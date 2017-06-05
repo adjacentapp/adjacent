@@ -1,0 +1,29 @@
+comment-component {
+	ion-item .item-inner {
+	// ion-item {
+		p {
+			// -webkit-box-orient: vertical;
+			// box-orient: vertical;
+			// text-decoration: none;
+			// overflow: hidden;
+			// text-overflow: ellipsis;
+			// display: -webkit-box;
+			// -webkit-line-clamp: 2;
+			// font-size: 16px;
+			// position: relative;
+			
+			// max-height: 5em;
+		}
+		.voting {
+			color: color($colors, secondary);
+		}
+	}
+}
+
+comment-component,
+new-comment-component {
+	height: 100px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}

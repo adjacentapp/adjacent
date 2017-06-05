@@ -1,0 +1,62 @@
+discover-page {
+	ion-card {
+		position: relative;
+		border-radius: 20px !important;
+		.card-content {
+			position: absolute;
+			top: 0;
+			color: white;
+			font-size: 1.8rem;
+			height: 60vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			text-align: left;
+			> div {
+				margin: 0.2em 0;
+				color: #cfcfcf;
+			}
+			span {
+				text-transform: uppercase;
+				font-weight: 600;
+				font-size: 1.4rem;
+				color: #fff;
+			}
+			ion-icon {
+				font-size: 3em;
+			}
+		}
+		// &:first-child img-bg:after {
+		// 	background:
+		// }
+		.img-bg {
+			position: relative;
+			height: 60vh;
+			background-size: cover;
+			&:after {
+				content: '';
+				z-index: 0;
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				// background: rgba(0,0,0,0.9);
+				background: color($colors, primary);
+				// opacity: 0.9;
+			}
+			&.Agriculture {
+				background-image: url('../../assets/img/industries/agriculture.jpg');
+				&:after { background: rgba(0,100,0,0.9); }
+			}
+			&.Art {
+				background-image: url('https://i.ytimg.com/vi/9MLZFQdpveI/maxresdefault.jpg');
+				&:after { background: rgba(0,0,125,0.9); }
+			}
+			&.Architecture {
+				background-image: url('http://static2.stuff.co.nz/1473217362/136/15843136.jpg');
+				&:after { background: rgba(100,0,0,0.9); }
+			}
+		}
+	}	
+}

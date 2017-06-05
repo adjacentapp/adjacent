@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Compose</ion-title>
+    <ion-buttons end><button clear>Share</button></ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-content>
+    <!-- <div><span>Industry:</span></div> -->
+    <ion-item>
+      <ion-label>Industry</ion-label>
+      <ion-select [(ngModel)]="item.industry">
+        <ion-option *ngFor="let industry of industries" value="industry">{{industry}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <!-- <div><span>Pitch:</span> {{item.pitch}}</div> -->
+    <ion-item>
+      <ion-label stacked>Pitch</ion-label>
+      <ion-textarea [(ngModel)]="item.pitch" type="text" placeholder="Elevator pitch. In 2-3 sentences, share your goal, route, and reason for pursuing it."></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label>Stage</ion-label>
+      <ion-range min="0" max="7" [(ngModel)]="item.stage" color="primary">
+        <!-- <ion-label range-left>-200</ion-label> -->
+        <!-- <ion-label range-right>200</ion-label> -->
+      </ion-range>
+    </ion-item>
+    <!-- <div><span>Location:</span> {{item.distance}}</div> -->
+    <ion-item>
+      <ion-label>Location</ion-label>
+      <ion-toggle [(ngModel)]="item.location" checked="true"></ion-toggle>
+    </ion-item>
+  </ion-card-content>
+</ion-content>

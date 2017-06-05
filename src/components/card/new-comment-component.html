@@ -1,0 +1,14 @@
+<ion-item text-wrap>
+  <ion-avatar item-left>
+    <img *ngIf='item.user.photo_url' [src]="item.user.photo_url">
+  </ion-avatar>
+  <h3>{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
+  <!-- <p>{{item.message}}</p> -->
+  <ion-textarea [(ngModel)]="item.message" type="text" placeholder="Share your advice"></ion-textarea>
+  <div item-right text-center>
+    <button>Send</button>
+  	<!-- <ion-icon name="arrow-up"></ion-icon><br/>
+  	{{item.likes ? item.likes.length : 0}}<br/>
+  	<ion-icon name="arrow-down"></ion-icon> -->
+  </div>
+</ion-item>

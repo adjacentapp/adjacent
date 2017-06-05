@@ -8,7 +8,7 @@
 
   <ion-content>
     <ion-list>
-      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <button ion-item *ngFor="let p of pages; let i = index" (click)="openPage(p)" detail-none id="{{i==0?'create-card-btn':''}}">
         {{p.title}}
       </button>
     </ion-list>

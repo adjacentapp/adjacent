@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle *ngIf="!selectedItem">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Item Details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content *ngIf="item">
+  <ion-card-content>
+    <div><span>Industry:</span> {{industries[i]}}</div>
+    <div><span>Pitch:</span> {{item.pitch}}</div>
+    <div><span>Distance:</span> {{item.distance}}</div>
+  </ion-card-content>
+  <ion-row>
+    <ion-col col-4>
+      <button ion-button icon-left clear small color='secondary'>
+        <ion-icon name="chatboxes"></ion-icon>
+        <div>{{item.comments.length || ''}} Comment{{item.comments.length>1?'s':''}}</div>
+      </button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button icon-left clear small color='secondary'>
+        <ion-icon name="share-alt"></ion-icon>
+        <div>Share</div>
+      </button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button icon-left clear small color="{{item.following ? 'primary' : 'secondary'}}" (click)="followTapped($event, item)">
+        <ion-icon name="bookmark"></ion-icon>
+        <div>Follow{{item.following ? 'ing' : ''}}</div>
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <wall-component [card_id]="item.id"></wall-component>
+  </ion-row>
+</ion-content>

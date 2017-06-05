@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <h1 *ngIf="loading" text-center>Loading...</h1>
+
+  <div *ngIf='profile'>
+    <img [src]="profile.photo_url" />
+    <h3>{{profile.fir_name + ' ' + profile.las_name}}</h3>
+    <p>{{profile.skills}}</p>
+    <h5>Contributions</h5>
+  </div>
+
+
+</ion-content>
