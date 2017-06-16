@@ -1,5 +1,15 @@
 profile-page {
 	p {
 		color: blue;
-	}	
+	}
+}
+
+// list of cards
+profile-page, page-bookmarks {
+	card-component {
+		.card {
+			margin: 12px 0;
+			width: 100%;
+		}
+	}
 }

@@ -5,9 +5,11 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 import { DiscoverPage } from '../pages/discover/discover';
 import { ProfilePage } from '../pages/profile/profile';
 import { NewCardPage } from '../pages/card/new';
+import { BookmarksPage } from '../pages/bookmarks/bookmarks';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 
 @Component({
@@ -16,7 +18,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  // make HelloIonicPage the root (or first) page
+  // set the root (or first) page
   rootPage = DiscoverPage;
   pages: Array<{title: string, component: any}>;
 
@@ -24,21 +26,17 @@ export class MyApp {
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    public ga: GoogleAnalytics
   ) {
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
-      // { title: 'Hello Ionic', component: HelloIonicPage },
-      // { title: 'My First List', component: ListPage },
-      { title: 'Pitch Your Project', component: NewCardPage },
+      { title: 'Pitch an Idea', component: NewCardPage },
       { title: 'Discover', component: DiscoverPage },
       { title: 'Profile', component: ProfilePage },
-      { title: 'My Cards', component: ProfilePage },
-      { title: 'Following', component: ProfilePage },
-      { title: 'Received', component: ProfilePage },
-      { title: 'Shared', component: ProfilePage },
+      { title: 'Following', component: BookmarksPage },
     ];
   }
 
@@ -48,6 +46,15 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.ga.startTrackerWithId('UA-86377634-1')
+         .then(() => {
+           console.log('Google analytics is ready now');
+              this.ga.trackView('test');
+           // Tracker is ready
+           // You can now track pages or set additional information such as AppVersion or UserId
+         })
+         .catch(e => console.log('Error starting GoogleAnalytics', e));
     });
   }
 

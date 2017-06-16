@@ -1,11 +1,9 @@
-<ion-menu [content]="content">
-
+<ion-menu [content]="content" side="left">
   <ion-header>
     <ion-toolbar>
       <ion-title>Pages</ion-title>
     </ion-toolbar>
   </ion-header>
-
   <ion-content>
     <ion-list>
       <button ion-item *ngFor="let p of pages; let i = index" (click)="openPage(p)" detail-none id="{{i==0?'create-card-btn':''}}">
@@ -13,7 +11,19 @@
       </button>
     </ion-list>
   </ion-content>
+</ion-menu>
 
+<ion-menu [content]="content" side="right">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Notifications</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <h3 style='margin-top:3em; color:#999; text-align: center;'>No notifications</h3>
+    </ion-list>
+  </ion-content>
 </ion-menu>
 
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

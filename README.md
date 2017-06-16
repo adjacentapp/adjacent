@@ -8,14 +8,14 @@ To use this template, either create a new ionic project using the ionic node.js 
 
 ### With the Ionic CLI:
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+Take the name after `adjacent`, and that is the name of the template to be used when using the `ionic start` command below:
 
 ```bash
 $ sudo npm install -g ionic cordova
-$ ionic start myTutorial tutorial
+$ ionic start adjacent tutorial
 ```
 
-Then, to run it, cd into `myTutorial` and run:
+Then, to run it, cd into `adjacent` and run:
 
 ```bash
 $ ionic cordova platform add ios

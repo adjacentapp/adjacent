@@ -1,62 +1,50 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { Http } from '@angular/http'
-import 'rxjs/add/operator/map';
-import { ShowCardPage } from '../card/show';
+import { NavController, NavParams, MenuController } from 'ionic-angular';
+import { ShowCardPage } from '../../pages/card/show';
+import { CardService } from '../../services/card.service';
 
 @Component({
 	selector: 'discover-page',
 	templateUrl: 'discover.html'
 })
 export class DiscoverPage {
-	industries: string[];
-	items: Array<{industry: string, pitch: string, distance: string}>;
-	url: string;
+	// items: Array<{industry: string, pitch: string, distance: string}>;
+	items: any[];
 	loading: boolean;
+	errorMessage: string;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http){//, public loadingCtrl: LoadingController) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private cardService: CardService) {
 		this.loading = true;
-		this.industries = ['Agriculture', 'Art', 'Architecture', 'Business', 'Computer Science', 'Design', 'Education', 'Engineering', 'Entrepreneurship', 'Finance', 'Government', 'Healthcare', 'Humanities', 'Journalism', 'Languages', 'Law', 'Marketing', 'Math', 'Music', 'Performing Arts', 'Science', 'Social Impact', 'Sports', 'Writing'];
-
-		var DEV = true;
-		var prod_url = "http://adjacent.wuex59etyj.us-west-2.elasticbeanstalk.com/api/v1/";
-		var dev_url = "http://localhost/~salsaia/adjacent/api/v2/";
-		var base_url = DEV ? dev_url : prod_url;
-		var query = '?user_id=1'
-		this.url = base_url + 'get_cards.php' + query;
-
-		this.http.get(this.url).map(res => res.json()).subscribe(data => {
-			this.items = data;
-			console.log(data);
-			this.items.unshift({
-				industry: 'test',
-				pitch: 'test',
-				distance: ''
-			});
-			this.loading = false;
-		});
+		this.cardService.getDeck()
+			.subscribe(
+				cards => this.items = cards,
+				error => this.errorMessage = <any>error,
+				() => this.loading = false
+			);
 	}
 
-	itemTapped(event, item) {
+	openRightMenu() {
+	   this.menuCtrl.open('right');
+	 }
+
+	showCard(event, item) {
 		this.navCtrl.push(ShowCardPage, {
 			item: item
 		});
 	}
 
-	followTapped(event, item) {
-		event.stopPropagation();
-		alert('follow!');
-	}
-
-	presentLoadingDefault() {
-	  // let loading = this.loadingCtrl.create({
-	  //   content: 'Please wait...'
-	  // });
-
-	  // loading.present();
-
-	  // setTimeout(() => {
-	  //   loading.dismiss();
-	  // }, 5000);
+	doFollow(e, item){
+		e.stopPropagation();
+		let data = {
+		  user_id: 1,
+		  card_id: item.id,
+		  new_entry: !item.following
+		};
+		this.cardService.follow(data).subscribe(
+			success => console.log(success),
+			error => this.errorMessage = <any>error
+		);
+		// dangerous optimism!
+		item.following = !item.following;
 	}
 }

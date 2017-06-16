@@ -4,54 +4,33 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Adjacent</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openRightMenu()">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
+<ion-content no-bounce>
+  <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
+  
+  <ion-slides *ngIf="!loading">    
 
-<ion-content>
-  <h1 *ngIf="loading" text-center>Loading...</h1>
-  <ion-slides>
-    <ion-slide *ngFor="let item of items; let i = index">
-      <ion-card *ngIf="i==0">
-        <div class='img-bg'></div>
+    <ion-slide id="tut-card">
+      <ion-card>
         <ion-card-content>
+          <div class='img-bg'></div>
           <h1 text-center>Slide left to begin exploring all of your adjacent opportunity.</h1>
           <h1 text-center><ion-icon name="arrow-round-back"></ion-icon></h1>
         </ion-card-content>
       </ion-card>
-      <ion-card *ngIf="i>0" (click)="itemTapped($event, item)">
-        <div class='img-bg {{industries[i]}}'></div>
-        <ion-card-content>
-          <div><span>Industry:</span> {{industries[i]}}</div>
-          <div><span>Pitch:</span> {{item.pitch}}</div>
-          <div><span>Distance:</span> {{item.distance}}</div>
-        </ion-card-content>
-        <ion-row>
-          <ion-col col-4>
-            <button ion-button icon-left clear small color='secondary'>
-              <ion-icon name="chatboxes"></ion-icon>
-              <div>{{item.comments.length || ''}} Comment{{item.comments.length>1?'s':''}}</div>
-            </button>
-          </ion-col>
-          <ion-col col-4>
-            <button ion-button icon-left clear small color='secondary'>
-              <ion-icon name="share-alt"></ion-icon>
-              <div>Share</div>
-            </button>
-          </ion-col>
-          <ion-col col-4>
-            <button ion-button icon-left clear small color="{{item.following ? 'primary' : 'secondary'}}" (click)="followTapped($event, item)">
-              <ion-icon name="bookmark"></ion-icon>
-              <div>Follow{{item.following ? 'ing' : ''}}</div>
-            </button>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <comment-component *ngIf="item.topComment.message" [item]="item.topComment"></comment-component>
-          <new-comment-component (click)="$event.stopPropagation()" *ngIf="!item.topComment.message" [card_id]="item.card_id"></new-comment-component>
-        </ion-row>
-      </ion-card>
     </ion-slide>
+
+    <ion-slide *ngFor="let item of items">
+      <card-component [handleTap]="showCard" [item]="item" [showVotes]="false"></card-component>
+    </ion-slide>
+
   </ion-slides>
 
 </ion-content>

@@ -1,29 +1,39 @@
 import { Component, Input } from '@angular/core';
 import { Http } from '@angular/http'
 import 'rxjs/add/operator/map';
+import { WallService } from '../../services/wall.service';
 
 @Component({
   selector: 'wall-component',
-  template: '<comment-component *ngFor="let comment of comments" [item]="comment"></comment-component>'
+  templateUrl: 'wall-component.html'
 })
 export class WallComponent {
   @Input() card_id: string;
   comments: any[];
+  loading: boolean;
 
-  constructor(public http: Http) {}
+  constructor(public http: Http, private wallService: WallService) {}
 
   ngOnInit() {
-  	var DEV = true;
-  	var prod_url = "http://adjacent.wuex59etyj.us-west-2.elasticbeanstalk.com/api/v1/";
-  	var dev_url = "http://localhost/~salsaia/adjacent/api/v2/";
-  	var base_url = DEV ? dev_url : prod_url;
-  	var query = '?card_id=' + this.card_id;
-  	var url = base_url + 'get_card_wall.php' + query;
-    console.log(url);
-  	
-  	this.http.get(url).map(res => res.json()).subscribe(data => {
-  		this.comments = data;
-  		console.log(data);
-  	});
+    this.loading = true;
+    this.wallService.getWall(this.card_id)
+      .subscribe(
+        comments => this.comments = comments,
+        error => console.log(error),
+        () => this.loading = false
+      );
+  }
+
+  doInfinite(e){
+    console.log(e);
+    setTimeout(function(){
+      e.complete();
+    }, 1000);
+    // this.service.getCard()
+    // .subscribe(
+    //   data => this.comments.push(...data.results),
+    //   err => console.log(err),
+    //   () => e.complete()
+    // );
   }
 }

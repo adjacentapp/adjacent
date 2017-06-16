@@ -1,12 +1,12 @@
 <ion-item *ngIf="item.user" text-wrap>
   <ion-avatar item-left (click)="goToProfile($event, item.user.user_id)">
-    <img *ngIf='item.user.photo_url' [src]="item.user.photo_url">
+    <div *ngIf='item.user.photo_url' [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
   </ion-avatar>
   <h3 (click)="goToProfile($event, item.user.user_id)">{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
   <p>{{item.message}}</p>
-  <div item-right text-center class='voting'>
-  	<ion-icon name="arrow-up"></ion-icon><br/>
-  	{{item.likes ? item.likes.length : 0}}<br/>
-  	<ion-icon name="arrow-down"></ion-icon>
+  <div *ngIf="showVotes" item-right text-center class='voting {{vote==1?"upvoted":(vote==-1?"downvoted":"")}}'>
+  	<ion-icon name="arrow-up" (click)="upvote($event, item)" color="{{vote == 1?'balanced':'secondary'}}"></ion-icon><br/>
+  	{{item.score}}<br/>
+  	<ion-icon name="arrow-down" (click)="downvote($event, item)" color="{{vote==-1?'danger':'secondary'}}"></ion-icon>
   </div>
 </ion-item>
