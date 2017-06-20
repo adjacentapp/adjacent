@@ -1,0 +1,50 @@
+[
+	[
+		{"title":"", "placeholder":"Tap the arrows to see different prompts, or create your own custom field."},
+		{"title":"problem", "placeholder":"What is the problem that this idea will solve?"},
+		{"title":"customer", "placeholder":"Who are the people that will benefit from this idea?"},
+		{"title":"value", "placeholder":"What value will the idea provide to the customer?"},
+		{"title":"background", "placeholder":"How did you originally come up with this idea?"},
+		{"title":"relationship", "placeholder":"What will the typical relationship with a customer consist of?"},
+		{"title":"channel", "placeholder":"How will the value reach the customer?"},
+		{"title":"resources", "placeholder":"What are some of the key resources that the idea requires?"},
+		{"title":"activities", "placeholder":"What are some of the key activities that the idea will perform?"},
+		{"title":"partners", "placeholder":"Who are some of the key partners that the idea needs?"},
+		{"title":"revenue", "placeholder":"Where will the revenue stream come from?"},
+		{"title":"cost", "placeholder":"What are some of the major costs associated with the idea?"},
+		{"title":"future", "placeholder":"How do you see the future world being different through your idea?"},
+		{"title":"inspiration", "placeholder":"What books, people, or other companies have inspired your idea?"},
+		{"title":"steps", "placeholder":"What’s the next step for your idea?"},
+		{"title":"challenges", "placeholder":"What’s the biggest challenge you’re currently facing?"},
+		{"title":"opportunity", "placeholder":"Why now? Why you?"}
+	],
+	[
+		{"title":"", "placeholder":"Tap the arrows to see different prompts, or create your own custom field."},
+		{"title":"experience", "placeholder":"How long have you been practicing this skill?"},
+		{"title":"background", "placeholder":"How did you first develop this skill?"},
+		{"title":"credentials", "placeholder":"What credentials or achievements do you have with this skill?"},
+		{"title":"past", "placeholder":"What kind of projects have you used this skill for in the past?"},
+		{"title":"future", "placeholder":"What future do you imagine for yourself and this skill?"},
+		{"title":"milestone", "placeholder":"What’s the next milestone for your journey with this skill?"},
+		{"title":"process", "placeholder":"What does your creative process look like?"},
+		{"title":"inspiration", "placeholder":"What works, art, or people inspire your work?"},
+		{"title":"challenges", "placeholder":"What’s the biggest challenge you’re currently facing?"},
+		{"title":"unique", "placeholder":"What sets you apart from others with a similar skill?"}
+	],
+	[
+		{"title":"", "placeholder":"Tap the arrows to see different prompts, or create your own custom field."},
+		{"title":"journey", "placeholder":"How did you get started in your field?"},
+		{"title":"challenges", "placeholder":"What’s the biggest challenge you’re currently facing?"},
+		{"title":"process", "placeholder":"What tips and tricks can you give to help people create their best work?"},
+		{"title":"inspiration", "placeholder":"What works, art, or people inspire you"},
+		{"title":"my future", "placeholder":"What future do you imagine for yourself and this skill?"},
+		{"title":"recently", "placeholder":"What's something you recently heard that made you stop and think?"},
+		{"title":"credentials", "placeholder":"What credentials or achievements do you have with this skill?"},
+		{"title":"mistakes", "placeholder":"What mistakes have you made? How have you learned from them?"},
+		{"title":"trends", "placeholder":"What trends in your field are currently piquing your interest?"},
+		{"title":"future", "placeholder":"What trends in your field do you see most impacting the future world?"},
+		{"title":"work", "placeholder":"What does your day to day role entail?"},
+		{"title":"pride", "placeholder":"What are you most proud to have accomplished over your career?"},
+		{"title":"change", "placeholder":"What was a time when you radically changed your mind?"}
+	]
+]
