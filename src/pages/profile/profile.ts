@@ -29,16 +29,15 @@ export class ProfilePage {
 			);
 	}
 
-	itemTapped(event, item) {
+	showCard(event, item) {
 		this.navCtrl.push(ShowCardPage, {
 			item: item
 		});
 	}
 
-	showCard(event, item) {
-		this.navCtrl.push(ShowCardPage, {
-			item: item
-		});
+	showContributions(event) {
+		alert('my contributions');
+		// this.navCtrl.push(ShowContributionsPage);
 	}
 
 	editTapped() {
