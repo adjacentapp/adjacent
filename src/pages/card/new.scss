@@ -1,5 +1,9 @@
 new-card-page {
 	textarea {
-		height: 8em;
+		height: 4em;
+	}
+	p {
+		color: color($colors, primary);
+		margin: 2em 1em;
 	}
 }

@@ -21,22 +21,24 @@ export class MyApp {
   // set the root (or first) page
   rootPage = DiscoverPage;
   pages: Array<{title: string, component: any}>;
+  profPage: any;
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public ga: GoogleAnalytics
+    public ga: GoogleAnalytics,
   ) {
     this.initializeApp();
 
     // set our app's pages
+    this.profPage = { title: 'Profile', component: ProfilePage };
     this.pages = [
-      { title: 'Pitch an Idea', component: NewCardPage },
-      { title: 'Discover', component: DiscoverPage },
-      { title: 'Profile', component: ProfilePage },
-      { title: 'Following', component: BookmarksPage },
+      { title: 'Pitch My Idea', component: NewCardPage },
+      // { title: 'Discover', component: DiscoverPage },
+      // { title: 'Profile', component: ProfilePage },
+      { title: "What I'm Following", component: BookmarksPage },
     ];
   }
 
@@ -62,6 +64,7 @@ export class MyApp {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
+    // this.nav.setRoot(page.component);
+    this.nav.push(page.component);
   }
 }

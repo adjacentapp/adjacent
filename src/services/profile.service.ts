@@ -19,6 +19,7 @@ export class ProfileService {
           .map(this.extractData)
           .map((data) => {
             let profile = data;
+            console.log(data);
             let skills = data.skills.replace(/[.,'"!-]/gi,'').split(' ');
             let skill = '';
             for (let s of skills)

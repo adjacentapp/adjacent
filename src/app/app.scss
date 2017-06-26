@@ -21,4 +21,13 @@ ion-menu {
 		color: green;
 	}
 
+	ion-avatar div {
+		background-size: contain;
+		width: 5em;
+		height: 5em;
+		margin: 0 auto 1em;
+	}
+
+	div { text-align: center; }
+
 }

@@ -20,6 +20,7 @@ export class NewCardPage {
     	pitch: '',
       location: true,
     	anonymous: false,
+      challenge: '',
     	stage: 0
     };
   }

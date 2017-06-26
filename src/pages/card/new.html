@@ -4,43 +4,57 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Compose</ion-title>
-    <ion-buttons end>
+    <!-- <ion-buttons end>
       <button ion-button (click)="shareTapped()">
         Share
       </button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-card-content>
-    <!-- <div><span>Industry:</span></div> -->
+    
     <ion-item>
       <ion-label>Industry</ion-label>
       <ion-select [(ngModel)]="item.industry">
         <ion-option *ngFor="let industry of industries" value="industry">{{industry}}</ion-option>
       </ion-select>
     </ion-item>
-    <!-- <div><span>Pitch:</span> {{item.pitch}}</div> -->
+
     <ion-item>
       <ion-label stacked>Pitch</ion-label>
-      <ion-textarea [(ngModel)]="item.pitch" type="text" placeholder="Elevator pitch time! In 2-3 sentences, describe your goal, plan of action, and reason for pursuit."></ion-textarea>
+      <ion-textarea [(ngModel)]="item.pitch" type="text" placeholder="Elevator pitch time! In just a few sentences, describe the goal, plan, and motivation of this idea."></ion-textarea>
     </ion-item>
-    <ion-item>
+    <p>A compelling pitch will entice potential advisors and collaborators to follow your idea.</p>
+
+    <!-- <ion-item>
       <ion-label>Stage</ion-label>
-      <ion-range min="0" max="7" [(ngModel)]="item.stage" color="primary">
+      <ion-range min="0" max="7" [(ngModel)]="item.stage" color="primary"> -->
         <!-- <ion-label range-left>-200</ion-label> -->
         <!-- <ion-label range-right>200</ion-label> -->
-      </ion-range>
-    </ion-item>
-    <!-- <div><span>Location:</span> {{item.distance}}</div> -->
+      <!-- </ion-range>
+    </ion-item> -->
+
     <ion-item>
       <ion-label>Location</ion-label>
       <ion-toggle [(ngModel)]="item.location" checked="true"></ion-toggle>
     </ion-item>
+
     <ion-item>
       <ion-label>Post Anonymously</ion-label>
       <ion-toggle [(ngModel)]="item.anonymous" checked="false"></ion-toggle>
     </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Challenge <i>(optinal)</i></ion-label>
+      <ion-textarea [(ngModel)]="item.challenge" type="text" placeholder="Where are you currently facing difficulty or uncertainy?"></ion-textarea>
+    </ion-item>
+    <p>Your followers will be notified each time you iterate on your pitch or post about a new <b>Challenge</b> you're facing.</p>
+
+    <br/>
+
+    <button ion-button block round (click)="shareTapped()">Share</button>
+
   </ion-card-content>
 </ion-content>

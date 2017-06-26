@@ -21,10 +21,11 @@
     <img [src]="profile.photo_url" />
     <h3>{{profile.fir_name + ' ' + profile.las_name}}</h3>
     <p>{{profile.skills}}</p>
+    
     <div (click)="showContributions($event)">
-      <h5>Contributions</h5>
-      Score: 28
+      <h5>Contribution score: 28</h5>
     </div>
+
     <h5>Ideas</h5>
     <ion-list>
       <card-component *ngFor="let item of profile.cards" [handleTap]="showCard" [item]="item" [showTopComment]="false"></card-component>
