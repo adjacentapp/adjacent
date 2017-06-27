@@ -25,6 +25,7 @@ export class CardComponent {
   @Input() showVotes: boolean = true;
   founder: boolean = false;
   industries: string[] = ['Agriculture', 'Art', 'Architecture', 'Business', 'Computer Science', 'Design', 'Education', 'Engineering', 'Entrepreneurship', 'Finance', 'Government', 'Healthcare', 'Humanities', 'Journalism', 'Languages', 'Law', 'Lifestyle', 'Marketing', 'Math', 'Music', 'Performing Arts', 'Policy Planning', 'Science', 'Social Impact', 'Sports', 'Writing'];
+  stages: string[] = ['Ideation', 'User Discovery', 'Design', 'Execution', 'Marketing', 'Growth'];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, private cardService: CardService, private socialSharing: SocialSharing) {}
 

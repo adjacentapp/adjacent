@@ -1,6 +1,9 @@
 discover-page {
 	card-component ion-card.card,
 	#tut-card ion-card.card, {
+
+		box-shadow: 0px 4px 12px #999;
+
 		.card-content {
 			font-size: 1.8rem;
 			height: 60vh;

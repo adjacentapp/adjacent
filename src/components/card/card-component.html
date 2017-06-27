@@ -3,8 +3,11 @@
   <ion-card-content>
     <div class='img-bg {{industries[item.industry].replace(" ","_")}}'></div>
     <p><span>Industry:</span> {{industries[item.industry]}}</p>
+    <p><span>Who:</span> {{item.who}}</p>
     <p><span>Pitch:</span> {{item.pitch}}</p>
-    <p><span>Distance:</span> {{item.distance}}</p>
+    <p *ngIf="item.challenge"><span>Challenge:</span> {{item.challenge}}</p>
+    <p><span>Stage:</span> {{stages[item.stage]}}</p>
+    <!-- <p><span>Distance:</span> {{item.distance}} miles away</p> -->
   </ion-card-content>
   <ion-row>
     <ion-col col-4>

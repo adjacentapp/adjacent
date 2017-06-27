@@ -16,6 +16,14 @@ export class WallService {
     let url = this.base_url + 'get_card_wall.php' + query;
     return this.http.get(url)
           .map(this.extractData)
+          .map((data) => {
+            let manip = data.map((item, i) => {
+              let thing = item;
+              thing.score = 5 - i;
+              return thing;
+             });
+            return manip;
+          })
           .catch(this.handleError);
   }
 
