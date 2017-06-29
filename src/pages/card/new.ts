@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import * as globs from '../../app/globals'
 
 
 @Component({
@@ -8,8 +9,12 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class NewCardPage {
   item: any;
-  industries: string[] = ['Agriculture', 'Art', 'Architecture', 'Business', 'Computer Science', 'Design', 'Education', 'Engineering', 'Entrepreneurship', 'Finance', 'Government', 'Healthcare', 'Humanities', 'Journalism', 'Languages', 'Law', 'Lifestyle', 'Marketing', 'Math', 'Music', 'Performing Arts', 'Policy Planning', 'Science', 'Social Impact', 'Sports', 'Writing'];
-  stages: string[] = ['Ideation', 'User Discovery', 'Design', 'Execution', 'Marketing', 'Growth'];
+  // industries: string[] = ['Agriculture', 'Art', 'Architecture', 'Business', 'Computer Science', 'Design', 'Education', 'Engineering', 'Entrepreneurship', 'Finance', 'Government', 'Healthcare', 'Humanities', 'Journalism', 'Languages', 'Law', 'Lifestyle', 'Marketing', 'Math', 'Music', 'Performing Arts', 'Policy Planning', 'Science', 'Social Impact', 'Sports', 'Writing'];
+  // stages: string[] = ['Ideation', 'User Discovery', 'Design', 'Execution', 'Marketing', 'Growth'];
+  private industries = globs.INDUSTRIES;
+  private challenges = globs.SKILLS;
+  private stages = globs.STAGES;
+  private networks = globs.NETWORKS;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     // If we navigated to this page, we will have an item available as a nav param    
@@ -18,8 +23,10 @@ export class NewCardPage {
     	pitch: '',
       location: true,
     	anonymous: false,
-      challenge: '',
-    	stage: 0
+      challenge_text: '',
+      challenge_index: 0,
+    	stage: 0,
+      networks: 0,
     };
   }
 

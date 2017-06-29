@@ -20,13 +20,25 @@
   <div *ngIf='profile'>
     <img [src]="profile.photo_url" />
     <h3>{{profile.fir_name + ' ' + profile.las_name}}</h3>
-    <p>{{profile.skills}}</p>
-    
-    <div (click)="showContributions($event)">
-      <h5>Contribution score: 28</h5>
-    </div>
+    <!-- <p>{{profile.skills}}</p> -->
 
-    <h5>Ideas</h5>
+    <h5>Skills</h5>
+    <div class="skill" *ngFor="let skill of skills">#{{skill}}</div>
+
+    <ion-item *ngIf="myself">
+      <ion-label>Edit My Skills</ion-label>
+      <ion-select multiple="true">
+        <ion-option *ngFor="let skill of skills; let i = index" value="{{i}}">{{skill}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <h5>Member of: {{networkCount}} Network{{networkCount === 1 ? '' : 's'}}</h5>
+    
+    <!-- <div (click)="showContributions($event)"> -->
+      <h5>{{myself? 'My ':''}}Contribution score: 28</h5>
+    <!-- </div> -->
+
+    <h5>{{myself? 'My ':''}}Ideas</h5>
     <ion-list>
       <card-component *ngFor="let item of profile.cards" [handleTap]="showCard" [item]="item" [showTopComment]="false"></card-component>
     </ion-list>

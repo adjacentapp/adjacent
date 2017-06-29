@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { ShowCardPage } from '../card/show';
 import { ProfileService } from '../../services/profile.service';
+import * as globs from '../../app/globals'
 
 @Component({
 	selector: 'profile-page',
@@ -15,6 +16,10 @@ export class ProfilePage {
 	myself: boolean = false;
 	profile: {fir_name: string, las_name: string, photo_url: string, skills: string};
 	contributions: Array<any>;
+
+	private skills = globs.SKILLS;
+	private networks = globs.NETWORKS;
+	private networkCount = Math.round( Math.random()*10 );
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, private profileService: ProfileService) {
 		this.loading = true;
