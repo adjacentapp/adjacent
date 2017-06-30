@@ -28,7 +28,7 @@
     </ion-slide>
 
     <ion-slide *ngFor="let item of items">
-      <card-component [handleTap]="showCard" [item]="item" [showVotes]="false"></card-component>
+      <card-component [handleTap]="showCard" [item]="item" [showTopCommentVotes]="false" [showDetails]="false"></card-component>
     </ion-slide>
 
   </ion-slides>

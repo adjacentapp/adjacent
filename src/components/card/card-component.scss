@@ -16,20 +16,27 @@ card-component,
 			justify-content: center;
 			text-align: left;
 
-			> p {
-				position: relative; /*for z-index*/
-				margin: 0.2em 0;
-				color: #cfcfcf;
-				font-size: inherit;
+			ion-item {
+				background: transparent;
+				color: white;
+				border: none !important;
 			}
-			span {
+
+
+			ion-icon {
+				position: absolute;
+				top: 0;
+			}
+			h2 {
 				text-transform: uppercase;
 				font-weight: 600;
-				font-size: 1.4rem;
+				margin-left: 40px;
 				color: #fff;
 			}
-			ion-icon {
-				font-size: 3em;
+			p {
+				color: #fff;
+				font-size: 1em;
+				margin-left: 40px;
 			}
 
 			.img-bg,

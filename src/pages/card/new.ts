@@ -19,12 +19,13 @@ export class NewCardPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     // If we navigated to this page, we will have an item available as a nav param    
     this.item = {
-    	industry: 0,
+    	industry: null,
     	pitch: '',
+      who: '',
       location: true,
     	anonymous: false,
       challenge_text: '',
-      challenge_index: 0,
+      challenge_index: null,
     	stage: 0,
       networks: 0,
     };

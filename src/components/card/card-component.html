@@ -2,12 +2,33 @@
 
   <ion-card-content>
     <div class='img-bg {{industries[item.industry].replace(" ","_")}}'></div>
-    <p><span>Industry:</span> {{industries[item.industry]}}</p>
-    <p><span>Who:</span> {{item.who}}</p>
-    <p><span>Pitch:</span> {{item.pitch}}</p>
-    <p><span>Stage:</span> {{stages[item.stage]}}</p>
-    <p *ngIf="item.challenge"><span>Challenge:</span> {{item.challenge}}</p>
-    <!-- <p><span>Distance:</span> {{item.distance}} miles away</p> -->
+    <ion-list>
+      <ion-item text-wrap>
+        <ion-icon name="briefcase" item-start></ion-icon>
+        <h2 *ngIf="showDetails">Industry</h2>
+        <p>{{industries[item.industry]}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        <ion-icon name="person" item-start></ion-icon>
+        <h2 *ngIf="showDetails">Background</h2>
+        <p>{{item.who}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        <ion-icon name="bulb" item-start></ion-icon>
+        <h2 *ngIf="showDetails">Pitch</h2>
+        <p>{{item.pitch}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        <ion-icon name="stats" item-start></ion-icon>
+        <h2 *ngIf="showDetails">Stage</h2>
+        <p>{{stages[item.stage]}}</p>
+      </ion-item>
+      <ion-item text-wrap *ngIf="item.challenge">
+        <ion-icon name="warning" item-start></ion-icon>
+        <h2 *ngIf="showDetails">Challenge</h2>
+        <p>{{item.challenge}}</p>
+      </ion-item>
+    </ion-list>
   </ion-card-content>
   <ion-row>
     <ion-col col-4>
@@ -35,7 +56,7 @@
   </ion-row>
   
   <ion-row *ngIf="item.topComment && showTopComment">
-    <comment-component *ngIf="item.topComment.message" [item]="item.topComment" [showVotes]="showVotes"></comment-component>
+    <comment-component *ngIf="item.topComment.message" [item]="item.topComment" [showVotes]="showTopCommentVotes"></comment-component>
     <new-comment-component *ngIf="!item.topComment.message" (click)="$event.stopPropagation()" [card_id]="item.card_id"></new-comment-component>
   </ion-row>
 

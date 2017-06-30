@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { CardService } from '../../services/card.service';
 import { SocialSharing } from '@ionic-native/social-sharing';
-
 import * as globs from '../../app/globals'
 
 @Component({
@@ -22,10 +21,11 @@ export class CardComponent {
   };
   @Input() handleTap: any;
   @Input() showTopComment: boolean = true;
-  @Input() showVotes: boolean = true;
+  @Input() showTopCommentVotes: boolean = true;
+  @Input() showDetails: boolean = true;
   founder: boolean = false;
-  industries: string[] = ['Agriculture', 'Art', 'Architecture', 'Business', 'Computer Science', 'Design', 'Education', 'Engineering', 'Entrepreneurship', 'Finance', 'Government', 'Healthcare', 'Humanities', 'Journalism', 'Languages', 'Law', 'Lifestyle', 'Marketing', 'Math', 'Music', 'Performing Arts', 'Policy Planning', 'Science', 'Social Impact', 'Sports', 'Writing'];
-  stages: string[] = ['Ideation', 'User Discovery', 'Design', 'Execution', 'Marketing', 'Growth'];
+  industries: string[] = globs.INDUSTRIES;
+  stages: string[] = globs.STAGES;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, private cardService: CardService, private socialSharing: SocialSharing) {}
 
