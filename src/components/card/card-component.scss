@@ -27,7 +27,7 @@ card-component,
 				position: absolute;
 				top: 0;
 			}
-			h2 {
+			ion-item h2 {
 				text-transform: uppercase;
 				font-weight: 600;
 				margin-left: 40px;
@@ -47,6 +47,14 @@ card-component,
 				left: 0;
 				right: 0;
 				bottom: 0;
+			}
+
+			> h2 {
+				position: absolute;
+				bottom: 1em;
+				width: 100%;
+				color: #ccc;
+				display: none;
 			}
 
 			.img-bg:before {

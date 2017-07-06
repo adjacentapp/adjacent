@@ -4,31 +4,34 @@
     <div class='img-bg {{industries[item.industry].replace(" ","_")}}'></div>
     <ion-list>
       <ion-item text-wrap>
-        <ion-icon name="briefcase" item-start></ion-icon>
-        <h2 *ngIf="showDetails">Industry</h2>
-        <p>{{industries[item.industry]}}</p>
-      </ion-item>
-      <ion-item text-wrap>
-        <ion-icon name="person" item-start></ion-icon>
-        <h2 *ngIf="showDetails">Background</h2>
-        <p>{{item.who}}</p>
-      </ion-item>
-      <ion-item text-wrap>
         <ion-icon name="bulb" item-start></ion-icon>
-        <h2 *ngIf="showDetails">Pitch</h2>
+        <h2 *ngIf="showDetails || true">Pitch</h2>
         <p>{{item.pitch}}</p>
       </ion-item>
       <ion-item text-wrap>
-        <ion-icon name="stats" item-start></ion-icon>
-        <h2 *ngIf="showDetails">Stage</h2>
-        <p>{{stages[item.stage]}}</p>
+        <ion-icon name="briefcase" item-start></ion-icon>
+        <h2 *ngIf="showDetails || true">Industry</h2>
+        <p>{{industries[item.industry]}}</p>
       </ion-item>
       <ion-item text-wrap *ngIf="item.challenge">
         <ion-icon name="warning" item-start></ion-icon>
-        <h2 *ngIf="showDetails">Challenge</h2>
+        <h2 *ngIf="showDetails || true">Current Obstacle</h2>
         <p>{{item.challenge}}</p>
       </ion-item>
+      <ion-item text-wrap *ngIf="showDetails">
+        <ion-icon name="person" item-start></ion-icon>
+        <h2 *ngIf="showDetails || true">My Background</h2>
+        <p>{{item.who}}</p>
+      </ion-item>
+      <ion-item text-wrap *ngIf="showDetails">
+        <ion-icon name="stats" item-start></ion-icon>
+        <h2 *ngIf="showDetails || true">Stage</h2>
+        <p>{{stages[item.stage]}}</p>
+      </ion-item>
     </ion-list>
+
+    <h2 text-center *ngIf="!showDetails">See more</h2>
+
   </ion-card-content>
   <ion-row>
     <ion-col col-4>
