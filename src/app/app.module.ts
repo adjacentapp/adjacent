@@ -4,6 +4,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+import { LoginPage } from '../pages/login/login';
 import { ShowCardPage } from '../pages/card/show';
 import { NewCardPage } from '../pages/card/new';
 import { DiscoverPage } from '../pages/discover/discover';
@@ -13,19 +14,22 @@ import { CardComponent } from '../components/card/card.component';
 import { CommentComponent } from '../components/card/comment.component';
 import { NewCommentComponent } from '../components/card/new-comment.component';
 import { WallComponent } from '../components/card/wall.component';
-import { CardService } from '../services/card.service';
-import { ProfileService } from '../services/profile.service';
-import { WallService } from '../services/wall.service';
-import { BookmarksService } from '../services/bookmarks.service';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
+import { CardService } from '../services/card.service';
+import { ProfileService } from '../services/profile.service';
+import { WallService } from '../services/wall.service';
+import { BookmarksService } from '../services/bookmarks.service';
+import { AuthProvider } from '../providers/auth/auth';
+
 @NgModule({
   declarations: [
     MyApp,
+    LoginPage,
     DiscoverPage,
     ProfilePage,
     BookmarksPage,
@@ -45,6 +49,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    LoginPage,
     DiscoverPage,
     ProfilePage,
     BookmarksPage,
@@ -60,7 +65,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     ProfileService,
     WallService,
     BookmarksService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthProvider
   ]
 })
 export class AppModule {}

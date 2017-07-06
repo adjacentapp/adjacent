@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { ShowCardPage } from '../card/show';
 import { ProfileService } from '../../services/profile.service';
+import { AuthProvider } from '../../providers/auth/auth';
 import * as globs from '../../app/globals'
 
 @Component({
@@ -21,9 +22,9 @@ export class ProfilePage {
 	private networks = globs.NETWORKS;
 	private networkCount = Math.round( Math.random()*10 );
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, private profileService: ProfileService) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, private profileService: ProfileService, private auth: AuthProvider) {
 		this.loading = true;
-		this.user_id = navParams.get('user_id') || '1';
+		this.user_id = navParams.get('user_id') || this.auth.currentUser.id;
 		if(this.user_id == '1') this.myself = true;
 
 		this.profileService.getProfile(this.user_id)

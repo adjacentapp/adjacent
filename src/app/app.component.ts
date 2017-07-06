@@ -1,15 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { DiscoverPage } from '../pages/discover/discover';
 import { ProfilePage } from '../pages/profile/profile';
 import { NewCardPage } from '../pages/card/new';
 import { BookmarksPage } from '../pages/bookmarks/bookmarks';
+import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
+
+import { AuthProvider } from '../providers/auth/auth';
 
 
 @Component({
@@ -19,9 +21,18 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // set the root (or first) page
-  rootPage = DiscoverPage;
-  pages: Array<{title: string, component: any}>;
-  profPage: any;
+  // rootPage = DiscoverPage;
+  rootPage = LoginPage;
+  // rootPage:any = 'LoginPage';
+  profPage:{title: string, component: any} = { title: 'Profile', component: ProfilePage };
+  pages: Array<{title: string, component: any}> = [
+    { title: 'Pitch My Idea', component: NewCardPage },
+    // { title: 'Discover', component: DiscoverPage },
+    // { title: 'Profile', component: ProfilePage },
+    { title: "What I'm Following", component: BookmarksPage },
+  ];
+  username = '';
+  email = '';
 
   constructor(
     public platform: Platform,
@@ -29,17 +40,20 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public ga: GoogleAnalytics,
-  ) {
+    private auth: AuthProvider
+  ){
     this.initializeApp();
+    this.checkDeepLink();
+  }
+   
+  public logout() {
+    this.auth.logout().subscribe(succ => {
+      this.nav.setRoot(LoginPage)
+    });
+  }
 
-    // set our app's pages
-    this.profPage = { title: 'Profile', component: ProfilePage };
-    this.pages = [
-      { title: 'Pitch My Idea', component: NewCardPage },
-      // { title: 'Discover', component: DiscoverPage },
-      // { title: 'Profile', component: ProfilePage },
-      { title: "What I'm Following", component: BookmarksPage },
-    ];
+  checkDeepLink() {
+    console.log('deep linking');
   }
 
   initializeApp() {
@@ -61,10 +75,7 @@ export class MyApp {
   }
 
   openPage(page) {
-    // close the menu when clicking a link from the menu
     this.menu.close();
-    // navigate to the new page if it is not the current page
-    // this.nav.setRoot(page.component);
     this.nav.push(page.component);
   }
 }

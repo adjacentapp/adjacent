@@ -13,6 +13,9 @@ export class DiscoverPage {
 	loading: boolean;
 	errorMessage: string;
 
+	username = '';
+    email = '';
+
 	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private cardService: CardService) {
 		this.loading = true;
 		this.cardService.getDeck()

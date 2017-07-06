@@ -1,7 +1,7 @@
 <ion-menu [content]="content" side="left">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Name</ion-title>
+      <ion-title>{{auth.check ? auth.currentUser.fir_name+' '+auth.currentUser.las_name : ''}}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -9,13 +9,17 @@
       
       <ion-item (click)="openPage(profPage)">
         <ion-avatar>
-          <div style="background-image: url('http://www.salsaia.com/aether/anon_photo.png')"></div>
+          <!-- <div style="background-image: url('../../assets/img/anon_photo.png')"></div> -->
+          <div *ngIf='auth.check' [ngStyle]="{'background-image': 'url(' + auth.currentUser.photo_url + ')'}"></div>
         </ion-avatar>
         View My Profile
       </ion-item>
-
       <button ion-item *ngFor="let p of pages; let i = index" (click)="openPage(p)" detail-none id="{{i==0?'create-card-btn':''}}">
         {{p.title}}
+      </button>
+
+      <button ion-item (click)="logout()">
+        <ion-icon name="log-out"></ion-icon> Logout
       </button>
 
     </ion-list>
