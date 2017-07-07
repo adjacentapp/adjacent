@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Http } from '@angular/http'
 import 'rxjs/add/operator/map';
-import { WallService } from '../../services/wall.service';
+import { WallProvider } from '../../providers/wall/wall';
 
 @Component({
   selector: 'wall-component',
@@ -12,11 +12,11 @@ export class WallComponent {
   comments: any[];
   loading: boolean;
 
-  constructor(public http: Http, private wallService: WallService) {}
+  constructor(public http: Http, private wall: WallProvider) {}
 
   ngOnInit() {
     this.loading = true;
-    this.wallService.getWall(this.card_id)
+    this.wall.getWall(this.card_id)
       .subscribe(
         comments => this.comments = comments,
         error => console.log(error),

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { CardService } from '../../services/card.service';
+import { CardProvider } from '../../providers/card/card';
 
 @Component({
   selector: 'show-card-page',
@@ -10,7 +10,7 @@ export class ShowCardPage {
   item: any;
   founder: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private cardService: CardService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.item = navParams.get('item');
     if(this.item.founder_id == 1) this.founder = true;
@@ -27,7 +27,7 @@ export class ShowCardPage {
       card_id: item.id,
       new_entry: !item.following
     };
-    this.cardService.follow(data).subscribe(
+    this.card.follow(data).subscribe(
       success => console.log(success),
       error => console.log(error)
     );

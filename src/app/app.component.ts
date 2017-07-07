@@ -48,7 +48,8 @@ export class MyApp {
    
   public logout() {
     this.auth.logout().subscribe(succ => {
-      this.nav.setRoot(LoginPage)
+      this.menu.close();
+      this.nav.setRoot(LoginPage);
     });
   }
 

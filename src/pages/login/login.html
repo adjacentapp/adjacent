@@ -8,7 +8,7 @@
      <!-- <ion-col></ion-col> -->
    </ion-row>
    
-   <div class="login-box">
+   <div class="login-box" *ngIf="!checkingSession">
      <form (ngSubmit)="login()" #registerForm="ngForm">
        <ion-row>
          <ion-col>

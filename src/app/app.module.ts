@@ -20,10 +20,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
-import { CardService } from '../services/card.service';
-import { ProfileService } from '../services/profile.service';
-import { WallService } from '../services/wall.service';
-import { BookmarksService } from '../services/bookmarks.service';
+import { CardProvider } from '../providers/card/card';
+import { ProfileProvider } from '../providers/profile/profile';
+import { WallProvider } from '../providers/wall/wall';
+import { BookmarksProvider } from '../providers/bookmarks/bookmarks';
 import { AuthProvider } from '../providers/auth/auth';
 
 @NgModule({
@@ -61,12 +61,12 @@ import { AuthProvider } from '../providers/auth/auth';
     SplashScreen,
     GoogleAnalytics,
     SocialSharing,
-    CardService,
-    ProfileService,
-    WallService,
-    BookmarksService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider
+    CardProvider,
+    ProfileProvider,
+    WallProvider,
+    BookmarksProvider,
+    AuthProvider,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

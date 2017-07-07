@@ -3,10 +3,10 @@ import { Http, Response }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import * as globs from '../app/globals'
+import * as globs from '../../app/globals'
 
 @Injectable()
-export class ProfileService {
+export class ProfileProvider {
   items: Array<{pitch: string, distance: string}>;
   
   constructor (private http: Http) {}

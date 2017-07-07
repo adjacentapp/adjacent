@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { ShowCardPage } from '../../pages/card/show';
-import { CardService } from '../../services/card.service';
+import { CardProvider } from '../../providers/card/card';
 
 @Component({
 	selector: 'discover-page',
@@ -16,9 +16,9 @@ export class DiscoverPage {
 	username = '';
     email = '';
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private cardService: CardService) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider) {
 		this.loading = true;
-		this.cardService.getDeck()
+		this.card.getDeck()
 			.subscribe(
 				cards => this.items = cards,
 				error => this.errorMessage = <any>error,
@@ -43,7 +43,7 @@ export class DiscoverPage {
 		  card_id: item.id,
 		  new_entry: !item.following
 		};
-		this.cardService.follow(data).subscribe(
+		this.card.follow(data).subscribe(
 			success => console.log(success),
 			error => this.errorMessage = <any>error
 		);

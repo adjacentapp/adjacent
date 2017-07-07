@@ -3,10 +3,10 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import * as globs from '../app/globals'
+import * as globs from '../../app/globals'
 
 @Injectable()
-export class BookmarksService {
+export class BookmarksProvider {
   private base_url = globs.BASE_API_URL;
   items: Array<{industry: string, pitch: string, distance: string}>;
   

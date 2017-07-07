@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { CardService } from '../../services/card.service';
+import { CardProvider } from '../../providers/card/card';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import * as globs from '../../app/globals'
 
@@ -27,7 +27,7 @@ export class CardComponent {
   industries: string[] = globs.INDUSTRIES;
   stages: string[] = globs.STAGES;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, private cardService: CardService, private socialSharing: SocialSharing) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, private card: CardProvider, private socialSharing: SocialSharing) {}
 
   ngOnInit() {
     // item is now accessible
@@ -46,7 +46,7 @@ export class CardComponent {
       card_id: item.id,
       new_entry: !item.following
     };
-    this.cardService.follow(data).subscribe(
+    this.card.follow(data).subscribe(
       success => console.log(success),
       error => console.log(error)
     );

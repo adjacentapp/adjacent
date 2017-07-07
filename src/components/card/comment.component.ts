@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ProfilePage } from '../../pages/profile/profile';
 import { ShowCardPage } from '../../pages/card/show';
-import { WallService } from '../../services/wall.service';
+import { WallProvider } from '../../providers/wall/wall';
 
 @Component({
   selector: 'comment-component',
@@ -24,7 +24,7 @@ export class CommentComponent {
   @Input() showVotes: boolean = true;
   vote: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private wallService: WallService) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private wall: WallProvider) {}
 
   ngOnInit() {
     let user_id = 1;
@@ -61,7 +61,7 @@ export class CommentComponent {
     e.stopPropagation();
     let user_id = 1;
     let data = {post_id: item.id, card_id: item.card_id, user_id: user_id, score: 1};
-    this.wallService.vote(data).subscribe(
+    this.wall.vote(data).subscribe(
       success => console.log('like success', success),
       error => console.log(error)
     );
@@ -76,7 +76,7 @@ export class CommentComponent {
     e.stopPropagation();
     let user_id = 1;
     let data = {post_id: item.id, card_id: item.card_id, user_id: user_id, score: -1};
-    this.wallService.vote(data).subscribe(
+    this.wall.vote(data).subscribe(
       success => console.log('dislike success', success),
       error => console.log(error)
     );

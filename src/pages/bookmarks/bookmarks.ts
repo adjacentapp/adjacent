@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ShowCardPage } from '../card/show';
-import { BookmarksService } from '../../services/bookmarks.service';
+import { BookmarksProvider } from '../../providers/bookmarks/bookmarks';
 
 @IonicPage()
 @Component({
@@ -12,9 +12,9 @@ export class BookmarksPage {
 	loading: boolean;
 	items: any[];
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, private bookmarksService: BookmarksService) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, private bookmarks: BookmarksProvider) {
 		this.loading = true;
-		this.bookmarksService.getBookmarks()
+		this.bookmarks.getBookmarks()
 			.subscribe(
 				items => this.items = items,
 				error => console.log(<any>error),

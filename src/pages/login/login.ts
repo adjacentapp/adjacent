@@ -9,19 +9,36 @@ import { DiscoverPage } from '../../pages/discover/discover';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  checkingSession: boolean = true;
   loading: Loading;
+
   registerCredentials = { email: '', password: '' };
  
-  constructor(private nav: NavController, private auth: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
+  constructor(private nav: NavController, private auth: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+    if(localStorage.token)
+      this.auth.checkToken(localStorage.token).subscribe(user => {
+        this.checkingSession = false;
+        if(user.valid)
+          this.nav.setRoot(DiscoverPage);
+        else
+          this.showError("failed token check");
+        },
+        error => {
+          this.showError(error);
+        }
+      );
+    else
+      this.checkingSession = false;
+  }
  
   public createAccount() {
     this.nav.push('RegisterPage');
   }
  
   public login() {
-    this.showLoading()
+    this.showLoading();
     this.auth.login(this.registerCredentials).subscribe(allowed => {
-      if (allowed) {        
+      if (allowed) {     
         this.nav.setRoot(DiscoverPage);
       } else {
         this.showError("Access Denied");
