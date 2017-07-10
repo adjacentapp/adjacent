@@ -22,7 +22,7 @@ export class CardComponent {
   @Input() handleTap: any;
   @Input() showTopComment: boolean = true;
   @Input() showTopCommentVotes: boolean = true;
-  @Input() showDetails: boolean = true;
+  @Input() showDetails: boolean = false;
   founder: boolean = false;
   industries: string[] = globs.INDUSTRIES;
   stages: string[] = globs.STAGES;

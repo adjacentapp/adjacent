@@ -17,7 +17,9 @@ export class LoginPage {
   constructor(private nav: NavController, private auth: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     if(localStorage.token)
       this.auth.checkToken(localStorage.token).subscribe(user => {
-        this.checkingSession = false;
+        setTimeout(() => {
+          this.checkingSession = false;
+        }, 500);
         if(user.valid)
           this.nav.setRoot(DiscoverPage);
         else

@@ -44,7 +44,7 @@ import { AuthProvider } from '../providers/auth/auth';
     BrowserModule,
     HttpModule,
     JsonpModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {}),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

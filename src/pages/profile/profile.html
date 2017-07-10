@@ -18,7 +18,9 @@
   <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 
   <div *ngIf='profile'>
-    <img [src]="profile.photo_url" />
+    <ion-avatar [ngClass]="'large'">
+      <div [ngStyle]="{'background-image': 'url(' + profile.photo_url + ')'}"></div>
+    </ion-avatar>
     <h3>{{profile.fir_name + ' ' + profile.las_name}}</h3>
     <!-- <p>{{profile.skills}}</p> -->
 

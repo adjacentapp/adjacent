@@ -17,7 +17,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <card-component [item]="item" [showTopComment]="false"></card-component>
+  <card-component [item]="item" [showTopComment]="false" [showDetails]="true"></card-component>
 
   <ion-row>
     <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.id"></new-comment-component>

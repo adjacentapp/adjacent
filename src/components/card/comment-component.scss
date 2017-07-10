@@ -1,18 +1,5 @@
 comment-component {
 	ion-item {
-		ion-avatar {
-			border-radius: 50%;
-			overflow: hidden;
-			background-image: url('../../assets/img/anon_photo.png');
-			background-size: cover;
-
-			> div {
-				background-size: cover;
-				background-position: 50% 50%;
-				min-height: inherit;
-			}
-		}
-
 		.item-inner {
 			p {
 				/* autoprefixer: off */

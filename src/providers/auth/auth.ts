@@ -25,7 +25,7 @@ export class User {
  
 @Injectable()
 export class AuthProvider {
-  check: boolean = false;
+  valid: boolean = false;
   currentUser: User;
 
   constructor (private http: Http) {}
@@ -42,7 +42,7 @@ export class AuthProvider {
         let access = (credentials.password === "pass" && credentials.email === "email");
         console.log(access);
         this.currentUser = new User(9, 'token', 'Simon', 'Cotton', 'saimon@devdactic.com', '../../assets/img/anon_photo.png');
-        this.check = true;
+        this.valid = true;
         observer.next(access);
         observer.complete();
       });
@@ -57,6 +57,7 @@ export class AuthProvider {
               console.log(data);
               if(data.valid){
                 this.currentUser = new User(data.user_id, data.token, data.fir_name, data.las_name, data.email, data.photo_url);
+                this.valid = true;
               }
               return data;
             })

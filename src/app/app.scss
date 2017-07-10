@@ -21,13 +21,25 @@ ion-menu {
 		color: green;
 	}
 
-	ion-avatar div {
-		background-size: contain;
-		width: 5em;
-		height: 5em;
-		margin: 0 auto 1em;
-	}
-
 	div { text-align: center; }
 
+}
+
+ion-avatar.large {
+	margin: 0 auto;
+	min-height: 72px;
+	width: 72px;
+}
+
+ion-avatar {
+	border-radius: 50%;
+	overflow: hidden;
+	background-image: url('../../assets/img/anon_photo.png');
+	background-size: cover;
+
+	> div {
+		background-size: cover;
+		background-position: 50% 50%;
+		min-height: inherit;
+	}
 }

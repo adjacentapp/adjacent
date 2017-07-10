@@ -1,16 +1,16 @@
 <ion-menu [content]="content" side="left">
   <ion-header>
     <ion-toolbar>
-      <ion-title>{{auth.check ? auth.currentUser.fir_name+' '+auth.currentUser.las_name : ''}}</ion-title>
+      <ion-title>{{auth.valid ? auth.currentUser.fir_name+' '+auth.currentUser.las_name : ''}}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-list>
       
       <ion-item (click)="openPage(profPage)">
-        <ion-avatar>
+        <ion-avatar [ngClass]="'large'">
           <!-- <div style="background-image: url('../../assets/img/anon_photo.png')"></div> -->
-          <div *ngIf='auth.check' [ngStyle]="{'background-image': 'url(' + auth.currentUser.photo_url + ')'}"></div>
+          <div *ngIf='auth.valid' [ngStyle]="{'background-image': 'url(' + auth.currentUser.photo_url + ')'}"></div>
         </ion-avatar>
         View My Profile
       </ion-item>
@@ -39,4 +39,4 @@
   </ion-content>
 </ion-menu>
 
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+<ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav>
