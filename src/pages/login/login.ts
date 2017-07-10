@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, IonicPage } from 'ionic-angular';
+import { NavController, MenuController, AlertController, LoadingController, Loading, IonicPage } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { DiscoverPage } from '../../pages/discover/discover';
  
@@ -14,23 +14,32 @@ export class LoginPage {
 
   registerCredentials = { email: '', password: '' };
  
-  constructor(private nav: NavController, private auth: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
-    if(localStorage.token)
+  constructor(private nav: NavController, public menu: MenuController, private auth: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+    if(localStorage.token && localStorage.user_id) {
+      this.auth.loginFromLocalStorage();
+      this.nav.setRoot(DiscoverPage);
       this.auth.checkToken(localStorage.token).subscribe(user => {
-        setTimeout(() => {
-          this.checkingSession = false;
-        }, 500);
-        if(user.valid)
-          this.nav.setRoot(DiscoverPage);
-        else
-          this.showError("failed token check");
-        },
-        error => {
-          this.showError(error);
+        setTimeout(() => { this.checkingSession = false; }, 500);
+        if(!user.valid) {
+          localStorage.clear();
+          this.showError("Something went wrong. Please sign in again.");
+          this.nav.setRoot('LoginPage');
         }
-      );
+      },
+      error => {
+          this.showError(error);
+      });
+    }
     else
       this.checkingSession = false;
+  }
+
+  ionViewWillEnter() {
+    this.menu.swipeEnable( false );
+  }
+
+  ionViewDidLeave() {
+    this.menu.swipeEnable( true );
   }
  
   public createAccount() {
@@ -60,7 +69,8 @@ export class LoginPage {
   }
  
   showError(text) {
-    this.loading.dismiss();
+    if(this.loading)
+      this.loading.dismiss();
  
     let alert = this.alertCtrl.create({
       title: 'Fail',

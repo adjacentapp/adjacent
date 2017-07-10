@@ -49,6 +49,11 @@ export class AuthProvider {
     }
   }
 
+  loginFromLocalStorage(){
+    this.currentUser = new User(localStorage.user_id, localStorage.token, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url);
+    this.valid = true;
+  }
+
   checkToken(token): Observable<any> {
     let url = globs.BASE_API_URL + 'get_session.php?token=' + token;
     return this.http.get(url)
@@ -59,6 +64,9 @@ export class AuthProvider {
                 this.currentUser = new User(data.user_id, data.token, data.fir_name, data.las_name, data.email, data.photo_url);
                 this.valid = true;
               }
+              else {
+                this.valid = false;
+              }
               return data;
             })
             .catch(this.handleError);
@@ -68,23 +76,82 @@ export class AuthProvider {
     let pass = this.sha256(globs.ENCRYPTION_KEY + credentials.password);
     let url = globs.BASE_API_URL + 'login.php';
     url += '?email=' + credentials.email + '&pass=' + pass;
-    console.log(url);
-    // let headers = new Headers({ 'Content-Type': 'application/json' });
-    // let headers = new Headers({});
-    // let options = new RequestOptions({ headers: headers });
-    // return this.http.post(url, credentials)//, options)
     return this.http.get(url)
             .map(this.extractData)
             .map((data) => {
               console.log(data);
               if(data.valid){
                 this.currentUser = new User(data.user_id, data.token, data.fir_name, data.las_name, data.email, data.photo_url);
+                this.valid = true;
                 localStorage.token = data.token;
+                localStorage.user_id = data.user_id;
+                localStorage.fir_name = data.fir_name;
+                localStorage.las_name = data.las_name;
+                localStorage.email = data.email;
+                localStorage.photo_url = data.photo_url;
                }
+               else
+                 this.valid = false;
               return data;
             })
             .catch(this.handleError);
   }
+
+  public register(credentials): Observable<any> {
+    if (credentials.email === null || credentials.password === null) {
+      return Observable.throw("Please insert credentials");
+    } else {
+      let url = globs.BASE_API_URL + 'signup.php';
+      let data = {
+        email: credentials.email,
+        pass: this.sha256(globs.ENCRYPTION_KEY + credentials.password)
+      };
+      // let headers = new Headers({ 'Content-Type': 'application/json' });
+      // let options = new RequestOptions({ headers: headers });
+      return this.http.post(url, data )//, options)
+              .map(this.extractData)
+              .map((data) => {
+                console.log(data);
+                if(data.valid){
+                  this.currentUser = new User(data.user_id, data.token, '', '', data.email, '');
+                  this.valid = true;
+                  localStorage.token = data.token;
+                  localStorage.user_id = data.user_id;
+                  localStorage.fir_name = '';
+                  localStorage.las_name = '';
+                  localStorage.email = data.email;
+                  localStorage.photo_url = '';
+                  return this.currentUser;
+                 }
+                 else{
+                   this.valid = false;
+                   return data;
+                 }
+                
+              })
+              .catch(this.handleError);
+      // At this point store the credentials to your backend!
+      // return Observable.create(observer => {
+      //   observer.next(true);
+      //   observer.complete();
+      // });
+    }
+  }
+  
+  public getUserInfo() : User {
+    return this.currentUser;
+  }
+
+  public logout() {
+    this.valid = false;
+    localStorage.clear();
+    return Observable.create(observer => {
+      this.currentUser = null;
+      observer.next(true);
+      observer.complete();
+    });
+  }
+
 
   private extractData(res: Response) {
     let body = res.json();
@@ -105,45 +172,6 @@ export class AuthProvider {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-
-  private handleErrorObservable (error: Response | any) {
-    console.error(error.message || error);
-    return Observable.throw(error.message || error);
-  }
-  private handleErrorPromise (error: Response | any) {
-    console.error(error.message || error);
-    return Promise.reject(error.message || error);
-  }  
- 
-  public register(credentials) {
-    if (credentials.email === null || credentials.password === null) {
-      return Observable.throw("Please insert credentials");
-    } else {
-      // At this point store the credentials to your backend!
-      return Observable.create(observer => {
-        observer.next(true);
-        observer.complete();
-      });
-    }
-  }
- 
-  public getUserInfo() : User {
-    return this.currentUser;
-  }
-
-  public test() {
-  	return 'test success!';
-  }
- 
-  public logout() {
-    localStorage.clear();
-    return Observable.create(observer => {
-      this.currentUser = null;
-      observer.next(true);
-      observer.complete();
-    });
-  }
-
 
   private sha256(data) {
     var rotateRight = function (n,x) {
@@ -317,17 +345,17 @@ export class AuthProvider {
     }
 
     /* Split the internal hash values into an array of bytes */
-    function sha256_encode_bytes() {
-            var j=0;
-            var output = new Array(32);
-      for(var i=0; i<8; i++) {
-        output[j++] = ((ihash[i] >>> 24) & 0xff);
-        output[j++] = ((ihash[i] >>> 16) & 0xff);
-        output[j++] = ((ihash[i] >>> 8) & 0xff);
-        output[j++] = (ihash[i] & 0xff);
-      }
-      return output;
-    }
+    // function sha256_encode_bytes() {
+    //         var j=0;
+    //         var output = new Array(32);
+    //   for(var i=0; i<8; i++) {
+    //     output[j++] = ((ihash[i] >>> 24) & 0xff);
+    //     output[j++] = ((ihash[i] >>> 16) & 0xff);
+    //     output[j++] = ((ihash[i] >>> 8) & 0xff);
+    //     output[j++] = (ihash[i] & 0xff);
+    //   }
+    //   return output;
+    // }
 
     /* Get the internal hash as a hex string */
     function sha256_encode_hex() {

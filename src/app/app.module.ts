@@ -4,7 +4,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { LoginPage } from '../pages/login/login';
+// import { LoginPage } from '../pages/login/login';
 import { ShowCardPage } from '../pages/card/show';
 import { NewCardPage } from '../pages/card/new';
 import { DiscoverPage } from '../pages/discover/discover';
@@ -29,7 +29,7 @@ import { AuthProvider } from '../providers/auth/auth';
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage,
+    // LoginPage,
     DiscoverPage,
     ProfilePage,
     BookmarksPage,
@@ -49,7 +49,7 @@ import { AuthProvider } from '../providers/auth/auth';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    LoginPage,
+    // LoginPage,
     DiscoverPage,
     ProfilePage,
     BookmarksPage,

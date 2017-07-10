@@ -9,17 +9,13 @@
 	if( isset($_GET['token']) )
 		$token = mysqli_real_escape_string($db, $_GET['token']);
 	else
-		exit('error');
+		exit( json_encode((object)array("message" => 'no token'), JSON_PRETTY_PRINT) );
 
 	$push_token = isset($_GET['push_token']) ? mysqli_real_escape_string($db, $_GET['push_token']) : false;
 
 	// Query database
- 	$query =	"SELECT * FROM sessions " .
- 				"WHERE token = '" . $token . "'";
+ 	$query =	"SELECT * FROM sessions WHERE token = '{$token}'";
  	$res = mysqli_query($db, $query);
-
- 	if(!$res)
- 		exit('error');
 
  	// Create JSON from database results
 	$session = array();
@@ -28,7 +24,7 @@
 			$session[] = $row;
 
  	if( count($session) === 0)
- 		exit('error');
+ 		exit( json_encode((object)array("message" => 'no session'), JSON_PRETTY_PRINT) );
  	else {
  		// get user
 	 	$query =	"SELECT * FROM users " .
@@ -123,10 +119,9 @@
 	 		update_badge(array($push_token), $badge_count);
 	 	}
 
-		// Close connection and ID
-	 	// mysqli_free_result($res);
-	 	mysqli_close($db);
+	 	$user[0]['valid'] = true;
 
+	 	mysqli_close($db);
  		exit(json_encode($user[0], JSON_PRETTY_PRINT));
  	}
  		

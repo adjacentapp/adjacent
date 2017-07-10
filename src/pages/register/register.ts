@@ -15,10 +15,13 @@ export class RegisterPage {
   constructor(private nav: NavController, private auth: AuthProvider, private alertCtrl: AlertController) { }
  
   public register() {
-    this.auth.register(this.registerCredentials).subscribe(success => {
-      if (success) {
+    this.auth.register(this.registerCredentials).subscribe(results => {
+      console.log(results);
+      if (this.auth.valid) {
         this.createSuccess = true;
         this.showPopup("Success", "Account created.");
+      } else if (results.message) {
+        this.showPopup("Error", results.message);
       } else {
         this.showPopup("Error", "Problem creating account.");
       }

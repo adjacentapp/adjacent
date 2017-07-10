@@ -5,7 +5,7 @@ import { DiscoverPage } from '../pages/discover/discover';
 import { ProfilePage } from '../pages/profile/profile';
 import { NewCardPage } from '../pages/card/new';
 import { BookmarksPage } from '../pages/bookmarks/bookmarks';
-import { LoginPage } from '../pages/login/login';
+// import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,10 +20,8 @@ import { AuthProvider } from '../providers/auth/auth';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  // set the root (or first) page
-  // rootPage = DiscoverPage;
-  rootPage = LoginPage;
-  // rootPage:any = 'LoginPage';
+  // rootPage = LoginPage;
+  rootPage:any = 'LoginPage';
   profPage:{title: string, component: any} = { title: 'Profile', component: ProfilePage };
   pages: Array<{title: string, component: any}> = [
     { title: 'Pitch My Idea', component: NewCardPage },
@@ -49,7 +47,7 @@ export class MyApp {
   public logout() {
     this.auth.logout().subscribe(succ => {
       this.menu.close();
-      this.nav.setRoot(LoginPage);
+      this.nav.setRoot('LoginPage');
     });
   }
 

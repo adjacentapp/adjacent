@@ -13,7 +13,7 @@
 	$order_by = isset($_GET['order_by']) ? mysqli_real_escape_string($db, $_GET['order_by']) : false;
 	$types = isset($_GET['types']) ? mysqli_real_escape_string($db, $_GET['types']) : '1,2,3';
 
-	$limit = isset($_GET['limit']) ? mysqli_real_escape_string($db, $_GET['limit']) : '25';
+	$limit = isset($_GET['limit']) ? mysqli_real_escape_string($db, $_GET['limit']) : '15';
 	$offset = isset($_GET['offset']) ? (int)mysqli_real_escape_string($db, $_GET['offset']) : 0;
 	$sub_offset = isset($_GET['sub_offset']) ? (int)mysqli_real_escape_string($db, $_GET['sub_offset']) : 0;
 	

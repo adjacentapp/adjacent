@@ -1,6 +1,6 @@
 <ion-item text-wrap>
   <ion-avatar item-left>
-    <img *ngIf='item.user.photo_url' [src]="item.user.photo_url">
+    <div *ngIf='item.user.photo_url' [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
   </ion-avatar>
   <h3>{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
   <ion-textarea [(ngModel)]="item.message" type="text" placeholder="Add your own constructive feedback"></ion-textarea>
