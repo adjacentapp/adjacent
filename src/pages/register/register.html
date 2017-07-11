@@ -13,12 +13,16 @@
           <ion-list inset>
             
             <ion-item>
-              <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+              <ion-input type="text" placeholder="Email" name="email" pattern=".{8,}" [(ngModel)]="registerCredentials.email" required email></ion-input>
             </ion-item>
             
             <ion-item>
-              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+              <ion-input type="password" placeholder="Password" name="password" Xpattern=".{8,}" [(ngModel)]="registerCredentials.password" required (keyup)="checkPassword()"></ion-input>
             </ion-item>
+
+            <ul id='error_msg'>
+              <li *ngFor="let msg of errorMessages">{{msg}}</li>
+            </ul>
             
           </ion-list>
         </ion-col>
@@ -26,7 +30,7 @@
       
       <ion-row>
         <ion-col class="signup-col">
-          <button ion-button block round class="submit-btn" type="submit" [disabled]="!registerForm.form.valid">Submit</button>
+          <button ion-button block round class="submit-btn" type="submit" [disabled]="!registerForm.form.valid || !passwordValid">Submit</button>
         </ion-col>
       </ion-row>
       

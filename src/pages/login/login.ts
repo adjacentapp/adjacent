@@ -15,12 +15,14 @@ export class LoginPage {
   registerCredentials = { email: '', password: '' };
  
   constructor(private nav: NavController, public menu: MenuController, private auth: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+    // immediately go to discover if cookies found
     if(localStorage.token && localStorage.user_id) {
       this.auth.loginFromLocalStorage();
       this.nav.setRoot(DiscoverPage);
+      // if token authentication issue, redirect back to login
       this.auth.checkToken(localStorage.token).subscribe(user => {
         setTimeout(() => { this.checkingSession = false; }, 500);
-        if(!user.valid) {
+        if(!this.auth.valid) {
           localStorage.clear();
           this.showError("Something went wrong. Please sign in again.");
           this.nav.setRoot('LoginPage');
@@ -41,6 +43,9 @@ export class LoginPage {
   ionViewDidLeave() {
     this.menu.swipeEnable( true );
   }
+
+  public checkPassword(){}
+  public checkEmail(){}
  
   public createAccount() {
     this.nav.push('RegisterPage');
@@ -48,12 +53,15 @@ export class LoginPage {
  
   public login() {
     this.showLoading();
-    this.auth.login(this.registerCredentials).subscribe(allowed => {
-      if (allowed) {     
+    this.auth.login(this.registerCredentials).subscribe(user => {
+      if (this.auth.valid) {     
         this.nav.setRoot(DiscoverPage);
+      } else if (user.message) {
+        this.showError(user.message);
       } else {
         this.showError("Access Denied");
       }
+      this.registerCredentials.password = '';
     },
       error => {
         this.showError(error);
@@ -73,7 +81,7 @@ export class LoginPage {
       this.loading.dismiss();
  
     let alert = this.alertCtrl.create({
-      title: 'Fail',
+      title: 'Uh Oh',
       subTitle: text,
       buttons: ['OK']
     });

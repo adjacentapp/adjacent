@@ -13,7 +13,7 @@ import * as globs from '../../app/globals'
 export class ProfilePage {
 	// @Input() user_id: string;
 	loading: boolean;
-	user_id: string;
+	user_id: number;
 	myself: boolean = false;
 	profile: {fir_name: string, las_name: string, photo_url: string, skills: string};
 	contributions: Array<any>;
@@ -25,7 +25,7 @@ export class ProfilePage {
 	constructor(public navCtrl: NavController, public navParams: NavParams, private profileProvider: ProfileProvider, private auth: AuthProvider) {
 		this.loading = true;
 		this.user_id = navParams.get('user_id') || this.auth.currentUser.id;
-		if(this.user_id == '1') this.myself = true;
+		if(this.user_id == this.auth.currentUser.id) this.myself = true;
 
 		this.profileProvider.getProfile(this.user_id)
 			.subscribe(

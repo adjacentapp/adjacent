@@ -20,11 +20,11 @@ export class ProfileProvider {
           .map((data) => {
             let profile = data;
             console.log(data);
-            let skills = data.skills.replace(/[.,'"!-]/gi,'').split(' ');
-            let skill = '';
-            for (let s of skills)
-              skill += ' #' + s;
-            profile.skills = skill;
+            // let skills = data.skills.replace(/[.,'"!-]/gi,'').split(' ');
+            // let skill = '';
+            // for (let s of skills)
+              // skill += ' #' + s;
+            // profile.skills = skill;
             return profile;
           })
           .catch(this.handleError);

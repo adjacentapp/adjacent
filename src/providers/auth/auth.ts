@@ -30,25 +30,6 @@ export class AuthProvider {
 
   constructor (private http: Http) {}
 
-  public loginXXXX(credentials) {
-    if (credentials.email === null || credentials.password === null) {
-      return Observable.throw("Please insert credentials");
-    } else {
-      let url = globs.BASE_API_URL + 'login.php';
-      console.log(credentials);
-
-      return Observable.create(observer => {
-        // At this point make a request to your backend to make a real check!
-        let access = (credentials.password === "pass" && credentials.email === "email");
-        console.log(access);
-        this.currentUser = new User(9, 'token', 'Simon', 'Cotton', 'saimon@devdactic.com', '../../assets/img/anon_photo.png');
-        this.valid = true;
-        observer.next(access);
-        observer.complete();
-      });
-    }
-  }
-
   loginFromLocalStorage(){
     this.currentUser = new User(localStorage.user_id, localStorage.token, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url);
     this.valid = true;
@@ -76,6 +57,7 @@ export class AuthProvider {
     let pass = this.sha256(globs.ENCRYPTION_KEY + credentials.password);
     let url = globs.BASE_API_URL + 'login.php';
     url += '?email=' + credentials.email + '&pass=' + pass;
+    console.log(url);
     return this.http.get(url)
             .map(this.extractData)
             .map((data) => {

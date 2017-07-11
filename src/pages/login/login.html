@@ -11,11 +11,11 @@
            <ion-list inset>
              
              <ion-item>
-               <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+               <ion-input type="email" placeholder="Email" name="email" pattern=".{4,}" [(ngModel)]="registerCredentials.email" required email></ion-input>
              </ion-item>
              
              <ion-item>
-               <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+               <ion-input type="password" placeholder="Password" name="password" pattern=".{8,}" [(ngModel)]="registerCredentials.password" required></ion-input>
              </ion-item>
              
            </ion-list>

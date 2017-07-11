@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { CardProvider } from '../../providers/card/card';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { AuthProvider } from '../../providers/auth/auth';
 import * as globs from '../../app/globals'
 
 @Component({
@@ -27,7 +28,14 @@ export class CardComponent {
   industries: string[] = globs.INDUSTRIES;
   stages: string[] = globs.STAGES;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, private card: CardProvider, private socialSharing: SocialSharing) {}
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private toastCtrl: ToastController, 
+    private card: CardProvider, 
+    private socialSharing: SocialSharing,
+    private auth: AuthProvider
+  ) {}
 
   ngOnInit() {
     // item is now accessible
@@ -42,7 +50,7 @@ export class CardComponent {
   followTapped(e, item){
     e.stopPropagation();
     let data = {
-      user_id: 1,
+      user_id: this.auth.currentUser.id,
       card_id: item.id,
       new_entry: !item.following
     };
