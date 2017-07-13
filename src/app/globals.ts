@@ -48,7 +48,7 @@ export const STAGES: string[] = [
 	'$$$'
 ];
 
-export const SKILLS: string[] = [
+export let SKILLS: string[] = [
 	'Business', 
 	'Customer Discovery', 
 	'Design', 
@@ -57,6 +57,9 @@ export const SKILLS: string[] = [
 	'User Experience', 
 	'Customer discovery'
 ];
+export let setSkills = (skills) => {
+	SKILLS = skills;
+};
 
 export const NETWORKS: string[] = [
 	'Public', 

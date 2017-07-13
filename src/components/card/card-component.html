@@ -3,6 +3,7 @@
   <ion-card-content>
     <div class='img-bg {{industries[item.industry].replace(" ","_")}}'></div>
     <ion-list>
+      <ion-title *ngIf="showDetails">The Vision</ion-title>
       <ion-item text-wrap>
         <ion-icon name="bulb" item-start></ion-icon>
         <h2 *ngIf="showDetails || true">Pitch</h2>
@@ -18,6 +19,7 @@
         <h2 *ngIf="showDetails || true">Current Obstacle</h2>
         <p>{{item.challenge}}</p>
       </ion-item>
+      <ion-title *ngIf="showDetails">The Founder</ion-title>
       <ion-item text-wrap *ngIf="showDetails">
         <ion-icon name="person" item-start></ion-icon>
         <h2 *ngIf="showDetails || true">My Background</h2>

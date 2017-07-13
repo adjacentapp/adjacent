@@ -11,6 +11,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 import { AuthProvider } from '../providers/auth/auth';
+import { GlobalsProvider } from '../providers/globals/globals';
 
 
 @Component({
@@ -36,10 +37,12 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public ga: GoogleAnalytics,
-    private auth: AuthProvider
+    private auth: AuthProvider,
+    private globsProv: GlobalsProvider,
   ){
     this.initializeApp();
     this.checkDeepLink();
+    this.getGlobs();
   }
    
   public logout() {
@@ -51,6 +54,14 @@ export class MyApp {
 
   checkDeepLink() {
     console.log('deep linking');
+  }
+
+  getGlobs() {
+    this.globsProv.getGlobs()
+      .subscribe(
+        data => console.log(data),
+        error => console.log(<any>error)
+      );
   }
 
   initializeApp() {

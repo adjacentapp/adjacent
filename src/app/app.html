@@ -9,17 +9,17 @@
       
       <ion-item (click)="openPage(profPage)">
         <ion-avatar [ngClass]="'large'">
-          <!-- <div style="background-image: url('../../assets/img/anon_photo.png')"></div> -->
           <div *ngIf='auth.valid' [ngStyle]="{'background-image': 'url(' + auth.currentUser.photo_url + ')'}"></div>
         </ion-avatar>
+        <br/>
         View My Profile
       </ion-item>
       <button ion-item *ngFor="let p of pages; let i = index" (click)="openPage(p)" detail-none id="{{i==0?'create-card-btn':''}}">
         {{p.title}}
       </button>
 
-      <button ion-item (click)="logout()">
-        <ion-icon name="log-out"></ion-icon> Logout
+      <button ion-item (click)="logout()" detail-none>
+        Logout <ion-icon name="log-out" style="margin-left: 0.2em;"></ion-icon> 
       </button>
 
     </ion-list>

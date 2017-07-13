@@ -5,8 +5,8 @@
   <h3 (click)="goToProfile($event, item.user.user_id)">{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
   <p>{{item.message}}</p>
   <div *ngIf="showVotes" item-right text-center class='voting {{vote==1?"upvoted":(vote==-1?"downvoted":"")}}'>
-  	<ion-icon name="arrow-up" (click)="upvote($event, item)" color="{{vote == 1?'balanced':'secondary'}}"></ion-icon><br/>
+  	<ion-icon name="md-arrow-dropup" (click)="upvote($event, item)" color="{{vote == 1?'balanced':'secondary'}}"></ion-icon><br/>
   	{{item.score}}<br/>
-  	<ion-icon name="arrow-down" (click)="downvote($event, item)" color="{{vote==-1?'danger':'secondary'}}"></ion-icon>
+  	<ion-icon name="md-arrow-dropdown" (click)="downvote($event, item)" color="{{vote==-1?'danger':'secondary'}}"></ion-icon>
   </div>
 </ion-item>

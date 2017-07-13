@@ -6,26 +6,18 @@ import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
 
 @Injectable()
-export class ProfileProvider {
-  items: Array<{pitch: string, distance: string}>;
-  
-  constructor (private http: Http) {}
-  
-  getProfile(user_id): Observable<any> {
-    let query = '?user_id=' + user_id
-    let url = globs.BASE_API_URL + 'get_profile.php' + query;
+export class GlobalsProvider {
 
+  constructor(public http: Http) {}
+
+  getGlobs(): Observable<any> {
+  // getGlobs() {
+  	let url = globs.BASE_API_URL + 'get_skill_list.php';
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
-            let profile = data;
-            console.log(data);
-            // let skills = data.skills.replace(/[.,'"!-]/gi,'').split(' ');
-            // let skill = '';
-            // for (let s of skills)
-              // skill += ' #' + s;
-            // profile.skills = skill;
-            return profile;
+          	globs.setSkills(data);
+            return data;
           })
           .catch(this.handleError);
   }

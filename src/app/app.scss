@@ -15,22 +15,32 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-ion-menu {
-	button#create-card-btn {
-		// background: green;
-		color: green;
-	}
 
-	div { text-align: center; }
-
+// Adjacent logo title
+#title-img {
+  height: 38px;
+  margin-top: 7px;
+}
+#title-img-large {
+	margin: 0 auto;
 }
 
+// Sidemenu
+ion-menu {
+	div {
+		text-align: center;
+	}
+	#create-card-btn {
+		color: green;
+	}
+}
+
+// Avatars
 ion-avatar.large {
 	margin: 0 auto;
 	min-height: 72px;
 	width: 72px;
 }
-
 ion-avatar {
 	border-radius: 50%;
 	overflow: hidden;

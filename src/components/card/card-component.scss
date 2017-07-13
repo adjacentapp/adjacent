@@ -16,6 +16,15 @@ card-component,
 			justify-content: center;
 			text-align: left;
 
+			ion-title {
+				color: white;
+				border-bottom: solid 1px white;
+				margin-top: 1em;
+				div {
+					color: inherit;
+				}
+			}
+
 			ion-item {
 				background: transparent;
 				color: white;
