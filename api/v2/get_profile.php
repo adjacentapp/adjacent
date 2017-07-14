@@ -37,6 +37,13 @@
 		$my_card_ids[] = $row['id'];
 	}
 
+	// Get skills
+	$query =	"SELECT name from skills WHERE user_id = {$user_id} AND active = 1 ORDER BY name ASC";
+	$res = mysqli_query($db, $query);
+	$profile['skills'] = array();
+	while($row = mysqli_fetch_assoc($res))
+		$profile['skills'][] = $row['name'];
+
 	// Get contribution score & cards/message
 	$query = "SELECT * FROM card_walls WHERE user_id = {$user_id} ORDER BY" .
 				" (SELECT SUM(active) as score FROM wall_post_likes WHERE card_id = cards.id)" .
@@ -61,7 +68,8 @@
 		"fir_name"	=> 	$profile['fir_name'],
 		"las_name"	=>	$profile['las_name'],
 		"photo_url"	=>	$profile['photo_url'],
-		"skills"	=>	$profile['bio'] ? $profile['bio'] : "skill skill moar skills",
+		"skills"	=>	$profile['skills'],
+		"bio"		=>	$profile['bio'],
 		"cards"		=>	$profile['cards'],
 		"score"		=>	$profile['score'],
 		"contributions" => $profile['contributions'],

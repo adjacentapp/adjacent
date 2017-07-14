@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Edit Profile</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="saveProfile()">Save</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf='profile'>    
+
+    <ion-avatar [ngClass]="'large'" (click)="uploadPhoto()">
+      <div [ngStyle]="{'background-image': 'url(' + profile.photo_url + ')'}"></div>
+      <ion-icon name="camera"></ion-icon>
+    </ion-avatar>
+    
+    <ion-item>
+      <ion-label stacked>First Name</ion-label>
+      <ion-input type="text" [(ngModel)]="profile.fir_name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Last Name</ion-label>
+      <ion-input type="text" [(ngModel)]="profile.las_name"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label stacked>Bio</ion-label>
+      <ion-textarea [(ngModel)]="profile.bio" placeholder="Receptionist by day, political activist by night. My dream for the future consists of a technologically-enabled, thoroughly democratic societal system."></ion-textarea>
+    </ion-item>
+
+    <!-- <h5>Skills</h5>
+    <div class="skill" *ngFor="let skill of skills">#{{skill}}</div> -->
+
+    <ion-item>
+      <ion-label stacked>Skills</ion-label>
+      <ion-select multiple="true" [(ngModel)]="profile.skills">
+        <ion-option *ngFor="let skill of skills; let i = index" value="{{skill}}">{{skill}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- <h5>Member of: {{networkCount}} Network{{networkCount === 1 ? '' : 's'}}</h5> -->
+
+  </div>
+</ion-content>

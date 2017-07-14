@@ -9,6 +9,7 @@ import { ShowCardPage } from '../pages/card/show';
 import { NewCardPage } from '../pages/card/new';
 import { DiscoverPage } from '../pages/discover/discover';
 import { ProfilePage } from '../pages/profile/profile';
+import { EditProfilePage } from '../pages/profile/edit';
 import { BookmarksPage } from '../pages/bookmarks/bookmarks';
 import { CardComponent } from '../components/card/card.component';
 import { CommentComponent } from '../components/card/comment.component';
@@ -33,6 +34,7 @@ import { GlobalsProvider } from '../providers/globals/globals';
     // LoginPage,
     DiscoverPage,
     ProfilePage,
+      EditProfilePage,
     BookmarksPage,
     ShowCardPage,
     NewCardPage,
@@ -53,6 +55,7 @@ import { GlobalsProvider } from '../providers/globals/globals';
     // LoginPage,
     DiscoverPage,
     ProfilePage,
+    EditProfilePage,
     BookmarksPage,
     ShowCardPage,
     NewCardPage,

@@ -26,7 +26,7 @@ export class MyApp {
     { title: 'Pitch My Idea', component: NewCardPage },
     // { title: 'Discover', component: DiscoverPage },
     // { title: 'Profile', component: ProfilePage },
-    { title: "What I'm Following", component: BookmarksPage },
+    { title: "Ideas I'm Following", component: BookmarksPage },
   ];
   username = '';
   email = '';

@@ -7,9 +7,9 @@
 	require '../vendor/autoload.php';
  	use Aws\Ses\SesClient;
 
-	$postdata = file_get_contents("php://input");
-	$data = json_decode($postdata);
-	@$post_email = mysqli_real_escape_string(	$db, $data->email	);
+	// $postdata = file_get_contents("php://input");
+	// $data = json_decode($postdata);
+	// @$post_email = mysqli_real_escape_string(	$db, $data->email	);
 
 	function send_email($email){
 		global $db;
@@ -80,7 +80,7 @@ return;
  	 	}
 	}
 
-	if($post_email)
-		exit( send_email( $post_email ) );
+	// if($post_email)
+		// exit( send_email( $post_email ) );
 	
 ?>

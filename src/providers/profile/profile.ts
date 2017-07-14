@@ -30,6 +30,17 @@ export class ProfileProvider {
           .catch(this.handleError);
   }
 
+  updateProfile (data): Observable<any> {
+    let url = globs.BASE_API_URL + 'post_profile.php';
+    return this.http.post(url, data)
+            .map(this.extractData)
+            .map((data) => {
+              console.log(data);
+              return data;              
+            })
+            .catch(this.handleError);
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body.data || body || { };

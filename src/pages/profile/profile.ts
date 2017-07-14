@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { ShowCardPage } from '../card/show';
+import { EditProfilePage } from '../profile/edit';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { AuthProvider } from '../../providers/auth/auth';
 import * as globs from '../../app/globals'
@@ -15,10 +16,9 @@ export class ProfilePage {
 	loading: boolean;
 	user_id: number;
 	myself: boolean = false;
-	profile: {fir_name: string, las_name: string, photo_url: string, skills: string};
+	profile: {fir_name: string, las_name: string, photo_url: string, bio: string, skills: string};
 	contributions: Array<any>;
 
-	private skills = globs.SKILLS;
 	private networks = globs.NETWORKS;
 	private networkCount = Math.round( Math.random()*10 );
 
@@ -47,6 +47,8 @@ export class ProfilePage {
 	}
 
 	editTapped() {
-		alert('Edit');
+		this.navCtrl.push(EditProfilePage, {
+			profile: this.profile
+		});
 	}
 }

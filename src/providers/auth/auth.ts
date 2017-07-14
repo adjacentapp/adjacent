@@ -57,7 +57,6 @@ export class AuthProvider {
     let pass = this.sha256(globs.ENCRYPTION_KEY + credentials.password);
     let url = globs.BASE_API_URL + 'login.php';
     url += '?email=' + credentials.email + '&pass=' + pass;
-    console.log(url);
     return this.http.get(url)
             .map(this.extractData)
             .map((data) => {
