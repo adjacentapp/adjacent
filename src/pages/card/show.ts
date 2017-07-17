@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { CardProvider } from '../../providers/card/card';
+import { AuthProvider } from '../../providers/auth/auth';
 
 @Component({
   selector: 'show-card-page',
@@ -10,10 +11,10 @@ export class ShowCardPage {
   item: any;
   founder: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.item = navParams.get('item');
-    if(this.item.founder_id == 1) this.founder = true;
+    if(this.item.founder_id == this.auth.currentUser.id) this.founder = true;
   }
 
   iterateTapped(){
@@ -23,7 +24,7 @@ export class ShowCardPage {
   doFollow (e, item){
     e.stopPropagation();
     let data = {
-      user_id: 1,
+      user_id: this.auth.currentUser.id,
       card_id: item.id,
       new_entry: !item.following
     };

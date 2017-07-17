@@ -39,7 +39,7 @@ export class CardComponent {
 
   ngOnInit() {
     // item is now accessible
-    if(this.item.founder_id == 1) this.founder = true;
+    if(this.item.founder_id == this.auth.currentUser.id) this.founder = true;
   }
 
   itemTapped(event, item) {

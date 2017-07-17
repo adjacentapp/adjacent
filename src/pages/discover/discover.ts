@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { ShowCardPage } from '../../pages/card/show';
 import { CardProvider } from '../../providers/card/card';
+import { AuthProvider } from '../../providers/auth/auth';
 
 @Component({
 	selector: 'discover-page',
@@ -16,9 +17,11 @@ export class DiscoverPage {
 	username = '';
     email = '';
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider) {}
+
+	ngOnInit() {
 		this.loading = true;
-		this.card.getDeck()
+		this.card.getDeck(this.auth.currentUser.id)
 			.subscribe(
 				cards => this.items = cards,
 				error => this.errorMessage = <any>error,
@@ -39,7 +42,7 @@ export class DiscoverPage {
 	doFollow(e, item){
 		e.stopPropagation();
 		let data = {
-		  user_id: 1,
+		  user_id: this.auth.currentUser.id,
 		  card_id: item.id,
 		  new_entry: !item.following
 		};

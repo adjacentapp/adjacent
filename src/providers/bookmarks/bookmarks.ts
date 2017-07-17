@@ -12,8 +12,8 @@ export class BookmarksProvider {
   
   constructor (private http: Http) {}
   
-  getBookmarks(): Observable<any[]> {
-    let query = '?user_id=1'
+  getBookmarks(user_id): Observable<any[]> {
+    let query = '?user_id=' + '1';
     let url = this.base_url + 'get_my_bookmarks.php' + query;
     return this.http.get(url)
           .map(this.extractData)

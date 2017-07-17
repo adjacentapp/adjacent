@@ -12,8 +12,8 @@ export class CardProvider {
   
   constructor (private http: Http) {}
   
-  getDeck(): Observable<any[]> {
-    let query = '?user_id=1&limit=4'
+  getDeck(user_id): Observable<any[]> {
+    let query = '?user_id=' + '1';
     let url = this.base_url + 'get_cards.php' + query;
     let personas = ['Compuer science student', 'ex-VC', 'Calc TA and longtime gamer', 'Recent grad with thesis in urban planning'];
     let challenges = ['UX design', 'Social media branding/marketing', 'Getting in contact with our potential users', 'Getting in front of investors'];
@@ -25,11 +25,20 @@ export class CardProvider {
             let manip = data.map((item, i) => {
               let thing = item;
               thing.distance = (Math.round(Math.random()*50));
-              thing.industry = industries[i];
-              thing.who = personas[i];
-              thing.challenge = challenges[i];
-              thing.pitch = pitches[i];
-              thing.stage = i;
+              if(i < 4){
+                thing.industry = industries[i];
+                thing.who = personas[i];
+                thing.challenge = challenges[i];
+                thing.pitch = pitches[i];
+                thing.stage = i;
+               } else {
+                 console.log('elsed');
+                 thing.industry = (Math.round(Math.random()*18));
+                 thing.who = "Anonymous Entrepreneur";
+                 thing.challenge = "N/A";
+                 thing.stage = (Math.round(Math.random()*5));
+               }
+               console.log(thing);
               return thing;
              });
             console.log(manip);
