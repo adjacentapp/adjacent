@@ -52,7 +52,7 @@ export class CardComponent {
     let data = {
       user_id: this.auth.currentUser.id,
       card_id: item.id,
-      new_entry: !item.following
+      new_entry: !item.followingu
     };
     this.card.follow(data).subscribe(
       success => console.log(success),

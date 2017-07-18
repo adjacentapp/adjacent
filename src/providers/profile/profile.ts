@@ -4,15 +4,16 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
+import { AuthProvider } from '../../providers/auth/auth';
 
 @Injectable()
 export class ProfileProvider {
   items: Array<{pitch: string, distance: string}>;
   
-  constructor (private http: Http) {}
+  constructor (private http: Http, private auth:AuthProvider) {}
   
   getProfile(user_id): Observable<any> {
-    let query = '?user_id=' + user_id
+    let query = '?user_id=' + this.auth.currentUser.id
     let url = globs.BASE_API_URL + 'get_profile.php' + query;
 
     return this.http.get(url)

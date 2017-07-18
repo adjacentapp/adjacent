@@ -13,7 +13,7 @@ export class CardProvider {
   constructor (private http: Http) {}
   
   getDeck(user_id): Observable<any[]> {
-    let query = '?user_id=' + '1';
+    let query = '?user_id=' + user_id;
     let url = this.base_url + 'get_cards.php' + query;
     let personas = ['Compuer science student', 'ex-VC', 'Calc TA and longtime gamer', 'Recent grad with thesis in urban planning'];
     let challenges = ['UX design', 'Social media branding/marketing', 'Getting in contact with our potential users', 'Getting in front of investors'];
@@ -32,7 +32,6 @@ export class CardProvider {
                 thing.pitch = pitches[i];
                 thing.stage = i;
                } else {
-                 console.log('elsed');
                  thing.industry = (Math.round(Math.random()*18));
                  thing.who = "Anonymous Entrepreneur";
                  thing.challenge = "N/A";
@@ -49,12 +48,13 @@ export class CardProvider {
   }
 
   follow(data): Observable<any> {
-    // let headers = new Headers({ 'Content-Type': 'application/json' });
-    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
-    let options = new RequestOptions({ headers: headers });
     let url = globs.BASE_API_URL + 'bookmark.php';
-    return this.http.post(url, data, options)
+    return this.http.post(url, data)
             .map(this.extractData)
+            .map((data) => {
+              console.log(data);
+              return data;              
+            })
             .catch(this.handleError);
   }
 

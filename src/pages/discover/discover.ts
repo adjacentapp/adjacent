@@ -17,9 +17,9 @@ export class DiscoverPage {
 	username = '';
     email = '';
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider) {}
-
-	ngOnInit() {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider) {//}
+	// ngOnInit() {
+		
 		this.loading = true;
 		this.card.getDeck(this.auth.currentUser.id)
 			.subscribe(
