@@ -62,7 +62,7 @@
   
   <ion-row *ngIf="item.topComment && showTopComment">
     <comment-component *ngIf="item.topComment.message" [item]="item.topComment" [showVotes]="showTopCommentVotes"></comment-component>
-    <new-comment-component *ngIf="!item.topComment.message" (click)="$event.stopPropagation()" [card_id]="item.card_id"></new-comment-component>
+    <new-comment-component *ngIf="!item.topComment.message" (click)="$event.stopPropagation()" [card_id]="item.card_id" (newComment)="newTopComment($event)"></new-comment-component>
   </ion-row>
 
 </ion-card>

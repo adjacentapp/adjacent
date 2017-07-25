@@ -17,7 +17,7 @@ export class ShowCardPage {
     if(this.item.founder_id == this.auth.currentUser.id) this.founder = true;
   }
 
-  iterateTapped(){
+  iterateTapped () {
     alert("Iterate on your idea.")
   }
 

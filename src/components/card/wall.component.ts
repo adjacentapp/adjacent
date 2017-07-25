@@ -9,7 +9,8 @@ import { WallProvider } from '../../providers/wall/wall';
 })
 export class WallComponent {
   @Input() card_id: string;
-  comments: any[];
+  // @Input() prependComment: any;
+  comments: any[] = [];
   loading: boolean;
 
   constructor(public http: Http, private wall: WallProvider) {}
@@ -18,10 +19,14 @@ export class WallComponent {
     this.loading = true;
     this.wall.getWall(this.card_id)
       .subscribe(
-        comments => this.comments = comments,
+        comments => {this.comments = comments; console.log(this.comments)},
         error => console.log(error),
         () => this.loading = false
       );
+  }
+
+  prependComment(item){
+    this.comments.unshift(item);
   }
 
   doInfinite(e){

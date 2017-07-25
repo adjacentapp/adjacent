@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http'
-import { Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
@@ -87,9 +86,7 @@ export class AuthProvider {
         email: credentials.email,
         pass: this.sha256(globs.ENCRYPTION_KEY + credentials.password)
       };
-      // let headers = new Headers({ 'Content-Type': 'application/json' });
-      // let options = new RequestOptions({ headers: headers });
-      return this.http.post(url, data )//, options)
+      return this.http.post(url, data )
               .map(this.extractData)
               .map((data) => {
                 console.log(data);

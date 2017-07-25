@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AuthProvider } from '../../providers/auth/auth';
+import { WallProvider } from '../../providers/wall/wall';
 
 @Component({
   selector: 'new-comment-component',
@@ -7,6 +9,9 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class NewCommentComponent {
   @Input() card_id: string;
+  @Input() handlePrependComment: any;
+  @Output() newComment: EventEmitter<any> = new EventEmitter();
+
   item: {
     timestamp: any,
     message: string,
@@ -18,21 +23,28 @@ export class NewCommentComponent {
     }
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider) {
     this.item = {
       timestamp: 'now',
       message: '',
-      user: {
-        fir_name: 'Your',
-        las_name: 'Name',
-        photo_url: 'https://graph.facebook.com/10154226234631397/picture?type=large'
-      }
+      user: this.auth.currentUser,
     }
   }
 
-  postComment(event, user_id) {
-  	event.stopPropagation();
-    alert('send message');
+  postComment(e, item) {
+    e.stopPropagation();
+
+    let data = {
+      user: item.user,
+      message: item.message
+    };
+    // this.wall.postComment(data).subscribe(
+    //   success => console.log(success),
+    //   error => console.log(error)
+    // );
+
+    this.newComment.emit(data);
+    this.item.message = '';
   }
 
 }

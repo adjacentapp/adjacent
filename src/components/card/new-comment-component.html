@@ -5,6 +5,6 @@
   <h3>{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
   <ion-textarea [(ngModel)]="item.message" type="text" placeholder="Add your own constructive feedback"></ion-textarea>
   <div item-right text-center>
-    <button ion-button round>Share</button>
+    <button ion-button round (click)="postComment($event, item)">Share</button>
   </div>
 </ion-item>

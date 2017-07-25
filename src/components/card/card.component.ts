@@ -47,12 +47,17 @@ export class CardComponent {
       this.handleTap(event, item);
   }
 
+  newTopComment(item){
+    // for new-comment shortcut: set newComment as topComment
+    this.item.topComment = item;
+  }
+
   followTapped(e, item){
     e.stopPropagation();
     let data = {
       user_id: this.auth.currentUser.id,
       card_id: item.id,
-      new_entry: !item.followingu
+      new_entry: !item.following
     };
     this.card.follow(data).subscribe(
       success => console.log(success),

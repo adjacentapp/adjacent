@@ -19,7 +19,7 @@
   <card-component [item]="item" [showTopComment]="false" [showDetails]="true"></card-component>
 
   <ion-row>
-    <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.id"></new-comment-component>
-    <wall-component [card_id]="item.id"></wall-component>
+    <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="wall.prependComment($event)"></new-comment-component>
+    <wall-component #wall [card_id]="item.id"></wall-component>
   </ion-row>
 </ion-content>

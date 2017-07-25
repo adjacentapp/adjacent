@@ -27,8 +27,18 @@ export class WallProvider {
           .catch(this.handleError);
   }
 
-  vote(item): Observable<any> {
+  postComment(data): Observable<any> {
+    let url = globs.BASE_API_URL + 'post_comment.php';
+    return this.http.post(url, data)
+            .map(this.extractData)
+            .map((data) => {
+              console.log(data);
+              return data;              
+            })
+            .catch(this.handleError);
+  }
 
+  vote(item): Observable<any> {
     // $scope.likePost = function(post){
     //   if(!post.liked){
     //     cardFactory.likeWallPost(post.id, post.card_id, user.id, true);
@@ -49,12 +59,8 @@ export class WallProvider {
     //   }
     // };
 
-
-    // let headers = new Headers({ 'Content-Type': 'application/json' });
-    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
-    let options = new RequestOptions({ headers: headers });
     let url = globs.BASE_API_URL + 'like_wall_post.php';
-    return this.http.post(url, item, options)
+    return this.http.post(url, item)
             .map(this.extractData)
             .catch(this.handleError);
   }
