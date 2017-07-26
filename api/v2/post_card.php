@@ -1,80 +1,59 @@
 <?php
 	header('Access-Control-Allow-Origin: *');
-	header('Access-Control-Allow-Headers: *');
-	// header('Content-Type: application/json');
+	// header('Access-Control-Allow-Headers: *');
+	header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 	require_once('../db_connect.php');
-
 	$db = connect_db();
 
-	// Decode card into JSON
 	$postdata = file_get_contents("php://input");
 	$data = json_decode($postdata);
-	@$author_id = $data->author_id ? mysqli_real_escape_string($db, $data->author_id) : null;
-	@$title = $data->title ? mysqli_real_escape_string($db, $data->title) : null;
-	@$idea = $data->idea ? mysqli_real_escape_string($db, $data->idea) : null;
-	@$photo_url = $data->photo_url ? "'" . mysqli_real_escape_string($db, $data->photo_url) . "'" : "NULL";
-	@$hum = $data->hum ? mysqli_real_escape_string($db, $data->hum) : null;
-	@$status = $data->status ? mysqli_real_escape_string($db, $data->status) : 0;
-	@$background = $data->background ? mysqli_real_escape_string($db, $data->background) : null;
-	@$recruit = $data->recruit ? mysqli_real_escape_string($db, $data->recruit) : null;
-	@$topic = $data->topic ? mysqli_real_escape_string($db, $data->topic) : null;
-	@$role = $data->role ? mysqli_real_escape_string($db, $data->role) : null;
-	@$prompt = $data->prompt ? mysqli_real_escape_string($db, $data->prompt) : 0;
-	@$website_url = $data->website_url ? mysqli_real_escape_string($db, $data->user_id) : null;
-	$team = null;
-	@$type = $data->type ? mysqli_real_escape_string($db, $data->type) : 1;
+	@$founder_id = $data->founder_id ? mysqli_real_escape_string($db, $data->founder_id) : null;
+	@$pitch = $data->pitch ? strip_tags( mysqli_real_escape_string($db, $data->pitch) ) : null;
+	@$photo_url = $data->photo_url ? strip_tags( mysqli_real_escape_string($db, $data->photo_url) ) : null;
+	@$who = $data->who ? mysqli_real_escape_string($db, $data->who) : null;
+	@$stage = $data->stage ? mysqli_real_escape_string($db, $data->stage) : null;
 	@$lat = $data->lat ? mysqli_real_escape_string($db, $data->lat) : null;
 	@$lon = $data->lon ? mysqli_real_escape_string($db, $data->lon) : null;
+	@$challenge = $data->challenge ? mysqli_real_escape_string($db, $data->challenge) : null;
+	@$challenge_details = $data->challenge_details ? mysqli_real_escape_string($db, $data->challenge_details) : null;
+	@$anonymous = $data->anonymous ? mysqli_real_escape_string($db, $data->anonymous) : null;
+	
+	@$industry = $data->industry ? strip_tags( mysqli_real_escape_string($db, $data->industry) ) : null;
+	@$networks = $data->networks ? mysqli_real_escape_string($db, $data->lon) : null;
+	
 
-	if($idea == '') $idea = $topic;
-	if($idea){
-		// $idea = str_replace('&nbps;','',$idea);
-		$idea = strip_tags($idea);
-	}
-
-	// Query database
  	$query =	"INSERT INTO cards " .
- 				"(author_id, title, idea, photo_url, hum, status, background, recruit, prompt, website_url, type, create_time, message_time, lat, lon) " .
+ 				"(author_id, idea, industry_string, photo_url, background, stage, challenge, challenge_details, message_time, lat, lon) " .
  				"VALUES (" .
- 					$author_id .
+ 					$founder_id .
  				", " .
- 					"'" . $title . "'" .
+ 					"'" . $pitch . "'" .
+				", " .
+ 					"'" . $industry . "'" .
  				", " .
- 					"'" . $idea . "'" .
+ 					($photo_url ? "'{$photo_url}'" : "null") . 
  				", " .
- 					$photo_url .
+ 					($who ? "'{$who}'" : "null") . 
  				", " .
- 					$hum .
+ 					($stage ? "{$stage}" : "null") . 
+				", " .
+ 					($challenge ? "'{$challenge}'" : "null") . 
  				", " .
- 					$status .
- 				", " .
- 					"'" . $background . "'" .
- 				", " .
- 					"'" . $recruit . "'" .
- 				", " .
- 					$prompt .
- 				", " .
- 					"'" . $website_url . "'" .
- 				", " .
- 					$type .
+ 					($challenge_details ? "'{$challenge_details}'" : "null") . 
  				", " .
  					"now()" .
  				", " .
- 					"now()" .
+ 					($lat ? "'{$lat}'" : "null") . 
  				", " .
- 					"'" . $lat . "'" .
- 				", " .
- 					"'" . $lon . "'" .
+ 					($lon ? "'{$lon}'" : "null") . 
  				")";
  	$res = mysqli_query($db, $query);
-
  	$new_card_id = mysqli_insert_id($db);
- 	echo $new_card_id;
 
 	$query =	"INSERT INTO collaborations " .
 				"(user_id, card_id, accepted, status) " .
 				"VALUES (" .
-					$author_id .
+					$founder_id .
 				", " .
 					$new_card_id .
 				", " .
@@ -84,8 +63,15 @@
 				")";
 	$res = mysqli_query($db, $query);
 
- 	// Close connection
- 	// if($res) mysqli_free_result($res);
+
+	// $card;
+	// $query =	"SELECT * FROM cards WHERE id = {$new_card_id}";
+	// $res = mysqli_query($db, $query);
+	// while($row = mysqli_fetch_assoc($res))
+	// 	$card = $row;
+	$card = (object)array("id" => $new_card_id, "founder_id" => $founder_id, "pitch" => $pitch, "photo_url" => $photo_url, "who" => $who, "stage" => $stage, "challenge" => $challenge, "challenge_details" => $challenge_details, "anonymous" => $anonymous, "industry" => $industry, "networks" => $networks, "comments" => []);
+
+	// if(is_a($res, 'mysqli_result')) mysqli_free_result($res);
 	mysqli_close($db);
-	exit();
+	exit(json_encode($card, JSON_PRETTY_PRINT));
 ?>

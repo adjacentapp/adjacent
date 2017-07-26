@@ -13,7 +13,7 @@ export class CardComponent {
   @Input() item: {
     id: number,
     founder_id: number,
-    industry: number,
+    industry: string,
     pitch: string,
     distance: string,
     following: boolean,

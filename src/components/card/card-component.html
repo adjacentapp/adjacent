@@ -1,7 +1,9 @@
 <ion-card *ngIf="item" (click)="itemTapped($event, item)">
 
   <ion-card-content>
-    <div class='img-bg {{industries[item.industry].replace(" ","_")}}'></div>
+    <div class='img-bg Art'></div>
+    <!-- <div class='img-bg {{industries[item.industry].replace(" ","_")}}'></div> -->
+    <!-- <div class='img-bg {{item.industry.replace(" ","_")}}'></div> -->
     <ion-list>
       <ion-title *ngIf="showDetails">The Vision</ion-title>
       <ion-item text-wrap>
@@ -12,7 +14,7 @@
       <ion-item text-wrap>
         <ion-icon name="briefcase" item-start></ion-icon>
         <h2 *ngIf="showDetails || true">Industry</h2>
-        <p>{{industries[item.industry]}}</p>
+        <!-- <p>{{industries[item.industry]}}</p> -->
       </ion-item>
       <ion-item text-wrap *ngIf="item.challenge">
         <ion-icon name="warning" item-start></ion-icon>
