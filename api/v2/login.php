@@ -40,7 +40,7 @@
 			exit( json_encode((object)array("message" => 'Incorrect password.'), JSON_PRETTY_PRINT) );
 
 		$user = (object)array(
-			"id" => $row['user_id'], 
+			"user_id" => $row['user_id'], 
 			"email" => $row['email'],
 			"fir_name" => $row['fir_name'],
 			"las_name" => $row['las_name'],
@@ -64,7 +64,7 @@
 
  	// cast user from object to array
 	$user = (array)$user;
-	$user_id = $user['id'];
+	$user_id = $user['user_id'];
 
 	// find user's networks
 	$user['networks'] = array();

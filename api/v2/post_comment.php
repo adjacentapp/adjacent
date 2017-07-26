@@ -1,23 +1,20 @@
 <?php
 	header('Access-Control-Allow-Origin: *');
-	header('Access-Control-Allow-Headers: *');
-	// header('Content-Type: application/json');
+	// header('Access-Control-Allow-Headers: *');
+	header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 	require_once('../db_connect.php');
-
 	$db = connect_db();
 
-	// Decode card into JSON
 	$postdata = file_get_contents("php://input");
 	$data = json_decode($postdata);
 	@$card_id = mysqli_real_escape_string($db, $data->card_id);
-	@$user_id = mysqli_real_escape_string($db, $data->user_id);
-	@$text = mysqli_real_escape_string($db, $data->text);
+	@$user_id = mysqli_real_escape_string($db, $data->user->id);
+	@$text = mysqli_real_escape_string($db, $data->message);
 	@$response_to = $data->response_to ? mysqli_real_escape_string($db, $data->response_to) : 'null';
 	@$member = $data->member ? true : 'null';
 	@$photo_url = $data->photo_url ? "'" . $data->photo_url . "'" : 'null';
 	@$prompt_id = $data->prompt_id ? mysqli_real_escape_string($db, $data->prompt_id) : 'null';
 
-	// Query database
  	$query =	"INSERT INTO card_walls " .
  				"(user_id, card_id, message, response_to, member, photo_url, prompt_id) " .
  				"VALUES (" .
@@ -36,20 +33,21 @@
  					$prompt_id .
  				")";
  	$res = mysqli_query($db, $query);
-
  	$post_id = mysqli_insert_id($db);
- 	echo $post_id;
-
 
  	// Update card timestamp
  	$query =	"UPDATE cards " .
  				"SET update_time = now() " .
- 				"WHERE id = " . $card_id;
+ 				"WHERE id = {$card_id}";
  	$res = mysqli_query($db, $query);
 
+ 	// Close connection
+	if(is_a($res, 'mysqli_result')) mysqli_free_result($res);
+	mysqli_close($db);
+
+	exit(json_encode((object)array("post_id" => $post_id, "message" => "success")));
 
  	//=======================================Post receipts
-	
 	// get team members
 	$members_to_notify = array();
 	$query =	"SELECT * FROM collaborations" .

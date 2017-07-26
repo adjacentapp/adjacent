@@ -75,7 +75,7 @@
 	// Send verification emails
 	require_once('send_verification_email.php');
 	send_email($email);
-	// THROWING ERROR ======= ^^^^^^^^^^^^^^^^^^^^^^
+	// THROWING ERROR ======= ^^^^^^^^^^^^^^^^^^^^^^ fix
 
  	// Close connection
 	mysqli_close($db);

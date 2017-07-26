@@ -13,9 +13,8 @@ export class NewCommentComponent {
   @Output() newComment: EventEmitter<any> = new EventEmitter();
 
   item: {
-    timestamp: any,
     message: string,
-    likes?: number, 
+    card_id: any,
     user: {
       fir_name: string, 
       las_name: string, 
@@ -23,10 +22,10 @@ export class NewCommentComponent {
     }
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider, private wall: WallProvider) {
     this.item = {
-      timestamp: 'now',
       message: '',
+      card_id: this.card_id,
       user: this.auth.currentUser,
     }
   }
@@ -35,13 +34,14 @@ export class NewCommentComponent {
     e.stopPropagation();
 
     let data = {
-      user: item.user,
-      message: item.message
+      message: item.message,
+      card_id: this.card_id,
+      user: item.user
     };
-    // this.wall.postComment(data).subscribe(
-    //   success => console.log(success),
-    //   error => console.log(error)
-    // );
+    this.wall.postComment(data).subscribe(
+      success => console.log(success),
+      error => console.log(error)
+    );
 
     this.newComment.emit(data);
     this.item.message = '';

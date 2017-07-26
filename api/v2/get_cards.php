@@ -5,7 +5,7 @@
 	require_once('../db_connect.php');
 	require_once('haversine_formula.php');
 	$db = connect_db();
-	$tissueTesting = true;
+	$tissueTesting = false;
 
 	// Check for arguments
 	$card_id = isset($_GET['card_id']) ? mysqli_real_escape_string($db, $_GET['card_id']) : 0;

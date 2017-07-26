@@ -64,7 +64,7 @@
 		"valid" => true
 	);
 
-	// if($res) mysqli_free_result($res);
+	// if(is_a($res, 'mysqli_result')) mysqli_free_result($res);
 	mysqli_close($db);
 	exit(json_encode($profile, JSON_PRETTY_PRINT));
 ?>
