@@ -12,20 +12,23 @@ export class ProfileProvider {
   
   constructor (private http: Http, private auth:AuthProvider) {}
   
-  getProfile(user_id): Observable<any> {
-    let query = '?user_id=' + this.auth.currentUser.id
+  getProfile(user_id, myself): Observable<any> {
+    let query = '?user_id=' + user_id;
+    query += myself ? '&myself=true' : ''
     let url = globs.BASE_API_URL + 'get_profile.php' + query;
 
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
             let profile = data;
-            console.log(data);
             // let skills = data.skills.replace(/[.,'"!-]/gi,'').split(' ');
             // let skill = '';
             // for (let s of skills)
               // skill += ' #' + s;
             // profile.skills = skill;
+             
+             // for (let card of profile.cards)
+             
             return profile;
           })
           .catch(this.handleError);

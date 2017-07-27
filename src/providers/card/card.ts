@@ -26,13 +26,13 @@ export class CardProvider {
               let thing = item;
               thing.distance = (Math.round(Math.random()*50));
               if(i < 4){
-                thing.industry = industries[i];
+                thing.industry = globs.INDUSTRIES[industries[i]];
                 thing.who = personas[i];
                 thing.challenge = challenges[i];
                 thing.pitch = pitches[i];
                 thing.stage = i;
                } else {
-                 thing.industry = (Math.round(Math.random()*18));
+                 thing.industry = globs.INDUSTRIES[(Math.round(Math.random()*18))];
                  thing.who = "Anonymous Entrepreneur";
                  thing.challenge = "N/A";
                  thing.stage = (Math.round(Math.random()*5));

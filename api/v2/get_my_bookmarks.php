@@ -6,9 +6,11 @@
 	$db = connect_db();
 
 	$user_id = isset($_GET['user_id']) ? mysqli_real_escape_string($db, $_GET['user_id']) : 0;
+	$offset = isset($_GET['offset']) ? mysqli_real_escape_string($db, $_GET['offset']) : 0;
+	$limit = isset($_GET['limit']) ? mysqli_real_escape_string($db, $_GET['limit']) : 10;
 
 	// Get id's of collaborations
- 	$query =	"SELECT card_id FROM bookmarks WHERE user_id = {$user_id} AND active = 1 ORDER BY updated_at DESC";
+ 	$query =	"SELECT card_id FROM bookmarks WHERE user_id = {$user_id} AND active = 1 ORDER BY updated_at DESC LIMIT {$limit} OFFSET {$offset}";
  	$res = mysqli_query($db, $query);
 
 	$card_ids = array();

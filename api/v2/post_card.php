@@ -16,14 +16,14 @@
 	@$lon = $data->lon ? mysqli_real_escape_string($db, $data->lon) : null;
 	@$challenge = $data->challenge ? mysqli_real_escape_string($db, $data->challenge) : null;
 	@$challenge_details = $data->challenge_details ? mysqli_real_escape_string($db, $data->challenge_details) : null;
-	@$anonymous = $data->anonymous ? mysqli_real_escape_string($db, $data->anonymous) : null;
+	@$anonymous = $data->anonymous ? mysqli_real_escape_string($db, $data->anonymous) : 0;
 	
 	@$industry = $data->industry ? strip_tags( mysqli_real_escape_string($db, $data->industry) ) : null;
 	@$networks = $data->networks ? mysqli_real_escape_string($db, $data->lon) : null;
 	
 
  	$query =	"INSERT INTO cards " .
- 				"(author_id, idea, industry_string, photo_url, background, stage, challenge, challenge_details, message_time, lat, lon) " .
+ 				"(author_id, idea, industry_string, photo_url, background, stage, challenge, challenge_details, anonymous, message_time, lat, lon) " .
  				"VALUES (" .
  					$founder_id .
  				", " .
@@ -40,6 +40,8 @@
  					($challenge ? "'{$challenge}'" : "null") . 
  				", " .
  					($challenge_details ? "'{$challenge_details}'" : "null") . 
+ 				", " .
+ 					$anonymous
  				", " .
  					"now()" .
  				", " .

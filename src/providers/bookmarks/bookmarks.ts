@@ -12,8 +12,9 @@ export class BookmarksProvider {
   
   constructor (private http: Http) {}
   
-  getBookmarks(user_id): Observable<any[]> {
-    let query = '?user_id=' + user_id;
+  getBookmarks(user_id, offset, limit, filters): Observable<any[]> {
+    let query = '?user_id=' + user_id + '&offset=' + offset + '&limit=' + limit;
+    // query += filters
     let url = this.base_url + 'get_my_bookmarks.php' + query;
     return this.http.get(url)
           .map(this.extractData)
@@ -24,8 +25,8 @@ export class BookmarksProvider {
               thing.industry = item.id % 10;
               return thing;
              });
+            console.log(manip);
             return manip;
-            // return [{}, ...manip];
           })
           .catch(this.handleError);
   }

@@ -12,6 +12,8 @@
 	else
 		exit('No user id provided');
 
+	$myself = isset($_GET['myself']) ? true : false;
+
  	$query =	"SELECT * FROM users WHERE user_id = {$user_id}";
  	$res = mysqli_query($db, $query);
  	if(!$res) exit(json_encode(array()));
@@ -21,9 +23,10 @@
 	}
 
 	// Count collaborations user owns
-	$query =	"SELECT id, author_id as user_id, idea as pitch, industry, create_time as created_at, update_time as updated_at " .
-				"FROM cards WHERE author_id = ${user_id} AND active = 1 " .
-				"ORDER BY created_at DESC";
+	$query =	"SELECT id, author_id as user_id, idea as pitch, industry_string as industry, anonymous, challenge, background, stage, challenge_details, create_time as created_at, update_time as updated_at " .
+				"FROM cards WHERE author_id = ${user_id} AND active = 1 ";
+	if(!$myself) $query .= "AND anonymous = 0 ";
+	$query .=	"ORDER BY created_at DESC";
 	$res = mysqli_query($db, $query);
 	$profile['cards_count'] = mysqli_num_rows($res) ? mysqli_num_rows($res) : 0;
 	// Make array of cards
@@ -33,6 +36,7 @@
 		$row['topComment'] = array();
 		$row['comments'] = array();
 		$row['founder_id'] = $user_id;
+		$row['anonymous'] = $row['anonymous'] == '1' ? true : false;
 		$profile['cards'][] = $row;
 		$my_card_ids[] = $row['id'];
 	}

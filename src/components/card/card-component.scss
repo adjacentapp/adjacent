@@ -45,6 +45,16 @@ card-component,
 				color: #fff;
 				font-size: 1em;
 				margin-left: 40px;
+
+				/* autoprefixer: off */
+					-webkit-box-orient: vertical;
+				/* autoprefixer: on */
+				box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 3;
+				position: relative;
 			}
 
 			.img-bg,
