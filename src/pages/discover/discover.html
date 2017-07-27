@@ -15,7 +15,7 @@
 <ion-content no-bounce>
   <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
   
-  <ion-slides *ngIf="!loading">    
+  <ion-slides *ngIf="!loading" (ionSlideDidChange)="slideChanged()">
 
     <ion-slide id="tut-card">
       <ion-card>

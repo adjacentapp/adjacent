@@ -12,37 +12,30 @@ export class CardProvider {
   
   constructor (private http: Http) {}
   
-  getDeck(user_id): Observable<any[]> {
-    let query = '?user_id=' + user_id;
+  getDeck(user_id, offset): Observable<any[]> {
+    let query = '?user_id=' + user_id + '&offset=' + offset;
     let url = this.base_url + 'get_cards.php' + query;
+    
     let personas = ['Compuer science student', 'ex-VC', 'Calc TA and longtime gamer', 'Recent grad with thesis in urban planning'];
     let challenges = ['UX design', 'Social media branding/marketing', 'Getting in contact with our potential users', 'Getting in front of investors'];
     let pitches = ['A recipe recommendation website that pulls in user meal preferences', 'Webseminar to help people refine their business pitch and value prop', 'Make a game(s) through which as you play you learn linear algebra or calculus. Then maybe kids might actaully be interested(excited even?) in learning', 'A crowd sourced parking spot mobile app'];
     let industries = [4,6,3,4]
+
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
             let manip = data.map((item, i) => {
               let thing = item;
               thing.distance = (Math.round(Math.random()*50));
-              if(i < 4){
-                thing.industry = globs.INDUSTRIES[industries[i]];
-                thing.who = personas[i];
-                thing.challenge = challenges[i];
-                thing.pitch = pitches[i];
-                thing.stage = i;
-               } else {
-                 thing.industry = globs.INDUSTRIES[(Math.round(Math.random()*18))];
-                 thing.who = "Anonymous Entrepreneur";
-                 thing.challenge = "N/A";
-                 thing.stage = (Math.round(Math.random()*5));
-               }
-               console.log(thing);
+              thing.industry = thing.industry_string || globs.INDUSTRIES[item.id % globs.INDUSTRIES.length];
+              thing.who = thing.background || "Anonymous Entrepreneur";
+              thing.challenge = thing.challenge || "N/A";
+              thing.challenge_detail = thing.challenge_detail || null;
+              thing.stage = (Math.round(Math.random()*5));
               return thing;
              });
             console.log(manip);
             return manip;
-            // return [{}, ...manip];
           })
           .catch(this.handleError);
   }

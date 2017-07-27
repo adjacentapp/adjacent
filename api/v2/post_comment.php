@@ -37,7 +37,7 @@
 
  	// Update card timestamp
  	$query =	"UPDATE cards " .
- 				"SET update_time = now() " .
+ 				"SET commented_at = now() " .
  				"WHERE id = {$card_id}";
  	$res = mysqli_query($db, $query);
 

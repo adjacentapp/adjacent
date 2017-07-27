@@ -8,9 +8,10 @@
 	$tissueTesting = false;
 
 	// Check for arguments
-	$card_id = isset($_GET['card_id']) ? mysqli_real_escape_string($db, $_GET['card_id']) : 0;
 	$user_id = isset($_GET['user_id']) ? mysqli_real_escape_string($db, $_GET['user_id']) : 0;
+	$card_id = isset($_GET['card_id']) ? mysqli_real_escape_string($db, $_GET['card_id']) : 0;
 	$order_by = isset($_GET['order_by']) ? mysqli_real_escape_string($db, $_GET['order_by']) : false;
+	
 	$types = isset($_GET['types']) ? mysqli_real_escape_string($db, $_GET['types']) : '1,2,3';
 
 	$limit = isset($_GET['limit']) ? mysqli_real_escape_string($db, $_GET['limit']) : '15';
@@ -64,10 +65,22 @@
 
 		$ordered_cards = [];
 		
-		$query = "SELECT * FROM cards WHERE active = 1 AND type IN ({$types}) ORDER BY" .
-					" (SELECT SUM(active) as score FROM wall_post_likes WHERE card_id = cards.id)" .
-					" desc LIMIT {$step} OFFSET {$offset}";
-		
+		$query = 	"SELECT cards.* " .
+					"FROM cards WHERE active = 1" .
+						" ORDER BY update_time DESC" .
+						" LIMIT {$step} OFFSET {$offset}";
+/*
+		SELECT 
+			(SELECT SUM(active) FROM wall_post_likes WHERE card_id = cards.id ) as comment_likes_sum,
+			(SELECT SUM(active) FROM wall_post_likes WHERE card_id = cards.id AND wall_post_likes.updated_at >= (NOW() - INTERVAL 7 DAY) ) as recent_likes_sum,
+			((UNIX_TIMESTAMP(cards.update_time)*1000)-(UNIX_TIMESTAMP(NOW())*1000))/(1000*60*60*24) as staleness,
+			( (SELECT card_walls.timestamp FROM card_walls WHERE card_id = cards.id ORDER BY card_walls.timestamp DESC LIMIT 1) - now() ) / 1000000 as comment_staleness,
+			cards.*
+		FROM cards WHERE active = 1
+			 ORDER BY score DESC
+			 LIMIT 10 OFFSET 0;
+*/
+
 		$res = mysqli_query($db, $query);
 		if(!$res) exit(mysqli_error());
 		while($row = mysqli_fetch_assoc($res))

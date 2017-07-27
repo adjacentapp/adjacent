@@ -12,14 +12,12 @@ import { AuthProvider } from '../../providers/auth/auth';
 export class BookmarksPage {
 	loading: boolean;
 	items: any[];
-	offset: number = 0;
-	limit: number = 10;
 	filters: any = [];
 	reachedEnd: boolean = false;
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, private bookmarks: BookmarksProvider, private auth: AuthProvider) {
 		this.loading = true;
-		this.bookmarks.getBookmarks(this.auth.currentUser.id, this.offset, this.limit, this.filters)
+		this.bookmarks.getBookmarks(this.auth.currentUser.id, 0, this.filters)
 			.subscribe(
 				items => this.items = items,
 				error => console.log(<any>error),
@@ -43,18 +41,12 @@ export class BookmarksPage {
 		});
 	}
 
-	doInfinite(e){
-	  if(this.reachedEnd){
-	  	e.complete();
-	  	return;
-	  }
-
-	  this.offset += this.limit;
-	  this.bookmarks.getBookmarks(this.auth.currentUser.id, this.offset, this.limit, this.filters)
+	doInfinite(e){let offset = this.items.length;
+	  this.bookmarks.getBookmarks(this.auth.currentUser.id, offset, this.filters)
 	  	.subscribe(
 	  		items => {
 	  			this.items = this.items.concat(items);
-	  			if(items.length < this.limit){
+	  			if(!items.length){
 	  				this.reachedEnd = true;
 	  			}
 	  		},

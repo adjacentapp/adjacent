@@ -12,8 +12,8 @@ export class BookmarksProvider {
   
   constructor (private http: Http) {}
   
-  getBookmarks(user_id, offset, limit, filters): Observable<any[]> {
-    let query = '?user_id=' + user_id + '&offset=' + offset + '&limit=' + limit;
+  getBookmarks(user_id, offset, filters): Observable<any[]> {
+    let query = '?user_id=' + user_id + '&offset=' + offset;
     // query += filters
     let url = this.base_url + 'get_my_bookmarks.php' + query;
     return this.http.get(url)
@@ -22,7 +22,11 @@ export class BookmarksProvider {
             let manip = data.map((item) => {
               let thing = item;
               thing.distance = (Math.round(Math.random()*50)) + ' mi.';
-              thing.industry = item.id % 10;
+              thing.industry = thing.industry_string || globs.INDUSTRIES[item.id % globs.INDUSTRIES.length];
+              thing.who = thing.background || "Anonymous Entrepreneur";
+              thing.challenge = thing.challenge || "N/A";
+              thing.challenge_detail = thing.challenge_detail || null;
+              thing.stage = (Math.round(Math.random()*5));
               return thing;
              });
             console.log(manip);
