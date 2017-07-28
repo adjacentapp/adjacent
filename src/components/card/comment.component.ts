@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ProfilePage } from '../../pages/profile/profile';
 import { ShowCardPage } from '../../pages/card/show';
-import { WallProvider } from '../../providers/wall/wall';
+import { WallProvider, Comment } from '../../providers/wall/wall';
 import { AuthProvider } from '../../providers/auth/auth';
 
 @Component({
@@ -10,35 +10,19 @@ import { AuthProvider } from '../../providers/auth/auth';
   templateUrl: 'comment-component.html'
 })
 export class CommentComponent {
-  @Input() item: {
-    timestamp: any,
-    message: string,
-    likes?: number[],
-    dislikes?: number[],
-    score?: number,
-  	user: {
-      fir_name: string, 
-      las_name: string, 
-      photo_url: string
-    }
-  };
+  @Input() item: Comment;
   @Input() showVotes: boolean = true;
   vote: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private wall: WallProvider, private auth: AuthProvider) {}
 
   ngOnInit() {
-    if(!this.item.score)
-      this.item.score = 0;
-
-    if(this.item.likes)
-      for (let liker_id of this.item.likes)
-        if(liker_id == this.auth.currentUser.id)
-          this.vote = 1;
-    if(this.item.dislikes)
-      for (let disliker_id of this.item.dislikes)
-        if(disliker_id == this.auth.currentUser.id)
-          this.vote = -1;
+    for (let liker_id of this.item.likes)
+      if(liker_id == this.auth.currentUser.id)
+        this.vote = 1;
+    for (let disliker_id of this.item.dislikes)
+      if(disliker_id == this.auth.currentUser.id)
+        this.vote = -1;
   }
 
   goToProfile(event, user_id) {

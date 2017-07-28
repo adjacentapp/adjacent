@@ -21,6 +21,10 @@ export class ShowCardPage {
     alert("Iterate on your idea.")
   }
 
+  historyTapped (age) {
+     alert("View card's version history. Last iteration: " + age + " ago.")
+  }
+
   doFollow (e, item){
     e.stopPropagation();
     let data = {

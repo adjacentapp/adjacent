@@ -1,9 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
+import { User } from '../../providers/auth/auth';
+
+export class Comment {
+  id: number;
+  timestamp: any;
+  message: string;
+  likes: number[];
+  dislikes: number[];
+  score: number;
+  user: User;
+ 
+  constructor (comment: any) {
+    this.id = comment.id;
+    this.timestamp = comment.timestamp;
+    this.message = comment.message;
+    this.likes = comment.likes || [];
+    this.dislikes = comment.dislikes || [];
+    this.score = comment.score || 0;
+    this.user = new User(comment.user.id, comment.user.fir_name, comment.user.las_name, comment.user.email, comment.user.photo_url);
+  }
+}
 
 @Injectable()
 export class WallProvider {

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, MenuController, Slides } from 'ionic-angular';
 import { ShowCardPage } from '../../pages/card/show';
-import { CardProvider } from '../../providers/card/card';
+import { CardProvider, Card } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
 
 @Component({
@@ -10,8 +10,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class DiscoverPage {
 	@ViewChild(Slides) slides: Slides;
-	// items: Array<{industry: string, pitch: string, distance: string}>;
-	items: any[];
+	items: Card[];
 	loading: boolean;
 	reachedEnd: boolean = false;
 	dealing: boolean = false;

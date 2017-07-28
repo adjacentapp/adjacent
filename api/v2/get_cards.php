@@ -286,12 +286,12 @@
 	 			}
  			}
 	// Get topComment user info
-	$query = 	"SELECT user_id, fir_name, las_name, photo_url FROM users " .
+	$query = 	"SELECT user_id as id, email, fir_name, las_name, photo_url FROM users " .
 				" WHERE user_id IN ( " . implode($topCommentUserIds, ", ") . " )";
 	$res = mysqli_query($db, $query);
 	while($row = mysqli_fetch_assoc($res))
 		foreach($cards as $key => $card)
-			if(array_key_exists('user_id', $card['topComment']) && $card['topComment']['user_id'] == $row['user_id'])
+			if(array_key_exists('user_id', $card['topComment']) && $card['topComment']['user_id'] == $row['id'])
 				$cards[$key]['topComment']['user'] = $row;
 
 	// Reformat keys

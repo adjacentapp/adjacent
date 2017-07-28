@@ -82,7 +82,7 @@
 
 	 // Get user for each comment
 	 $users = [];
-	 $query =	"SELECT user_id, fir_name, las_name, photo_url FROM users" .
+	 $query =	"SELECT user_id as id, email, fir_name, las_name, photo_url FROM users" .
 	 			" WHERE user_id IN ( " . implode($user_ids, ", ") . " )";
 	 $res = mysqli_query($db, $query);
 	 if($res)
@@ -91,7 +91,7 @@
 	 foreach($messages as $key => $message){
 	 	$messages[$key]['user'] = array();
 	 	foreach($users as $user){
-	 		if($message['user_id'] == $user['user_id']){
+	 		if($message['user_id'] == $user['id']){
 	 			$messages[$key]['user'] = $user;
 	 		}
 	 	}

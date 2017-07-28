@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { ShowCardPage } from '../card/show';
 import { EditProfilePage } from '../profile/edit';
-import { ProfileProvider } from '../../providers/profile/profile';
+import { ProfileProvider, Profile } from '../../providers/profile/profile';
 import { AuthProvider } from '../../providers/auth/auth';
 import * as globs from '../../app/globals'
 
@@ -16,7 +16,7 @@ export class ProfilePage {
 	loading: boolean;
 	user_id: number;
 	myself: boolean = false;
-	profile: {fir_name: string, las_name: string, photo_url: string, bio: string, skills: string};
+	profile: Profile;
 	contributions: Array<any>;
 
 	private networks = globs.NETWORKS;
@@ -27,7 +27,8 @@ export class ProfilePage {
 		this.user_id = navParams.get('user_id') || this.auth.currentUser.id;
 		if(this.user_id == this.auth.currentUser.id) this.myself = true;
 
-		this.profileProvider.getProfile(this.user_id, this.myself)
+		let my_id = this.myself ? false : this.auth.currentUser.id;
+		this.profileProvider.getProfile(this.user_id, my_id)
 			.subscribe(
 				profile => this.profile = profile,
 				error => console.log(<any>error),

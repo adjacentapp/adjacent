@@ -10,12 +10,12 @@
         <h2>Pitch</h2>
         <p>{{item.pitch}}</p>
       </ion-item>
-      <ion-item text-wrap>
+      <ion-item *ngIf="showDetails" text-wrap>
         <ion-icon name="briefcase" item-start></ion-icon>
         <h2>Industry</h2>
         <p>{{item.industry}}</p>
       </ion-item>
-      <ion-item text-wrap *ngIf="item.challenge">
+      <ion-item text-wrap>
         <ion-icon name="warning" item-start></ion-icon>
         <h2>Current Obstacle</h2>
         <p>{{item.challenge}}</p>
@@ -23,10 +23,10 @@
         <p *ngIf="showDetails && item.challenge_details">{{item.challenge_details}}</p>
       </ion-item>
       <ion-title *ngIf="showDetails">The Founder</ion-title>
-      <ion-item text-wrap *ngIf="showDetails">
+      <ion-item text-wrap>
         <ion-icon name="person" item-start></ion-icon>
         <h2 *ngIf="showDetails || true">My Background</h2>
-        <p>{{item.who}}</p>
+        <p class='oneline'>{{item.who}}</p>
       </ion-item>
       <ion-item text-wrap *ngIf="showDetails">
         <ion-icon name="stats" item-start></ion-icon>
@@ -65,9 +65,9 @@
     </ion-col>
   </ion-row>
   
-  <ion-row *ngIf="item.topComment && showTopComment">
-    <comment-component *ngIf="item.topComment.message" [item]="item.topComment" [showVotes]="showTopCommentVotes"></comment-component>
-    <new-comment-component *ngIf="!item.topComment.message" (click)="$event.stopPropagation()" [card_id]="item.card_id" (newComment)="newTopComment($event)"></new-comment-component>
+  <ion-row *ngIf="showTopComment">
+    <comment-component *ngIf="item.topComment" [item]="item.topComment" [showVotes]="showTopCommentVotes"></comment-component>
+    <new-comment-component *ngIf="!item.topComment" (click)="$event.stopPropagation()" [card_id]="item.card_id" (newComment)="newTopComment($event)"></new-comment-component>
   </ion-row>
 
 </ion-card>

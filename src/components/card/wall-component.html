@@ -1,5 +1,5 @@
 <ion-list>
-	<!-- <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1> -->
+	<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 	<comment-component *ngFor="let comment of comments" [item]="comment"></comment-component>
 </ion-list>
 

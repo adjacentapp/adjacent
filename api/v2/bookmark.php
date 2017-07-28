@@ -13,10 +13,6 @@
 	@$user_id = $data->user_id ? mysqli_real_escape_string($db, $data->user_id) : null;
 	@$new_entry = $data->new_entry ? mysqli_real_escape_string($db, $data->new_entry) : false;
 
-	// @$card_id = '1';
-	// @$user_id = '1';
-	// @$new_entry = true;
-
 	$msg = '';
 
 	$bookmark_id = null;
@@ -65,6 +61,7 @@
 			 // 	}
 
 		  	//=======================================Push notifications
+		  	$founder_id;
 		  	$query =	"SELECT * FROM cards WHERE id = {$card_id}";
 		  	while($row = mysqli_fetch_assoc($res)){
 		  		$founder_id = $row['author_id'];

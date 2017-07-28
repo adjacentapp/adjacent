@@ -1,9 +1,43 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
+import { Comment } from '../../providers/wall/wall';
+
+export class Card {
+  id: number;
+  pitch: string;
+  industry: string;
+  who: string;
+  challenge: string;
+  challenge_detail: string;
+  stage: number;
+  distance: number;
+  following: boolean;
+  topComment?: Comment;
+  // comments: Comment[];
+  comments: any[];
+  // user: User;
+  // founder_id: number;
+ 
+  constructor(id: number, pitch: string, industry: string, who: string, challenge: string, challenge_detail: string, stage: number, distance: number, comments: any[], following: boolean, topComment?: any) {
+    this.id = id;
+    this.pitch = pitch;
+    this.industry = industry || globs.INDUSTRIES[(Math.round(Math.random()*(globs.INDUSTRIES.length-1)))];
+    this.who = who || 'Anonymous Entrepreneur';
+    this.challenge = challenge || 'N/A';
+    this.challenge_detail = challenge_detail || '';
+    this.stage = stage;
+    this.distance = distance || (Math.round(Math.random()*50));
+    this.following = following ? following : null;
+    // this.user = user;
+    // this.founder_id = founder_id;
+    this.topComment = topComment && topComment.id ? new Comment(topComment) : null;
+    this.comments = comments;
+  }
+}
 
 @Injectable()
 export class CardProvider {
@@ -25,14 +59,8 @@ export class CardProvider {
           .map(this.extractData)
           .map((data) => {
             let manip = data.map((item, i) => {
-              let thing = item;
-              thing.distance = (Math.round(Math.random()*50));
-              thing.industry = thing.industry_string || globs.INDUSTRIES[item.id % globs.INDUSTRIES.length];
-              thing.who = thing.background || "Anonymous Entrepreneur";
-              thing.challenge = thing.challenge || "N/A";
-              thing.challenge_detail = thing.challenge_detail || null;
-              thing.stage = (Math.round(Math.random()*5));
-              return thing;
+              console.log(item);
+              return new Card(item.id, item.pitch, item.industry_string, item.background, item.challenge, item.challenge_detail, item.stage, item.distance, item.comments, item.following, item.topComment);
              });
             console.log(manip);
             return manip;

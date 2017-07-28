@@ -9,7 +9,8 @@ card-component,
 			position: relative;
 			color: white;
 			font-size: 1.4rem;
-			height: 30vh;
+			height: 40vh;
+			min-height: 19em;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -55,6 +56,10 @@ card-component,
 				display: -webkit-box;
 				-webkit-line-clamp: 3;
 				position: relative;
+				
+				&.oneline {
+					-webkit-line-clamp: 3;
+				}
 			}
 
 			.img-bg,
@@ -197,7 +202,7 @@ card-component,
 					background-position: 100% 50%;
 				}
 				&.Writing {
-					background-image: url('../assets/img/industries/writing3.jpeg');
+					background-image: url('../assets/img/industries/writing_3.jpeg');
 					&:before { background: rgba(70,50,0,0.9) }
 					background-position: 50% 50%;
 				}

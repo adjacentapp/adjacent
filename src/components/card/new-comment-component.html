@@ -3,8 +3,8 @@
     <div *ngIf='item.user.photo_url' [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
   </ion-avatar>
   <h3>{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
-  <ion-textarea [(ngModel)]="item.message" type="text" placeholder="Add your own constructive feedback"></ion-textarea>
+  <ion-textarea [(ngModel)]="item.message" type="text" placeholder="Share your own constructive feedback"></ion-textarea>
   <div item-right text-center>
-    <button ion-button round [disabled]="!item.message.length" (click)="postComment($event, item)">Share</button>
+    <button ion-button round [disabled]="!item.message.length" (click)="postComment($event, item)">Post</button>
   </div>
 </ion-item>

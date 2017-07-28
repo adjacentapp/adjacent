@@ -6,19 +6,19 @@ import * as globs from '../../app/globals'
  
 export class User {
   id: number;
-  token: string;
   fir_name: string;
   las_name: string;
   email: string;
   photo_url: string;
+  token?: string;
  
-  constructor(id: number, token: string, fir_name: string, las_name: string, email: string, photo_url: string) {
+  constructor(id: number, fir_name: string, las_name: string, email: string, photo_url: string, token?: string) {
   	this.id = id;
-    this.token = token;
     this.fir_name = fir_name;
     this.las_name = las_name;
     this.email = email;
     this.photo_url = photo_url;
+    if(token) this.token = token;
   }
 }
  
@@ -30,7 +30,7 @@ export class AuthProvider {
   constructor (private http: Http) {}
 
   loginFromLocalStorage(){
-    this.currentUser = new User(localStorage.user_id, localStorage.token, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url);
+    this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url,  localStorage.token);
     this.valid = true;
   }
 
@@ -41,7 +41,7 @@ export class AuthProvider {
             .map((data) => {
               console.log(data);
               if(data.valid){
-                this.currentUser = new User(data.user_id, data.token, data.fir_name, data.las_name, data.email, data.photo_url);
+                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token);
                 this.valid = true;
               }
               else {
@@ -61,7 +61,7 @@ export class AuthProvider {
             .map((data) => {
               console.log(data);
               if(data.valid){
-                this.currentUser = new User(data.user_id, data.token, data.fir_name, data.las_name, data.email, data.photo_url);
+                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token);
                 this.valid = true;
                 localStorage.token = data.token;
                 localStorage.user_id = data.user_id;
@@ -91,7 +91,7 @@ export class AuthProvider {
               .map((data) => {
                 console.log(data);
                 if(data.valid){
-                  this.currentUser = new User(data.user_id, data.token, '', '', data.email, '');
+                  this.currentUser = new User(data.user_id, '', '', data.email, '', data.token);
                   this.valid = true;
                   localStorage.token = data.token;
                   localStorage.user_id = data.user_id;

@@ -3,16 +3,14 @@
 	header('Access-Control-Allow-Headers: *');
 	header('Content-Type: application/json');
 	require_once('../db_connect.php');
-
 	$db = connect_db();
 
-	// Check for metadata arguments
 	if(isset($_GET['user_id']) )
 		$user_id = mysqli_real_escape_string($db, $_GET['user_id']);
 	else
 		exit('No user id provided');
 
-	$myself = isset($_GET['myself']) ? true : false;
+	$my_id = isset($_GET['my_id']) ? mysqli_real_escape_string($db, $_GET['my_id']) : false;
 
  	$query =	"SELECT * FROM users WHERE user_id = {$user_id}";
  	$res = mysqli_query($db, $query);
@@ -25,7 +23,7 @@
 	// Count collaborations user owns
 	$query =	"SELECT id, author_id as user_id, idea as pitch, industry_string as industry, anonymous, challenge, background, stage, challenge_details, create_time as created_at, update_time as updated_at " .
 				"FROM cards WHERE author_id = ${user_id} AND active = 1 ";
-	if(!$myself) $query .= "AND anonymous = 0 ";
+	if(!$my_id) $query .= "AND anonymous = 0 ";
 	$query .=	"ORDER BY created_at DESC";
 	$res = mysqli_query($db, $query);
 	$profile['cards_count'] = mysqli_num_rows($res) ? mysqli_num_rows($res) : 0;
@@ -62,13 +60,27 @@
 				") as score FROM card_walls WHERE user_id = {$user_id} ORDER BY score desc";
 	$res = mysqli_query($db, $query);
 	$profile['contributions'] = array();
-	$my_card_ids = array(0);
 	while($row = mysqli_fetch_assoc($res))
 		$profile['contributions'][] = $row;
+
+	// Check if each card is bookmarked by the my_id user
+	if($my_id){
+		$query = 	"SELECT * FROM bookmarks " .
+					" WHERE card_id IN ( " . implode($my_card_ids, ", ") . " )" .
+					" AND card_active = 1" .
+					" AND active = 1" .
+					" AND user_id = {$my_id}";
+		$res = mysqli_query($db, $query);
+		while($row = mysqli_fetch_assoc($res))
+			foreach($profile['cards'] as $key => $card)
+				if($card['id'] == $row['card_id'])
+					$profile['cards'][$key]['following'] = true;
+	}
 
 	// Reformat keys
 	$profile = (object)array(
 		"user_id"	=> 	$profile['user_id'],
+		"email"		=> 	$profile['email'],
 		"fir_name"	=> 	$profile['fir_name'],
 		"las_name"	=>	$profile['las_name'],
 		"photo_url"	=>	$profile['photo_url'],

@@ -9,6 +9,10 @@ show-card-page {
 			.card-content {
 				font-size: 1.8rem;
 				height: auto;
+
+				p {
+					-webkit-line-clamp: 999;
+				}
 			}
 		}
 	}

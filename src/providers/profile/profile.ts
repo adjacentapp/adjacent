@@ -4,32 +4,43 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
-import { AuthProvider } from '../../providers/auth/auth';
+import { User } from '../../providers/auth/auth';
+import { Card } from '../../providers/card/card';
+
+export class Profile {
+  user: User;
+  skills: string;
+  bio: string;
+  cards: Card[];
+  
+  constructor(user: User, skills: string, bio: string, cards: any[]) {
+    this.user = user;
+    this.skills = skills;
+    this.bio = bio;
+    this.cards = cards;
+  }
+}
 
 @Injectable()
 export class ProfileProvider {
-  items: Array<{pitch: string, distance: string}>;
+  // items: Array<{pitch: string, distance: string}>;
   
-  constructor (private http: Http, private auth:AuthProvider) {}
+  constructor (private http: Http) {}
   
-  getProfile(user_id, myself): Observable<any> {
+  getProfile(user_id, my_id): Observable<any> {
     let query = '?user_id=' + user_id;
-    query += myself ? '&myself=true' : ''
+    query += my_id ? '&my_id=' + my_id : ''
     let url = globs.BASE_API_URL + 'get_profile.php' + query;
 
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
-            let profile = data;
-            // let skills = data.skills.replace(/[.,'"!-]/gi,'').split(' ');
-            // let skill = '';
-            // for (let s of skills)
-              // skill += ' #' + s;
-            // profile.skills = skill;
-             
-             // for (let card of profile.cards)
-             
-            return profile;
+            console.log(data);
+            let user = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url);
+            let cards = data.cards.map((card) => {
+              return new Card(card.id, card.pitch, card.industry_string, card.background, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following);
+            });
+            return new Profile(user, data.skills, data.bio, data.cards);
           })
           .catch(this.handleError);
   }
