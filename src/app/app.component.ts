@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, Nav } from 'ionic-angular';
+import { Platform, MenuController, Nav, AlertController } from 'ionic-angular';
 
 import { DiscoverPage } from '../pages/discover/discover';
 import { ProfilePage } from '../pages/profile/profile';
@@ -39,17 +39,37 @@ export class MyApp {
     public ga: GoogleAnalytics,
     private auth: AuthProvider,
     private globsProv: GlobalsProvider,
+    private alertCtrl: AlertController
   ){
     this.initializeApp();
     this.checkDeepLink();
     this.getGlobs();
   }
-   
+
   public logout() {
-    this.auth.logout().subscribe(succ => {
-      this.menu.close();
-      this.nav.setRoot('LoginPage');
+    let alert = this.alertCtrl.create({
+      title: 'Logout?',
+      message: 'Are you sure you want to logout?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Logout',
+          handler: () => {
+            this.auth.logout().subscribe(succ => {
+              this.menu.close();
+              this.nav.setRoot('LoginPage');
+            });
+          }
+        }
+      ]
     });
+    alert.present();
   }
 
   checkDeepLink() {

@@ -14,7 +14,7 @@ export class Comment {
   dislikes: number[];
   score: number;
   user: User;
- 
+
   constructor (comment: any) {
     this.id = comment.id;
     this.timestamp = comment.timestamp;
@@ -29,9 +29,9 @@ export class Comment {
 @Injectable()
 export class WallProvider {
   private base_url = globs.BASE_API_URL;
-  
+
   constructor (private http: Http) {}
-  
+
   getWall (card_id): Observable<any[]> {
     let query = '?card_id=' + card_id;
     let url = this.base_url + 'get_card_wall.php' + query;
@@ -41,8 +41,9 @@ export class WallProvider {
             let manip = data.map((item, i) => {
               let thing = item;
               thing.score = 5 - i;
-              return thing;
+              return new Comment(thing);
              });
+             console.log(manip);
             return manip;
           })
           .catch(this.handleError);
@@ -53,8 +54,7 @@ export class WallProvider {
     return this.http.post(url, data)
             .map(this.extractData)
             .map((data) => {
-              console.log(data);
-              return data;              
+              return new Comment(data);
             })
             .catch(this.handleError);
   }
@@ -64,7 +64,7 @@ export class WallProvider {
     //   if(!post.liked){
     //     cardFactory.likeWallPost(post.id, post.card_id, user.id, true);
     //     post.liked = true;
-        
+
     //     post.likes.push(user.id);
     //   }
     //   else {

@@ -11,50 +11,50 @@ export const ENCRYPTION_KEY = "aether12292015";
 export const BASE_API_URL = DEV ? localURL : remoteURL;
 
 export const INDUSTRIES: string[] = [
-	'Agriculture', 
-	'Art', 
-	'Architecture', 
-	'Business', 
-	'Computer Science', 
-	'Design', 
-	'Education', 
-	'Engineering', 
-	'Entrepreneurship', 
-	'Finance', 
-	'Government', 
-	'Healthcare', 
-	'Humanities', 
-	'Journalism', 
-	'Languages', 
-	'Law', 
-	'Lifestyle', 
-	'Marketing', 
-	'Math', 
-	'Music', 
-	'Performing Arts', 
-	'Policy Planning', 
-	'Science', 
-	'Social Impact', 
-	'Sports', 
+	'Agriculture',
+	'Art',
+	'Architecture',
+	'Business',
+	'Computer Science',
+	'Design',
+	'Education',
+	'Engineering',
+	'Entrepreneurship',
+	'Finance',
+	'Government',
+	'Healthcare',
+	'Humanities',
+	'Journalism',
+	'Languages',
+	'Law',
+	'Lifestyle',
+	'Marketing',
+	'Math',
+	'Music',
+	'Performing Arts',
+	'Policy Planning',
+	'Science',
+	'Social Impact',
+	'Sports',
 	'Writing'
 ];
 
 export const STAGES: string[] = [
-	'Couch Entrepreneur', 
-	'Taking First Step', 
-	'"Kickstarting" The Engine', 
-	'Running The Company', 
-	'Scaling The Business', 
+	'Couch Entrepreneur',
+	'Taking First Step',
+	'"Kickstarting" The Engine',
+	'Running The Company',
+	'Scaling The Business',
 	'$$$'
 ];
 
 export let SKILLS: string[] = [
-	'Business', 
-	'Customer Discovery', 
-	'Design', 
-	'Development', 
-	'Marketing', 
-	'User Experience', 
+	'Business',
+	'Customer Discovery',
+	'Design',
+	'Development',
+	'Marketing',
+	'User Experience',
 	'Customer discovery'
 ];
 export let setSkills = (skills) => {
@@ -62,10 +62,10 @@ export let setSkills = (skills) => {
 };
 
 export const NETWORKS: string[] = [
-	'Public', 
-	'New York University', 
-	'NYU Game Centr', 
-	'ThinkLab Incubator', 
+	'Public',
+	'New York University',
+	'NYU Game Centr',
+	'ThinkLab Incubator',
 	'HCI Meetup'
 ];
 

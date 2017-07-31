@@ -22,10 +22,18 @@ export class DiscoverPage {
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider) {
 		this.loading = true;
+		this.getDeck();
+	}
+
+	getDeck() {
 		this.card.getDeck(this.auth.currentUser.id, 0)
 			.subscribe(
 				items => this.items = items,
-				error => this.errorMessage = <any>error,
+				error => {
+					console.log('trying to get_cards again');
+					this.getDeck();
+					this.errorMessage = <any>error;
+				},
 				() => this.loading = false
 			);
 	}

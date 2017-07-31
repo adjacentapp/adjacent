@@ -16,8 +16,8 @@ export class NewCommentComponent {
     message: string,
     card_id: any,
     user: {
-      fir_name: string, 
-      las_name: string, 
+      fir_name: string,
+      las_name: string,
       photo_url: string
     }
   };
@@ -39,12 +39,12 @@ export class NewCommentComponent {
       user: item.user
     };
     this.wall.postComment(data).subscribe(
-      success => console.log(success),
+      success => {
+        this.newComment.emit(success);
+        this.item.message = '';
+      },
       error => console.log(error)
     );
-
-    this.newComment.emit(data);
-    this.item.message = '';
   }
 
 }
