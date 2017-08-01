@@ -15,6 +15,8 @@ import { CardComponent } from '../components/card/card.component';
 import { CommentComponent } from '../components/card/comment.component';
 import { NewCommentComponent } from '../components/card/new-comment.component';
 import { WallComponent } from '../components/card/wall.component';
+import { NotificationCenterComponent } from '../components/notification/notification-center.component';
+import { NotificationComponent } from '../components/notification/notification.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -42,6 +44,8 @@ import { GlobalsProvider } from '../providers/globals/globals';
     CommentComponent,
     NewCommentComponent,
     WallComponent,
+    NotificationCenterComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,

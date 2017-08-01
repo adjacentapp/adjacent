@@ -9,4 +9,10 @@
   	{{item.score}}<br/>
   	<ion-icon name="md-arrow-dropdown" (click)="downvote($event, item)" color="{{vote==-1?'danger':'secondary'}}"></ion-icon>
   </div>
+  <div *ngIf="showVotes">
+    <h6 (click)="item.expanded=!item.expanded">{{item.responses.length>0 ? item.responses.length + " Replies" : "Reply"}}</h6>
+    <div *ngIf="item.expanded">
+      <comment-component *ngFor="let response of item.responses" [item]="response" [showVotes]="false"></comment-component>
+    </div>
+  </div>
 </ion-item>

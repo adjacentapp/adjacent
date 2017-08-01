@@ -14,6 +14,7 @@ export class Comment {
   dislikes: number[];
   score: number;
   user: User;
+  responses: Comment[];
 
   constructor (comment: any) {
     this.id = comment.id;
@@ -23,6 +24,7 @@ export class Comment {
     this.dislikes = comment.dislikes || [];
     this.score = comment.score || 0;
     this.user = new User(comment.user.id, comment.user.fir_name, comment.user.las_name, comment.user.email, comment.user.photo_url);
+    this.responses = !comment.responses ? [] : comment.responses.map((resp) => new Comment(resp));
   }
 }
 
@@ -43,7 +45,7 @@ export class WallProvider {
               thing.score = 5 - i;
               return new Comment(thing);
              });
-             console.log(manip);
+            //  console.log(manip);
             return manip;
           })
           .catch(this.handleError);

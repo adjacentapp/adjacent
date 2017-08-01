@@ -19,7 +19,7 @@ export class WallComponent {
     this.loading = true;
     this.wall.getWall(this.card_id)
       .subscribe(
-        comments => {this.comments = comments; console.log(this.comments)},
+        comments => this.comments = comments,
         error => console.log(error),
         () => this.loading = false
       );

@@ -9,7 +9,7 @@ import { WallProvider } from '../../providers/wall/wall';
 })
 export class NewCommentComponent {
   @Input() card_id: string;
-  @Input() handlePrependComment: any;
+  // @Input() handlePrependComment: any;
   @Output() newComment: EventEmitter<any> = new EventEmitter();
 
   item: {

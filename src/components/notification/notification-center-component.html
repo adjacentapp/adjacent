@@ -1,0 +1,24 @@
+<ion-menu [content]="inheritedContent" side="right">
+	<ion-header>
+		<ion-toolbar>
+			<ion-title>Notifications</ion-title>
+		</ion-toolbar>
+	</ion-header>
+	<ion-content>
+		<ion-refresher (ionRefresh)="doRefresh($event)">
+			<ion-refresher-content></ion-refresher-content>
+		</ion-refresher>
+
+		<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
+		<h3 *ngIf="!loading && notifications.length===0">No notifications wtf</h3>
+
+
+		<ion-list *ngIf="!loading && notifications.length > 0">
+			<notification-component *ngFor="let notif of notifications" [item]="notif" (click)="notifTapped(item)"></notification-component>
+		</ion-list>
+
+		<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+			<ion-infinite-scroll-content></ion-infinite-scroll-content>
+		</ion-infinite-scroll>
+	</ion-content>
+</ion-menu>

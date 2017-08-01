@@ -5,6 +5,7 @@ import { DiscoverPage } from '../pages/discover/discover';
 import { ProfilePage } from '../pages/profile/profile';
 import { NewCardPage } from '../pages/card/new';
 import { BookmarksPage } from '../pages/bookmarks/bookmarks';
+import { ShowCardPage } from '../pages/card/show';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -105,5 +106,12 @@ export class MyApp {
   openPage(page) {
     this.menu.close();
     this.nav.push(page.component);
+  }
+
+  goToCard(item) {
+    this.menu.close();
+    this.nav.push(ShowCardPage, {
+      item: item
+    });
   }
 }
