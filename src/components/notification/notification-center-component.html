@@ -14,7 +14,7 @@
 
 
 		<ion-list *ngIf="!loading && notifications.length > 0">
-			<notification-component *ngFor="let notif of notifications" [item]="notif" (click)="notifTapped(item)"></notification-component>
+			<notification-component *ngFor="let notif of notifications" [item]="notif" (click)="notifTapped(notif)"></notification-component>
 		</ion-list>
 
 		<ion-infinite-scroll (ionInfinite)="doInfinite($event)">

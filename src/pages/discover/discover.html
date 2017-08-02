@@ -14,13 +14,13 @@
 
 <ion-content no-bounce>
   <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
-  
+
   <ion-slides *ngIf="!loading" (ionSlideDidChange)="slideChanged()">
 
     <ion-slide id="tut-card">
       <ion-card>
         <ion-card-content>
-          <div class='img-bg'></div>
+          <div class='img-bg tut'></div>
           <h1 text-center>Slide left to begin exploring the opportunity around you.</h1>
           <h1 text-center><ion-icon name="arrow-round-back"></ion-icon></h1>
         </ion-card-content>

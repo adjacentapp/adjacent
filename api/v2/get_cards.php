@@ -11,13 +11,13 @@
 	$user_id = isset($_GET['user_id']) ? mysqli_real_escape_string($db, $_GET['user_id']) : 0;
 	$card_id = isset($_GET['card_id']) ? mysqli_real_escape_string($db, $_GET['card_id']) : 0;
 	$order_by = isset($_GET['order_by']) ? mysqli_real_escape_string($db, $_GET['order_by']) : false;
-	
+
 	$types = isset($_GET['types']) ? mysqli_real_escape_string($db, $_GET['types']) : '1,2,3';
 
 	$limit = isset($_GET['limit']) ? mysqli_real_escape_string($db, $_GET['limit']) : '15';
 	$offset = isset($_GET['offset']) ? (int)mysqli_real_escape_string($db, $_GET['offset']) : 0;
 	$sub_offset = isset($_GET['sub_offset']) ? (int)mysqli_real_escape_string($db, $_GET['sub_offset']) : 0;
-	
+
 	$distance = isset($_GET['distance']) ? mysqli_real_escape_string($db, $_GET['distance']) : false;
 	$lat = isset($_GET['lat']) ? mysqli_real_escape_string($db, $_GET['lat']) : false;
 	$lon = isset($_GET['lon']) ? mysqli_real_escape_string($db, $_GET['lon']) : false;
@@ -59,18 +59,18 @@
 	}
 
 	function getCards(){
-		global 	$cards, $card_ids, $card_id, $types, $order_by, $limit, 
-				$step, $offset, $new_offset, $sub_offset, $new_sub_offset, 
+		global 	$cards, $card_ids, $card_id, $types, $order_by, $limit,
+				$step, $offset, $new_offset, $sub_offset, $new_sub_offset,
 				$distance, $lat, $lon, $db, $card_max;
 
 		$ordered_cards = [];
-		
+
 		$query = 	"SELECT cards.* " .
 					"FROM cards WHERE active = 1" .
 						" ORDER BY update_time DESC" .
 						" LIMIT {$step} OFFSET {$offset}";
 /*
-		SELECT 
+		SELECT
 			(SELECT SUM(active) FROM wall_post_likes WHERE card_id = cards.id ) as comment_likes_sum,
 			(SELECT SUM(active) FROM wall_post_likes WHERE card_id = cards.id AND wall_post_likes.updated_at >= (NOW() - INTERVAL 7 DAY) ) as recent_likes_sum,
 			((UNIX_TIMESTAMP(cards.update_time)*1000)-(UNIX_TIMESTAMP(NOW())*1000))/(1000*60*60*24) as staleness,
@@ -198,7 +198,7 @@
 				$cards[$key]['likes'][] = $row['user_id'];
 				if($row['user_id'] == $user_id)
 					$cards[$key]['liked'] = true;
-			
+
 	}
 
 	// Check user's member status
@@ -212,14 +212,14 @@
 	}
 
 	while($row = mysqli_fetch_assoc($res)){
-		foreach($cards as $key => $card){		
+		foreach($cards as $key => $card){
 			if($card['id'] == $row['card_id']){
 				// Get user's membership status
 				if($card['author_id'] == $user_id)
 					$cards[$key]['member'] = "2";
 				else if($row['user_id'] == $user_id)
 					$cards[$key]['member'] = $row['accepted'];
-			
+
 				// Construct team array
 				if($row['user_id'] == $card['author_id'])
 				// if($card['author_id'] == $user_id)
@@ -254,8 +254,8 @@
 	$query =	"SELECT * from (" .
 					"SELECT card_walls.*, (" .
 						"SELECT SUM(active) as score FROM wall_post_likes WHERE post_id = card_walls.id" .
-					") as score FROM card_walls ORDER BY score desc" .
-				") AS x WHERE card_id IN (".implode($card_ids,", ") . ") GROUP BY card_id";
+					") AS score FROM card_walls WHERE response_to IS NULL ORDER BY score DESC" .
+				") AS x WHERE card_id IN (".implode($card_ids,", ") . ") GROUP BY card_id ORDER BY score DESC";
 	$res = mysqli_query($db, $query);
 	while($row = mysqli_fetch_assoc($res)){
 		foreach($cards as $key => $card){

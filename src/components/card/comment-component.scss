@@ -1,6 +1,10 @@
 comment-component {
 	ion-item {
+		align-items: flex-start !important;
+
 		.item-inner {
+			overflow: visible;
+
 			p {
 				/* autoprefixer: off */
 					-webkit-box-orient: vertical;
@@ -10,11 +14,9 @@ comment-component {
 				overflow: hidden;
 				text-overflow: ellipsis;
 				display: -webkit-box;
-				-webkit-line-clamp: 3;
+				-webkit-line-clamp: 99;
 				font-size: 16px;
 				position: relative;
-
-				// max-height: 5em;
 			}
 			.voting {
 				color: color($colors, secondary);
@@ -36,6 +38,39 @@ comment-component {
 					}
 				}
 			}
+			.responses {
+				margin-left: -1em;
+				margin-right: 0;
+				h6 {
+					margin: 6px 16px;
+					color: color($colors, primary);
+					ion-icon {
+						position: relative;
+						top: 3px;
+					}
+				}
+				comment-component {
+					min-height: 50px;
+					p {
+						max-width: 195px;
+					}
+				}
+				.new-comment-wrapper {
+					padding-bottom: 80px;
+					new-comment-component {
+						position: absolute;
+						width: 85vw;
+						.item-inner {
+							// padding-bottom: 0;
+							border-bottom: 0;
+							.post-btn-wrapper {
+								// position: absolute;
+								// left: 100%;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -47,4 +82,10 @@ new-comment-component {
 	flex-direction: column;
 	justify-content: center;
 	width: 100%;
+}
+
+new-comment-component {
+	.item-inner {
+			padding-bottom: 20px;
+	}
 }

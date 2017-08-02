@@ -41,11 +41,24 @@
  				"WHERE id = {$card_id}";
  	$res = mysqli_query($db, $query);
 
+	// Get user
+	$user;
+	$query = 	"SELECT user_id as id, email, fir_name, las_name, photo_url FROM users WHERE user_id = {$user_id}";
+	$res = mysqli_query($db, $query);
+	while($row = mysqli_fetch_assoc($res))
+ 		$user = $row;
+
  	// Close connection
 	if(is_a($res, 'mysqli_result')) mysqli_free_result($res);
 	mysqli_close($db);
 
-	exit(json_encode((object)array("post_id" => $post_id, "message" => "success")));
+	$comment = (object)array(
+		"id" => $post_id,
+		"timestamp" => 'now',
+		"message" => $text,
+		"user" => $user
+	);
+	exit(json_encode($comment));
 
  	//=======================================Post receipts
 	// get team members
@@ -180,7 +193,7 @@
 
 	 	push_notification($title, $message, $user_tokens, $badge_count, $url);
 	 }
-	
+
  	// Close connection
 	mysqli_free_result($res);
 	mysqli_close($db);

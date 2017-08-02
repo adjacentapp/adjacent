@@ -4,7 +4,7 @@
 	header('Content-Type: application/json');
 	require_once('../db_connect.php');
 	$db = connect_db();
-	$tissueTesting = true;
+	$tissueTesting = false;
 
 	// Check for metadata arguments
 	if(isset($_GET['card_id']) )
@@ -25,6 +25,13 @@
  	else
  		$query .= " AND prompt_id IS NULL";
  	$query .=	" ORDER BY timestamp DESC";
+
+	$query =	"SELECT * from (" .
+					"SELECT card_walls.*, (" .
+						"SELECT SUM(active) as score FROM wall_post_likes WHERE post_id = card_walls.id" .
+					") AS score FROM card_walls WHERE response_to IS NULL ORDER BY score DESC" .
+				") AS x WHERE card_id = {$card_id} ORDER BY score DESC";
+
  	$res = mysqli_query($db, $query);
 
  	if(!$res) exit(json_encode(array()));
@@ -36,6 +43,7 @@
 		$row['responses'] = array();
 		$row['likes'] = array();
 		$row['dislikes'] = array();
+		// $row['score'] = 0;
 		$messages[] = $row;
 		$m_ids[] = $row['id'];
 		if(!in_array($row['user_id'], $user_ids)) $user_ids[] = $row['user_id'];
@@ -62,6 +70,7 @@
 	 				else if($like['active'] == -1)
 	 					$messages[$key]['dislikes'][] = $like['user_id'];
 	 			}
+				// $messages[$key]['score'] = count($messages[$key]['likes']) - count($messages[$key]['dislikes']);
  			}
 
 
@@ -94,6 +103,9 @@
 	 		if($message['user_id'] == $user['id']){
 	 			$messages[$key]['user'] = $user;
 	 		}
+			foreach($message['responses'] as $ley => $response)
+				if($response['user_id'] == $user['id'])
+					$messages[$key]['responses'][$ley]['user'] = $user;
 	 	}
 	 }
 

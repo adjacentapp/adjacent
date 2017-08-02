@@ -29,6 +29,7 @@ import { WallProvider } from '../providers/wall/wall';
 import { BookmarksProvider } from '../providers/bookmarks/bookmarks';
 import { AuthProvider } from '../providers/auth/auth';
 import { GlobalsProvider } from '../providers/globals/globals';
+import { NotificationProvider } from '../providers/notification/notification';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { GlobalsProvider } from '../providers/globals/globals';
     BookmarksProvider,
     AuthProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GlobalsProvider
+    GlobalsProvider,
+    NotificationProvider
   ]
 })
 export class AppModule {}

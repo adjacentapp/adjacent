@@ -4,7 +4,7 @@
   </ion-avatar>
   <h3>{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
   <ion-textarea [(ngModel)]="item.message" type="text" placeholder="Share your own constructive feedback"></ion-textarea>
-  <div item-right text-center>
-    <button ion-button round [disabled]="!item.message.length" (click)="postComment($event, item)">Post</button>
+  <div class="post-btn-wrapper" item-right text-center>
+    <button *ngIf="!item.response" ion-button round [disabled]="!item.message.length" (click)="postComment($event, item)">{{item.response_to ? "Reply" : "Post"}}</button>
   </div>
 </ion-item>

@@ -67,4 +67,8 @@ export class CommentComponent {
     item.score--;
   }
 
+  appendResponse(item){
+    this.item.responses.push(item);
+  }
+
 }

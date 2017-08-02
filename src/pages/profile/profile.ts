@@ -27,8 +27,7 @@ export class ProfilePage {
 		this.user_id = navParams.get('user_id') || this.auth.currentUser.id;
 		if(this.user_id == this.auth.currentUser.id) this.myself = true;
 
-		let my_id = this.myself ? false : this.auth.currentUser.id;
-		this.profileProvider.getProfile(this.user_id, my_id)
+		this.profileProvider.getProfile(this.user_id, this.auth.currentUser.id)
 			.subscribe(
 				profile => this.profile = profile,
 				error => console.log(<any>error),

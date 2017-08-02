@@ -8,6 +8,7 @@ import { User } from '../../providers/auth/auth';
 
 export class Comment {
   id: number;
+  card_id: number;
   timestamp: any;
   message: string;
   likes: number[];
@@ -15,9 +16,11 @@ export class Comment {
   score: number;
   user: User;
   responses: Comment[];
+  response_to: number;
 
   constructor (comment: any) {
     this.id = comment.id;
+    this.card_id = comment.card_id;
     this.timestamp = comment.timestamp;
     this.message = comment.message;
     this.likes = comment.likes || [];
@@ -25,6 +28,7 @@ export class Comment {
     this.score = comment.score || 0;
     this.user = new User(comment.user.id, comment.user.fir_name, comment.user.las_name, comment.user.email, comment.user.photo_url);
     this.responses = !comment.responses ? [] : comment.responses.map((resp) => new Comment(resp));
+    this.response_to = comment.response_to || null;
   }
 }
 
@@ -42,10 +46,8 @@ export class WallProvider {
           .map((data) => {
             let manip = data.map((item, i) => {
               let thing = item;
-              thing.score = 5 - i;
               return new Comment(thing);
              });
-            //  console.log(manip);
             return manip;
           })
           .catch(this.handleError);

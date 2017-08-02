@@ -10,7 +10,7 @@
 	else
 		exit('No user id provided');
 
-	$my_id = isset($_GET['my_id']) ? mysqli_real_escape_string($db, $_GET['my_id']) : false;
+	$my_id = isset($_GET['my_id']) ? mysqli_real_escape_string($db, $_GET['my_id']) : '0';
 
  	$query =	"SELECT * FROM users WHERE user_id = {$user_id}";
  	$res = mysqli_query($db, $query);
@@ -23,7 +23,7 @@
 	// Count collaborations user owns
 	$query =	"SELECT id, author_id as user_id, idea as pitch, industry_string as industry, anonymous, challenge, background, stage, challenge_details, create_time as created_at, update_time as updated_at " .
 				"FROM cards WHERE author_id = ${user_id} AND active = 1 ";
-	if(!$my_id) $query .= "AND anonymous = 0 ";
+	if($user_id != $my_id) $query .= "AND anonymous = 0 ";
 	$query .=	"ORDER BY created_at DESC";
 	$res = mysqli_query($db, $query);
 	$profile['cards_count'] = mysqli_num_rows($res) ? mysqli_num_rows($res) : 0;
@@ -64,7 +64,7 @@
 		$profile['contributions'][] = $row;
 
 	// Check if each card is bookmarked by the my_id user
-	if($my_id){
+	if($user_id != $my_id){
 		$query = 	"SELECT * FROM bookmarks " .
 					" WHERE card_id IN ( " . implode($my_card_ids, ", ") . " )" .
 					" AND card_active = 1" .

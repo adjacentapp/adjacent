@@ -1,6 +1,7 @@
 <?php
 	header('Access-Control-Allow-Origin: *');
-	header('Access-Control-Allow-Headers: *');
+	// header('Access-Control-Allow-Headers: *');
+	header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 	require_once('../db_connect.php');
 	$db = connect_db();
 
@@ -21,7 +22,7 @@
 	if($res)
  		while($row = mysqli_fetch_assoc($res))
 	 		$like_id = $row['id'];
-	
+
 	if($like_id){
 		$query =	"UPDATE wall_post_likes SET active = {$score}  WHERE id = {$like_id}";
 		$res = mysqli_query($db, $query);

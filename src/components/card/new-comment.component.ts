@@ -9,7 +9,7 @@ import { WallProvider } from '../../providers/wall/wall';
 })
 export class NewCommentComponent {
   @Input() card_id: string;
-  // @Input() handlePrependComment: any;
+  @Input() response_to: string = null;
   @Output() newComment: EventEmitter<any> = new EventEmitter();
 
   item: {
@@ -36,8 +36,10 @@ export class NewCommentComponent {
     let data = {
       message: item.message,
       card_id: this.card_id,
-      user: item.user
+      user: item.user,
+      response_to: this.response_to
     };
+
     this.wall.postComment(data).subscribe(
       success => {
         this.newComment.emit(success);

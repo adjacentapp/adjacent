@@ -5,6 +5,10 @@ card-component,
 		border-radius: 20px;
 		opacity: 0.9999; // weird overflow bug fix for iOS
 
+		comment-component ion-item .item-inner p {
+			-webkit-line-clamp: 3;
+		}
+
 		ion-card-content {
 			position: relative;
 			color: white;
@@ -56,7 +60,7 @@ card-component,
 				display: -webkit-box;
 				-webkit-line-clamp: 3;
 				position: relative;
-				
+
 				&.oneline {
 					-webkit-line-clamp: 3;
 				}
@@ -86,7 +90,11 @@ card-component,
 
 			.img-bg {
 				background-size: cover;
-
+				&.tut {
+					background-image: url('../assets/img/industries/Energy 2.jpeg');
+					background-position: 50% 50%;
+					&:before { background: rgba(68,57,153,0.9); }
+				}
 				&.Agriculture {
 					background-image: url('../assets/img/industries/Agriculture_4.jpg');
 					&:before { background: rgba(0,100,0,0.9); }
@@ -209,13 +217,13 @@ card-component,
 			}
 		}
 	}
-	
+
 	.img-bg {
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
 		bottom: 45px;
-		background-size: cover;		
+		background-size: cover;
 	}
 }

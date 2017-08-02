@@ -8,6 +8,7 @@ import { Comment } from '../../providers/wall/wall';
 
 export class Card {
   id: number;
+  founder_id: number;
   pitch: string;
   industry: string;
   who: string;
@@ -20,10 +21,10 @@ export class Card {
   // comments: Comment[];
   comments: any[];
   // user: User;
-  // founder_id: number;
 
-  constructor(id: number, pitch: string, industry: string, who: string, challenge: string, challenge_detail: string, stage: number, distance: number, comments: any[], following: boolean, topComment?: any) {
+  constructor(id: number, founder_id: number, pitch: string, industry: string, who: string, challenge: string, challenge_detail: string, stage: number, distance: number, comments: any[], following: boolean, topComment?: any) {
     this.id = id;
+    this.founder_id = founder_id;
     this.pitch = pitch;
     this.industry = industry || globs.INDUSTRIES[(Math.round(Math.random()*(globs.INDUSTRIES.length-1)))];
     this.who = who || 'Anonymous Entrepreneur';
@@ -33,7 +34,6 @@ export class Card {
     this.distance = distance || (Math.round(Math.random()*50));
     this.following = following ? following : null;
     // this.user = user;
-    // this.founder_id = founder_id;
     this.topComment = topComment && topComment.id ? new Comment(topComment) : null;
     this.comments = comments;
   }
@@ -59,8 +59,7 @@ export class CardProvider {
           .map(this.extractData)
           .map((data) => {
             let manip = data.map((item, i) => {
-              console.log(item);
-              return new Card(item.id, item.pitch, item.industry_string, item.background, item.challenge, item.challenge_detail, item.stage, item.distance, item.comments, item.following, item.topComment);
+              return new Card(item.id, item.founder_id, item.pitch, item.industry_string, item.background, item.challenge, item.challenge_detail, item.stage, item.distance, item.comments, item.following, item.topComment);
              });
             console.log(manip);
             return manip;

@@ -6,7 +6,7 @@
 	$db = connect_db();
 	$tissueTesting = false;
 	if($tissueTesting) exit(json_encode( (object)array("message" => "tissueTesting") ));
-	
+
 	$postdata = file_get_contents("php://input");
 	$data = json_decode($postdata);
 	@$card_id = $data->card_id ? mysqli_real_escape_string($db, $data->card_id) : null;
@@ -31,7 +31,7 @@
 		if($bookmark_id){
 			$msg = 'reactivate bookmark';
 			$query =	"UPDATE bookmarks SET active = 1 WHERE id = {$bookmark_id}";
-			$res = mysqli_query($db, $query);	
+			$res = mysqli_query($db, $query);
 		}
 		else {
 			$msg = 'create bookmark';
@@ -63,6 +63,7 @@
 		  	//=======================================Push notifications
 		  	$founder_id;
 		  	$query =	"SELECT * FROM cards WHERE id = {$card_id}";
+				$res = mysqli_query($db, $query);
 		  	while($row = mysqli_fetch_assoc($res)){
 		  		$founder_id = $row['author_id'];
 		  		$message = $row['idea'];
@@ -85,7 +86,7 @@
 		  	$tokens = array();
 		  	if($res)
 		  		while($device_row = mysqli_fetch_assoc($res))
-			  		$tokens[] = $device_row['token'];	  	
+			  		$tokens[] = $device_row['token'];
 
 		  	require_once('push_notification.php');
 		  	// fix

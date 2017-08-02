@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http'
 import 'rxjs/add/operator/map';
 import { WallProvider } from '../../providers/wall/wall';
+import { Notification } from '../../providers/notification/notification';
 
 @Component({
   selector: 'notification-center-component',
@@ -10,14 +11,14 @@ import { WallProvider } from '../../providers/wall/wall';
 export class NotificationCenterComponent {
   @Input() inheritedContent: any;
   @Output() goToCard: EventEmitter<any> = new EventEmitter();
-  notifications: any[] = [];
+  notifications: Notification[] = [];
   loading: boolean;
 
   constructor(public http: Http, private wall: WallProvider) {}
 
   ngOnInit() {
     this.loading = true;
-    this.notifications.push({title: 'The first one', message: 'And the message here.'})
+    this.notifications.push(new Notification('Title', 'and the message too.'));
     // this.wall.getWall(this.card_id)
     //   .subscribe(
     //     comments => {this.comments = comments; console.log(this.comments)},
@@ -29,13 +30,13 @@ export class NotificationCenterComponent {
 
   notifTapped(item) {
     // markAsRead();
-    this.goToCard.emit(item);
+    this.goToCard.emit(item.card);
 	}
 
   doInfinite(e){
     console.log(e);
     setTimeout(function(){
-      // e.complete();
+      e.complete();
     }, 1000);
     // this.service.getCard()
     // .subscribe(

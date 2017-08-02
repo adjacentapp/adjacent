@@ -12,7 +12,7 @@ export class Profile {
   skills: string;
   bio: string;
   cards: Card[];
-  
+
   constructor(user: User, skills: string, bio: string, cards: any[]) {
     this.user = user;
     this.skills = skills;
@@ -24,23 +24,22 @@ export class Profile {
 @Injectable()
 export class ProfileProvider {
   // items: Array<{pitch: string, distance: string}>;
-  
+
   constructor (private http: Http) {}
-  
+
   getProfile(user_id, my_id): Observable<any> {
-    let query = '?user_id=' + user_id;
-    query += my_id ? '&my_id=' + my_id : ''
+    let query = '?user_id=' + user_id + '&my_id=' + my_id;
     let url = globs.BASE_API_URL + 'get_profile.php' + query;
 
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
-            console.log(data);
+            // console.log(data);
             let user = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url);
             let cards = data.cards.map((card) => {
-              return new Card(card.id, card.pitch, card.industry_string, card.background, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following);
+              return new Card(card.id, card.founder_id, card.pitch, card.industry, card.background, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following);
             });
-            return new Profile(user, data.skills, data.bio, data.cards);
+            return new Profile(user, data.skills, data.bio, cards);
           })
           .catch(this.handleError);
   }
@@ -51,7 +50,7 @@ export class ProfileProvider {
             .map(this.extractData)
             .map((data) => {
               console.log(data);
-              return data;              
+              return data;
             })
             .catch(this.handleError);
   }

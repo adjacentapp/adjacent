@@ -1,5 +1,5 @@
 discover-page {
-	
+
 	card-component ion-card.card,
 	#tut-card ion-card.card, {
 
@@ -12,9 +12,15 @@ discover-page {
 	}
 
 	#tut-card {
+		ion-card.card .card-content {
+			height: calc(60vh + 145px);
+		}
+
 		h1 {
 			color: inherit;
 			position: relative;
+			font-size: 1.4em;
+			line-height: 1.75em;
 		}
 
 		ion-icon {
@@ -25,12 +31,12 @@ discover-page {
 		-webkit-animation: slideLeft 5s infinite;
 		animation-delay: 1s;
 		-webkit-animation-delay: 1s;
-		
-		@-webkit-keyframes slideLeft { 
+
+		@-webkit-keyframes slideLeft {
 			0%, 20% {-webkit-transform: translateX(0);}
 			15% {-webkit-transform: translateX(-40px);}
 			17% {-webkit-transform: translateX(10px);}
-		} 
+		}
 
 		@keyframes slideLeft {
 			0%, 20% {-webkit-transform: translateX(0);}
