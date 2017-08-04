@@ -15,17 +15,17 @@
   <div *ngIf='profile'>    
 
     <ion-avatar [ngClass]="'large'" (click)="uploadPhoto()">
-      <div [ngStyle]="{'background-image': 'url(' + profile.photo_url + ')'}"></div>
+      <div [ngStyle]="{'background-image': 'url(' + profile.user.photo_url + ')'}"></div>
       <ion-icon name="camera"></ion-icon>
     </ion-avatar>
     
     <ion-item>
       <ion-label stacked>First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="profile.fir_name"></ion-input>
+      <ion-input type="text" [(ngModel)]="profile.user.fir_name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Last Name</ion-label>
-      <ion-input type="text" [(ngModel)]="profile.las_name"></ion-input>
+      <ion-input type="text" [(ngModel)]="profile.user.las_name"></ion-input>
     </ion-item>
     
     <ion-item>

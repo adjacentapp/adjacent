@@ -7,19 +7,12 @@
 
 	$postdata = file_get_contents("php://input");
 	$data = json_decode($postdata);
-	@$user_id 		= $data->user_id ? mysqli_real_escape_string($db, $data->user_id) : null;
-	@$fir_name 		= $data->fir_name ? mysqli_real_escape_string($db, $data->fir_name) : null;
-	@$las_name 		= $data->las_name ? mysqli_real_escape_string($db, $data->las_name) : null;
+	@$user_id 		= mysqli_real_escape_string($db, $data->user->id);
+	@$fir_name 		= mysqli_real_escape_string($db, $data->user->fir_name);
+	@$las_name 		= mysqli_real_escape_string($db, $data->user->las_name);
 	@$bio 			= $data->bio ? mysqli_real_escape_string($db, $data->bio) : null;
 	@$photo_url 	= $data->photo_url ? mysqli_real_escape_string($db, $data->photo_url) : null;
 	@$skills 		= $data->skills ? $data->skills : [];
-
-	// @$user_id 		= 2;
-	// @$fir_name 		= "Sal";
-	// @$las_name 		= "";
-	// @$bio 			= "Bio";
-	// @$photo_url 	= null;
-	// @$skills 		= ['Development'];
 
 	$query =	"UPDATE users " .
 				"SET fir_name = '" . 	$fir_name . "', " .

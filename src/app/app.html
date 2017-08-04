@@ -12,20 +12,23 @@
           <div *ngIf='auth.valid' [ngStyle]="{'background-image': 'url(' + auth.currentUser.photo_url + ')'}"></div>
         </ion-avatar>
         <br/>
-        View My Profile
+        My Profile
       </ion-item>
       <button ion-item *ngFor="let p of pages; let i = index" (click)="openPage(p)" detail-none id="{{i==0?'create-card-btn':''}}">
         {{p.title}}
+        <ion-icon item-right name="{{p.icon}}"></ion-icon>
       </button>
 
       <button ion-item (click)="logout()" detail-none>
-        Logout <ion-icon name="log-out" style="margin-left: 0.2em;"></ion-icon>
+        Logout
+        <ion-icon item-right name="log-out"></ion-icon>
       </button>
 
     </ion-list>
   </ion-content>
 </ion-menu>
 
-<notification-center-component [inheritedContent]="content" (goToCard)="goToCard($event)"></notification-center-component>
+<notification-center-component [inheritedContent]="content" (goToCard)="goToCard($event)" (goToProfile)="goToProfile($event)"> -->
+</notification-center-component>
 
 <ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav>

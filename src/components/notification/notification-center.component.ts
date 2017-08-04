@@ -11,6 +11,7 @@ import { Notification } from '../../providers/notification/notification';
 export class NotificationCenterComponent {
   @Input() inheritedContent: any;
   @Output() goToCard: EventEmitter<any> = new EventEmitter();
+  @Output() goToProfile: EventEmitter<any> = new EventEmitter();
   notifications: Notification[] = [];
   loading: boolean;
 
@@ -18,7 +19,8 @@ export class NotificationCenterComponent {
 
   ngOnInit() {
     this.loading = true;
-    this.notifications.push(new Notification('Title', 'and the message too.'));
+    this.notifications.push(new Notification('Title', 'and the message too.', null, null));
+    this.notifications.push(new Notification('Title', 'and the message too.', null, true));
     // this.wall.getWall(this.card_id)
     //   .subscribe(
     //     comments => {this.comments = comments; console.log(this.comments)},
@@ -32,6 +34,10 @@ export class NotificationCenterComponent {
     // markAsRead();
     this.goToCard.emit(item.card);
 	}
+
+  handleUserTapped(item) {
+    this.goToProfile.emit(item);
+  }
 
   doInfinite(e){
     console.log(e);

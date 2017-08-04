@@ -22,12 +22,12 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage:any = 'LoginPage';
-  profPage:{title: string, component: any} = { title: 'Profile', component: ProfilePage };
-  pages: Array<{title: string, component: any}> = [
-    { title: 'Pitch My Idea', component: NewCardPage },
-    // { title: 'Discover', component: DiscoverPage },
-    // { title: 'Profile', component: ProfilePage },
-    { title: "Ideas I'm Following", component: BookmarksPage },
+  profPage:{title: string, component: any, icon: string} = { title: 'Profile', component: ProfilePage, icon: 'person' };
+  pages: Array<{title: string, component: any, icon: string}> = [
+    // { title: 'Profile', component: ProfilePage, icon: 'person' },
+    { title: 'Pitch My Idea', component: NewCardPage, icon: 'bulb' },
+    { title: "Ideas I'm Following", component: BookmarksPage, icon: 'bookmark' },
+    { title: "Messages", component: BookmarksPage, icon: 'chatbubbles' },
   ];
   username = '';
   email = '';
@@ -112,6 +112,13 @@ export class MyApp {
     this.menu.close();
     this.nav.push(ShowCardPage, {
       item: item
+    });
+  }
+
+  goToProfile(item) {
+    this.menu.close();
+    this.nav.push(ProfilePage, {
+      user_id: item
     });
   }
 }
