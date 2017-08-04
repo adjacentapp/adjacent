@@ -54,13 +54,13 @@
     <ion-col col-4>
       <button *ngIf="!founder" ion-button icon-left clear small color="{{item.following ? 'primary' : 'secondary'}}" (click)="followTapped($event, item)">
         <ion-icon name="bookmark"></ion-icon>
-        <div>Follow{{item.following ? 'ing' : ''}}</div>
+        <div>{{item.following ? item.followers.length + ' Followers' : 'Follow'}}</div>
       </button>
       <button *ngIf="founder" ion-button icon-left clear small color="primary" (click)="$event.preventDefault();$event.stopPropagation();">
         <ion-icon *ngIf="!item.anonymous" name="bulb"></ion-icon>
-        <div *ngIf="!item.anonymous">Founder</div>
+        <div *ngIf="!item.anonymous"><!-- Founder -->{{item.followers.length}} Followers</div>
         <ion-icon *ngIf="item.anonymous" name="eye-off"></ion-icon>
-        <div *ngIf="item.anonymous">Anonymous</div>
+        <div *ngIf="item.anonymous"><!-- Anonymous -->{{item.followers.length}} Followers</div>
       </button>
     </ion-col>
   </ion-row>

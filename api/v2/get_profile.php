@@ -35,6 +35,7 @@
 		$row['comments'] = array();
 		$row['founder_id'] = $user_id;
 		$row['anonymous'] = $row['anonymous'] == '1' ? true : false;
+		$row['followers'] = [];
 		$profile['cards'][] = $row;
 		$my_card_ids[] = $row['id'];
 	}
@@ -63,19 +64,21 @@
 	while($row = mysqli_fetch_assoc($res))
 		$profile['contributions'][] = $row;
 
-	// Check if each card is bookmarked by the my_id user
-	if($user_id != $my_id){
-		$query = 	"SELECT * FROM bookmarks " .
-					" WHERE card_id IN ( " . implode($my_card_ids, ", ") . " )" .
-					" AND card_active = 1" .
-					" AND active = 1" .
-					" AND user_id = {$my_id}";
-		$res = mysqli_query($db, $query);
-		while($row = mysqli_fetch_assoc($res))
-			foreach($profile['cards'] as $key => $card)
-				if($card['id'] == $row['card_id'])
-					$profile['cards'][$key]['following'] = true;
-	}
+	// Get Followers and check if following
+	$query = 	"SELECT * FROM bookmarks " .
+				" WHERE card_id IN ( " . implode($my_card_ids, ", ") . " )" .
+				" AND card_active = 1" .
+				" AND active = 1";
+	$res = mysqli_query($db, $query);
+	while($row = mysqli_fetch_assoc($res))
+		foreach($profile['cards'] as $key => $card){
+			if($card['id'] == $row['card_id']){
+				$profile['cards'][$key]['followers'][] = $row['user_id'];
+				if($user_id != $my_id)
+					if($row['user_id'] == $my_id)
+						$profile['cards'][$key]['following'] = true;
+			}
+		}
 
 	// Reformat keys
 	$profile = (object)array(

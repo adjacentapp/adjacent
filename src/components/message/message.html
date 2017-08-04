@@ -1,0 +1,9 @@
+<ion-item text-wrap>
+	<ion-avatar *ngIf="other" item-left (click)="goToProfile($event, item.user.id)">
+	    <div *ngIf='item.user.photo_url' [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
+    </ion-avatar>
+    <p class="{{other ? 'other' : ''}}">{{item.text}}</p>
+    <ion-avatar *ngIf="!other" item-right (click)="goToProfile($event, item.user.id)">
+	    <div *ngIf='item.user.photo_url' [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
+    </ion-avatar>
+</ion-item>

@@ -305,6 +305,7 @@
 			"comments"	=>	$card['comments'],
 			"topComment"=>	$card['topComment'],
 			"following"	=>	$card['saved'],
+			"followers"	=>	$card['followers'],
 		);
 	}
 

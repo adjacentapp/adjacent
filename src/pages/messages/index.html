@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Messages</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+	<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
+
+	<ion-list>
+		<ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+      <ion-avatar item-left (click)="goToProfile($event, item.other.id)">
+        <div *ngIf='item.other.photo_url' [ngStyle]="{'background-image': 'url(' + item.other.photo_url + ')'}"></div>
+      </ion-avatar>
+      <h3>{{item.other.fir_name + ' ' + item.other.las_name}}</h3>
+      <p>
+        {{item.messages[item.messages.length-1].user.id==auth.currentUser.id ? 'You: ' : ''}}
+        {{item.messages[item.messages.length-1].text}}
+      </p>
+    </ion-item>
+	</ion-list>
+
+	<ion-infinite-scroll *ngIf="!reachedEnd" (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+
+</ion-content>

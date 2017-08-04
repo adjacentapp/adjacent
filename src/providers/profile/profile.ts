@@ -37,7 +37,7 @@ export class ProfileProvider {
             // console.log(data);
             let user = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url);
             let cards = data.cards.map((card) => {
-              return new Card(card.id, card.founder_id, card.pitch, card.industry, card.background, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following);
+              return new Card(card.id, card.founder_id, card.pitch, card.industry, card.background, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following, card.followers);
             });
             return new Profile(user, data.skills, data.bio, cards);
           })

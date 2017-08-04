@@ -13,8 +13,10 @@
         </ion-avatar>
         <br/>
         My Profile
+        <ion-icon item-right></ion-icon>
       </ion-item>
       <button ion-item *ngFor="let p of pages; let i = index" (click)="openPage(p)" detail-none id="{{i==0?'create-card-btn':''}}">
+        <!-- <ion-icon item-left></ion-icon> -->
         {{p.title}}
         <ion-icon item-right name="{{p.icon}}"></ion-icon>
       </button>

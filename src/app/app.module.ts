@@ -17,6 +17,8 @@ import { NewCommentComponent } from '../components/card/new-comment.component';
 import { WallComponent } from '../components/card/wall.component';
 import { NotificationCenterComponent } from '../components/notification/notification-center.component';
 import { NotificationComponent } from '../components/notification/notification.component';
+import { MessagesPage } from '../pages/messages/index';
+import { ShowMessagePage } from '../pages/messages/show';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -30,6 +32,8 @@ import { BookmarksProvider } from '../providers/bookmarks/bookmarks';
 import { AuthProvider } from '../providers/auth/auth';
 import { GlobalsProvider } from '../providers/globals/globals';
 import { NotificationProvider } from '../providers/notification/notification';
+import { MessagesProvider } from '../providers/messages/messages';
+import { MessageComponent } from '../components/message/message';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,7 @@ import { NotificationProvider } from '../providers/notification/notification';
     // LoginPage,
     DiscoverPage,
     ProfilePage,
-      EditProfilePage,
+    EditProfilePage,
     BookmarksPage,
     ShowCardPage,
     NewCardPage,
@@ -47,6 +51,9 @@ import { NotificationProvider } from '../providers/notification/notification';
     WallComponent,
     NotificationCenterComponent,
     NotificationComponent,
+    MessagesPage,
+    ShowMessagePage,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +71,8 @@ import { NotificationProvider } from '../providers/notification/notification';
     BookmarksPage,
     ShowCardPage,
     NewCardPage,
+    MessagesPage,
+    ShowMessagePage
   ],
   providers: [
     StatusBar,
@@ -77,7 +86,8 @@ import { NotificationProvider } from '../providers/notification/notification';
     AuthProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GlobalsProvider,
-    NotificationProvider
+    NotificationProvider,
+    MessagesProvider
   ]
 })
 export class AppModule {}

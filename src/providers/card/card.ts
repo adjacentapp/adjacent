@@ -17,12 +17,11 @@ export class Card {
   stage: number;
   distance: number;
   following: boolean;
+  followers: number[];
   topComment?: Comment;
-  // comments: Comment[];
   comments: any[];
-  // user: User;
 
-  constructor(id: number, founder_id: number, pitch: string, industry: string, who: string, challenge: string, challenge_detail: string, stage: number, distance: number, comments: any[], following: boolean, topComment?: any) {
+  constructor(id: number, founder_id: number, pitch: string, industry: string, who: string, challenge: string, challenge_detail: string, stage: number, distance: number, comments: any[], following: boolean, followers: number[], topComment?: any) {
     this.id = id;
     this.founder_id = founder_id;
     this.pitch = pitch;
@@ -32,8 +31,8 @@ export class Card {
     this.challenge_detail = challenge_detail || '';
     this.stage = stage;
     this.distance = distance || (Math.round(Math.random()*50));
-    this.following = following ? following : null;
-    // this.user = user;
+    this.following = following || null;
+    this.followers = followers || [];
     this.topComment = topComment && topComment.id ? new Comment(topComment) : null;
     this.comments = comments;
   }
@@ -59,7 +58,7 @@ export class CardProvider {
           .map(this.extractData)
           .map((data) => {
             let manip = data.map((item, i) => {
-              return new Card(item.id, item.founder_id, item.pitch, item.industry_string, item.background, item.challenge, item.challenge_detail, item.stage, item.distance, item.comments, item.following, item.topComment);
+              return new Card(item.id, item.founder_id, item.pitch, item.industry_string, item.background, item.challenge, item.challenge_detail, item.stage, item.distance, item.comments, item.following, item.followers, item.topComment);
              });
             console.log(manip);
             return manip;

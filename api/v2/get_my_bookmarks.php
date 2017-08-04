@@ -26,6 +26,7 @@
 	 	$res = mysqli_query($db, $query);
 		while($row = mysqli_fetch_assoc($res)){
 			$row['comments'] = array();
+			$row['followers'] = array();
 			$cards[] = $row;
 		}
 
@@ -38,19 +39,31 @@
 			foreach($cards as $key => $card)
 				if($card['id'] == $row['card_id'])
 					$cards[$key]['comments'][] = $row['id'];
+
+		// Get other followers
+		$query = 	"SELECT * FROM bookmarks " .
+					" WHERE card_id IN ( " . implode($card_ids, ", ") . " )" .
+					" AND card_active = 1" .
+					" AND active = 1";
+		$res = mysqli_query($db, $query);
+
+		while($row = mysqli_fetch_assoc($res))
+			foreach($cards as $key => $card)
+				if($card['id'] == $row['card_id'])
+					$cards[$key]['followers'][] = $row['user_id'];
 	}
 
 	// Reformat keys
 	foreach($cards as $key => $card){
 		$cards[$key] = (object)array(
 			"id"		=> 	$card['id'],
-			// "founder_id"=> 	$card['author_id'],
+			"founder_id"=> 	$card['author_id'],
 			"industry"	=> 	$card['prompt'],
 			"pitch"		=>	$card['idea'],
 			"distance"	=>	'',
 			"comments"	=>	$card['comments'],
-			// "topComment"=>	[],
 			"following"	=>	true,
+			"followers"	=>	$card['followers']
 		);
 	}
 	

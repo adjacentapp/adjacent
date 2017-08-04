@@ -68,7 +68,7 @@ export class CardComponent {
 
     if(globs.firstFollow){
       globs.setFirstFollowFalse();
-      this.firstFollowToast();
+      // this.firstFollowToast();
     }
   }
 

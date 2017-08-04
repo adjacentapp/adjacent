@@ -6,6 +6,8 @@ import { ProfilePage } from '../pages/profile/profile';
 import { NewCardPage } from '../pages/card/new';
 import { BookmarksPage } from '../pages/bookmarks/bookmarks';
 import { ShowCardPage } from '../pages/card/show';
+import { MessagesPage } from '../pages/messages/index';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,7 +29,7 @@ export class MyApp {
     // { title: 'Profile', component: ProfilePage, icon: 'person' },
     { title: 'Pitch My Idea', component: NewCardPage, icon: 'bulb' },
     { title: "Ideas I'm Following", component: BookmarksPage, icon: 'bookmark' },
-    { title: "Messages", component: BookmarksPage, icon: 'chatbubbles' },
+    { title: "Messages", component: MessagesPage, icon: 'chatbubbles' },
   ];
   username = '';
   email = '';

@@ -1,0 +1,20 @@
+message {
+	.item-inner {
+		border: none !important;
+
+		p {
+			display: inline-block;
+			padding: 10px 18px;
+			border-radius: 20px;
+			background: color($colors, primary);
+			color: color($colors, light);
+			float: right;
+
+			&.other {
+				background: darken( color($colors, light), 5%);
+				color: color($colors, dark);
+				float: left;
+			}
+		}	
+	}
+}

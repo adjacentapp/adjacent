@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Card } from '../../providers/card/card';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
 
 @Injectable()
 export class BookmarksProvider {
-  private base_url = globs.BASE_API_URL;
   items: Array<{industry: string, pitch: string, distance: string}>;
   
   constructor (private http: Http) {}
@@ -15,22 +15,13 @@ export class BookmarksProvider {
   getBookmarks(user_id, offset, filters): Observable<any[]> {
     let query = '?user_id=' + user_id + '&offset=' + offset;
     // query += filters
-    let url = this.base_url + 'get_my_bookmarks.php' + query;
+    let url = globs.BASE_API_URL + 'get_my_bookmarks.php' + query;
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
-            let manip = data.map((item) => {
-              let thing = item;
-              thing.distance = (Math.round(Math.random()*50)) + ' mi.';
-              thing.industry = thing.industry_string || globs.INDUSTRIES[item.id % globs.INDUSTRIES.length];
-              thing.who = thing.background || "Anonymous Entrepreneur";
-              thing.challenge = thing.challenge || "N/A";
-              thing.challenge_detail = thing.challenge_detail || null;
-              thing.stage = (Math.round(Math.random()*5));
-              return thing;
+            return data.map((card) => {
+              return new Card(card.id, card.founder_id, card.pitch, card.industry, card.background, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following, card.followers);
              });
-            console.log(manip);
-            return manip;
           })
           .catch(this.handleError);
   }

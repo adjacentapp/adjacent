@@ -1,0 +1,9 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{item.other.fir_name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	<message *ngFor="let msg of item.messages" [item]="msg"></message>
+</ion-content>
