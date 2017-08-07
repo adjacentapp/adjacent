@@ -13,8 +13,4 @@ export class ShowMessagePage {
   	this.item = navParams.get('item');
   }
 
-  ionViewDidLoad() {
-  	
-  }
-
 }

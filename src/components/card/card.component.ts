@@ -20,7 +20,7 @@ export class CardComponent {
     comments: any,
     topComment: any,
   };
-  @Input() handleTap: any;
+  // @Input() handleTap: any;
   @Input() showTopComment: boolean = true;
   @Input() showTopCommentVotes: boolean = true;
   @Input() showDetails: boolean = false;
@@ -42,10 +42,10 @@ export class CardComponent {
     if(this.item.founder_id == this.auth.currentUser.id) this.founder = true;
   }
 
-  itemTapped(event, item) {
-    if(this.handleTap)
-      this.handleTap(event, item);
-  }
+  // itemTapped(event, item) {
+  //   if(this.handleTap)
+  //     this.handleTap(event, item);
+  // }
 
   newTopComment(item){
     // for new-comment shortcut: set newComment as topComment

@@ -58,7 +58,7 @@
 		$cards[$key] = (object)array(
 			"id"		=> 	$card['id'],
 			"founder_id"=> 	$card['author_id'],
-			"industry"	=> 	$card['prompt'],
+			"industry"	=> 	$card['industry_string'],
 			"pitch"		=>	$card['idea'],
 			"distance"	=>	'',
 			"comments"	=>	$card['comments'],

@@ -20,7 +20,7 @@ export class BookmarksProvider {
           .map(this.extractData)
           .map((data) => {
             return data.map((card) => {
-              return new Card(card.id, card.founder_id, card.pitch, card.industry, card.background, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following, card.followers);
+              return new Card(card.id, card.founder_id, card.pitch, card.industry, card.background, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following, card.followers, card.anonymous);
              });
           })
           .catch(this.handleError);

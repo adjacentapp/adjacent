@@ -20,7 +20,7 @@
 	<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 
 	<ion-list>
-		<card-component *ngFor="let item of items" [handleTap]="showCard" [item]="item" [showTopComment]="false"></card-component>
+		<card-component *ngFor="let item of items" (click)="showCard($event, item)" [item]="item" [showTopComment]="false"></card-component>
 	</ion-list>
 
 	<ion-infinite-scroll *ngIf="!reachedEnd" (ionInfinite)="doInfinite($event)">

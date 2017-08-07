@@ -36,8 +36,18 @@ export class ProfilePage {
 	}
 
 	showCard(event, item) {
+		let handleCallback = (_params) => {
+		  return new Promise((resolve, reject) => {
+	    	this.profile.cards = this.profile.cards.filter(item => item.id !== _params.remove_id);
+		    this.user_id = _params.user_id;
+			this.myself = true;	
+		    resolve();
+		  });
+		}
+		
 		this.navCtrl.push(ShowCardPage, {
-			item: item
+			item: item,
+			callback: handleCallback
 		});
 	}
 

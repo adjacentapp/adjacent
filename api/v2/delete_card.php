@@ -1,15 +1,13 @@
 <?php
 	header('Access-Control-Allow-Origin: *');
-	header('Access-Control-Allow-Headers: *');
-	// header('Content-Type: application/json');
+	// header('Access-Control-Allow-Headers: *');
+	header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 	require_once('../db_connect.php');
-
 	$db = connect_db();
 
-	// Decode card into JSON
 	$postdata = file_get_contents("php://input");
 	$data = json_decode($postdata);
-	@$card_id = $data->card_id ? mysqli_real_escape_string($db, $data->card_id) : null;
+	@$card_id = $data->id ? mysqli_real_escape_string($db, $data->id) : null;
 
 	// Query database
 	$query =	"UPDATE cards SET active = 0" .
@@ -64,7 +62,7 @@
  	$res = mysqli_query($db, $query);
 
  	// Close connection
- 	mysqli_free_result($res);
+ 	if(is_a($res, 'mysqli_result')) mysqli_free_result($res);
 	mysqli_close($db);
-	exit();
+	exit(json_encode( (object)array("deleted_id" => $card_id) ));
 ?>

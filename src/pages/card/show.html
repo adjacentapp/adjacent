@@ -4,8 +4,9 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-buttons end *ngIf="founder">
-      <button ion-button icon-only (click)="iterateTapped()">
-        <ion-icon name="refresh"></ion-icon>
+      <button ion-button (click)="iterateTapped()">
+        <!-- <ion-icon name="refresh"></ion-icon> -->
+        Edit
       </button>
     </ion-buttons>
     <ion-buttons end *ngIf="!founder">

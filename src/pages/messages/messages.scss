@@ -1,3 +1,10 @@
 page-message {
 
+	.list > .item-block:first-child {
+		border-top: none;
+	}
+	.list > .item-block:last-child, 
+	.list > .item-wrapper:last-child .item-block {
+		border-bottom: none;
+	}
 }

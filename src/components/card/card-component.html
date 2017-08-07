@@ -1,4 +1,4 @@
-<ion-card *ngIf="item" (click)="itemTapped($event, item)">
+<ion-card>
 
   <ion-card-content>
     <!-- <div class='img-bg {{industries[item.industry].replace(" ","_")}}'></div> -->
@@ -54,13 +54,13 @@
     <ion-col col-4>
       <button *ngIf="!founder" ion-button icon-left clear small color="{{item.following ? 'primary' : 'secondary'}}" (click)="followTapped($event, item)">
         <ion-icon name="bookmark"></ion-icon>
-        <div>{{item.following ? item.followers.length + ' Followers' : 'Follow'}}</div>
+        <div>{{item.following ? item.followers.length + ' Follower'+(item.followers.length!==1 ? 's' : '') : 'Follow'}}</div>
       </button>
       <button *ngIf="founder" ion-button icon-left clear small color="primary" (click)="$event.preventDefault();$event.stopPropagation();">
         <ion-icon *ngIf="!item.anonymous" name="bulb"></ion-icon>
-        <div *ngIf="!item.anonymous"><!-- Founder -->{{item.followers.length}} Followers</div>
+        <div *ngIf="!item.anonymous"><!-- Founder -->{{item.followers.length}} Follower{{item.followers.length!==1 ? 's' : ''}}</div>
         <ion-icon *ngIf="item.anonymous" name="eye-off"></ion-icon>
-        <div *ngIf="item.anonymous"><!-- Anonymous -->{{item.followers.length}} Followers</div>
+        <div *ngIf="item.anonymous"><!-- Anonymous -->{{item.followers.length}} Follower{{item.followers.length!==1 ? 's' : ''}}</div>
       </button>
     </ion-col>
   </ion-row>

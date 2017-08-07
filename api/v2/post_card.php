@@ -7,6 +7,7 @@
 
 	$postdata = file_get_contents("php://input");
 	$data = json_decode($postdata);
+	@$card_id = $data->id ? mysqli_real_escape_string($db, $data->id) : false;
 	@$founder_id = $data->founder_id ? mysqli_real_escape_string($db, $data->founder_id) : null;
 	@$pitch = $data->pitch ? strip_tags( mysqli_real_escape_string($db, $data->pitch) ) : null;
 	@$photo_url = $data->photo_url ? strip_tags( mysqli_real_escape_string($db, $data->photo_url) ) : null;
@@ -20,60 +21,82 @@
 	
 	@$industry = $data->industry ? strip_tags( mysqli_real_escape_string($db, $data->industry) ) : null;
 	@$networks = $data->networks ? mysqli_real_escape_string($db, $data->lon) : null;
+
+	$comments = [];
+	$followers = [];
 	
+	if($card_id) {
+		$query =	"UPDATE cards SET " .
+						"idea = '{$pitch}', " .
+						"industry_string = '{$industry}', " .
+						"photo_url = " . ($photo_url ? "'{$photo_url}'" : "null") . ", " .
+						"background = " . ($who ? "'{$who}'" : "null") . ", " .
+						"stage = " . ($stage ? "{$stage}" : "null") . ", " .
+						"challenge = " . ($challenge ? "'{$challenge}'" : "null") . ", " .
+						"challenge_details = " . ($challenge_details ? "'{$challenge_details}'" : "null") . ", " .
+						"anonymous = {$anonymous}, " .
+						"lat = " . ($lat ? "'{$lat}'" : "null") . ", " .
+						"lon = " . ($lon ? "'{$lon}'" : "null") . " " .
+					"WHERE id = {$card_id}";
+		$res = mysqli_query($db, $query);
 
- 	$query =	"INSERT INTO cards " .
- 				"(author_id, idea, industry_string, photo_url, background, stage, challenge, challenge_details, anonymous, message_time, lat, lon) " .
- 				"VALUES (" .
- 					$founder_id .
- 				", " .
- 					"'" . $pitch . "'" .
-				", " .
- 					"'" . $industry . "'" .
- 				", " .
- 					($photo_url ? "'{$photo_url}'" : "null") . 
- 				", " .
- 					($who ? "'{$who}'" : "null") . 
- 				", " .
- 					($stage ? "{$stage}" : "null") . 
-				", " .
- 					($challenge ? "'{$challenge}'" : "null") . 
- 				", " .
- 					($challenge_details ? "'{$challenge_details}'" : "null") . 
- 				", " .
- 					$anonymous
- 				", " .
- 					"now()" .
- 				", " .
- 					($lat ? "'{$lat}'" : "null") . 
- 				", " .
- 					($lon ? "'{$lon}'" : "null") . 
- 				")";
- 	$res = mysqli_query($db, $query);
- 	$new_card_id = mysqli_insert_id($db);
+		$query = 	"SELECT * FROM card_walls WHERE card_id = {$card_id} AND prompt_id IS NULL";
+		$res = mysqli_query($db, $query);
+		while($row = mysqli_fetch_assoc($res))
+			$comments[] = $row;
 
-	$query =	"INSERT INTO collaborations " .
-				"(user_id, card_id, accepted, status) " .
-				"VALUES (" .
-					$founder_id .
-				", " .
-					$new_card_id .
-				", " .
-					"1" .
-				", " .
-					"'owner'" .
-				")";
-	$res = mysqli_query($db, $query);
+		$query = 	"SELECT * FROM bookmarks WHERE card_id = {$card_id} AND card_active = 1 AND active = 1";
+		$res = mysqli_query($db, $query);
+		while($row = mysqli_fetch_assoc($res))
+			$followers[] = $row['user_id'];
+	}
+	else {
+	 	$query =	"INSERT INTO cards " .
+	 				"(author_id, idea, industry_string, photo_url, background, stage, challenge, challenge_details, anonymous, message_time, lat, lon) " .
+	 				"VALUES (" .
+	 					$founder_id .
+	 				", " .
+	 					"'" . $pitch . "'" .
+					", " .
+	 					"'" . $industry . "'" .
+	 				", " .
+	 					($photo_url ? "'{$photo_url}'" : "null") . 
+	 				", " .
+	 					($who ? "'{$who}'" : "null") . 
+	 				", " .
+	 					($stage ? "{$stage}" : "null") . 
+					", " .
+	 					($challenge ? "'{$challenge}'" : "null") . 
+	 				", " .
+	 					($challenge_details ? "'{$challenge_details}'" : "null") . 
+	 				", " .
+	 					$anonymous .
+	 				", " .
+	 					"now()" .
+	 				", " .
+	 					($lat ? "'{$lat}'" : "null") . 
+	 				", " .
+	 					($lon ? "'{$lon}'" : "null") . 
+	 				")";
+	 	$res = mysqli_query($db, $query);
+	 	$card_id = mysqli_insert_id($db);
+
+		$query =	"INSERT INTO collaborations " .
+					"(user_id, card_id, accepted, status) " .
+					"VALUES ({$founder_id}, {$card_id}, 1, 'owner')";
+		$res = mysqli_query($db, $query);
+	}
 
 
 	// $card;
-	// $query =	"SELECT * FROM cards WHERE id = {$new_card_id}";
+	// $query =	"SELECT * FROM cards WHERE id = {$card_id}";
 	// $res = mysqli_query($db, $query);
 	// while($row = mysqli_fetch_assoc($res))
 	// 	$card = $row;
-	$card = (object)array("id" => $new_card_id, "founder_id" => $founder_id, "pitch" => $pitch, "photo_url" => $photo_url, "who" => $who, "stage" => $stage, "challenge" => $challenge, "challenge_details" => $challenge_details, "anonymous" => $anonymous, "industry" => $industry, "networks" => $networks, "comments" => []);
 
-	// if(is_a($res, 'mysqli_result')) mysqli_free_result($res);
+	$card = (object)array("id" => $card_id, "founder_id" => $founder_id, "pitch" => $pitch, "photo_url" => $photo_url, "background" => $who, "stage" => $stage, "challenge" => $challenge, "challenge_details" => $challenge_details, "anonymous" => $anonymous, "industry_string" => $industry, "networks" => $networks, "comments" => $comments, "followers" => $followers);
+
+	if(is_a($res, 'mysqli_result')) mysqli_free_result($res);
 	mysqli_close($db);
 	exit(json_encode($card, JSON_PRETTY_PRINT));
 ?>

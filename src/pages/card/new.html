@@ -62,10 +62,10 @@
         <ion-label>Post Anonymously</ion-label>
         <ion-toggle name="anonymous" [(ngModel)]="item.anonymous" checked="false"></ion-toggle>
       </ion-item>
-      <ion-item>
+      <!-- <ion-item>
         <ion-label>Location</ion-label>
         <ion-toggle name="location" [(ngModel)]="item.location" checked="true"></ion-toggle>
-      </ion-item>
+      </ion-item> -->
       <ion-item>
         <ion-label>Share to Networks</ion-label>
         <ion-select name="networks" [(ngModel)]="item.networks" multiple="false" disabled="false">
@@ -75,6 +75,9 @@
       <p>This post will only be visible to members of the selected networks.</p>
 
       <button ion-button block round type="submit" [disabled]="!cardForm.form.valid">Share</button>
+
+      <br/>
+      <button *ngIf="this.item.id" ion-button block round color="danger" (click)="deleteCard($event)">Delete Card</button>
 
     </form>
 

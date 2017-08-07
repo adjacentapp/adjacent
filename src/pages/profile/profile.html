@@ -34,7 +34,7 @@
 
     <h5>{{myself? 'My ':''}}Ideas</h5>
     <ion-list>
-      <card-component *ngFor="let item of profile.cards" [handleTap]="showCard" [item]="item" [showTopComment]="false"></card-component>
+      <card-component *ngFor="let item of profile.cards" (click)="showCard($event, item)" [item]="item" [showTopComment]="false"></card-component>
     </ion-list>
   </div>
 

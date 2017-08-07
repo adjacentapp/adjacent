@@ -21,7 +21,7 @@
 	}
 
 	// Count collaborations user owns
-	$query =	"SELECT id, author_id as user_id, idea as pitch, industry_string as industry, anonymous, challenge, background, stage, challenge_details, create_time as created_at, update_time as updated_at " .
+	$query =	"SELECT id, author_id as user_id, idea as pitch, industry_string as industry, anonymous, challenge, background, stage, challenge_details, create_time as created_at, update_time as updated_at, anonymous " .
 				"FROM cards WHERE author_id = ${user_id} AND active = 1 ";
 	if($user_id != $my_id) $query .= "AND anonymous = 0 ";
 	$query .=	"ORDER BY created_at DESC";

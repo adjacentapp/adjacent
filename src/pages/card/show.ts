@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
+import { NewCardPage } from '../../pages/card/new';
 
 @Component({
   selector: 'show-card-page',
@@ -10,15 +11,27 @@ import { AuthProvider } from '../../providers/auth/auth';
 export class ShowCardPage {
   item: any;
   founder: boolean = false;
+  callback: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider) {
-    // If we navigated to this page, we will have an item available as a nav param
+    this.callback = this.navParams.get('callback');
     this.item = navParams.get('item');
     if(this.item.founder_id == this.auth.currentUser.id) this.founder = true;
   }
 
-  iterateTapped () {
-    alert("Iterate on your idea.")
+  iterateTapped = () => {
+    let handleCallback = (_params) => {
+      return new Promise((resolve, reject) => {
+        this.callback(_params).then(()=>{
+          resolve();
+         });
+      });
+    }
+
+    this.navCtrl.push(NewCardPage, {
+      item: this.item,
+      callback: handleCallback
+    });
   }
 
   historyTapped (age) {
