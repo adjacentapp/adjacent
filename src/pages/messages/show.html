@@ -5,5 +5,20 @@
 </ion-header>
 
 <ion-content>
+	<ion-infinite-scroll *ngIf="!reachedEnd" enabled="!reachedEnd" (ionInfinite)="$event.waitFor(doInfinite())" position="top">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+	
 	<message *ngFor="let msg of item.messages" [item]="msg"></message>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+  	<ion-buttons left>
+  	</ion-buttons>
+    <ion-input [(ngModel)]="draft.text" type="text" placeholder="Type a message"></ion-input>
+    <ion-buttons right>
+    	<button ion-button round [disabled]="!draft.text.length" (click)="sendMessage($event)">Send</button>
+  	</ion-buttons>
+  </ion-toolbar>
+</ion-footer>

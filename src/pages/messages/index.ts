@@ -16,7 +16,7 @@ export class MessagesPage {
   filters: any = [];
   reachedEnd: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private msg: MessagesProvider, private auth: AuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public msg: MessagesProvider, private auth: AuthProvider) {
   	this.loading = true;
   	this.msg.getConversations(this.auth.currentUser.id)
   		.subscribe(
@@ -39,24 +39,15 @@ export class MessagesPage {
     });
   }
 
-  doInfinite(e){
-    // let offset = this.items.length;
-    // this.bookmarks.getBookmarks(this.auth.currentUser.id, offset, this.filters)
-    // 	.subscribe(
-    // 		items => {
-    // 			this.items = this.items.concat(items);
-    // 			if(!items.length){
-    // 				this.reachedEnd = true;
-    // 			}
-    // 		},
-    // 		error => console.log(<any>error),
-    // 		() => {
-    // 			this.loading = false;
-    			e.complete();
-    // 		}
-    // 	);
+  doRefresh (e) {
+    this.msg.getConversations(this.auth.currentUser.id)
+      .subscribe(
+        items => this.items = items,
+        error => console.log(<any>error),
+        () => {
+          e.complete();
+        }
+      );
   }
-
-  
 
 }

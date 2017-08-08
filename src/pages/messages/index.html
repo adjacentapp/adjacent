@@ -9,6 +9,10 @@
 
 
 <ion-content>
+  
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
 	<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 
@@ -25,8 +29,8 @@
     </ion-item>
 	</ion-list>
 
-	<ion-infinite-scroll *ngIf="!reachedEnd" (ionInfinite)="doInfinite($event)">
+	<!-- <ion-infinite-scroll *ngIf="!reachedEnd" (ionInfinite)="doInfinite($event)">
 		<ion-infinite-scroll-content></ion-infinite-scroll-content>
-	</ion-infinite-scroll>
+	</ion-infinite-scroll> -->
 
 </ion-content>

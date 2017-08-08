@@ -41,21 +41,26 @@ export class BookmarksPage {
 		});
 	}
 
-	doInfinite(e){let offset = this.items.length;
-	  this.bookmarks.getBookmarks(this.auth.currentUser.id, offset, this.filters)
-	  	.subscribe(
-	  		items => {
-	  			this.items = this.items.concat(items);
-	  			if(!items.length){
-	  				this.reachedEnd = true;
-	  			}
-	  		},
-	  		error => console.log(<any>error),
-	  		() => {
-	  			this.loading = false;
-	  			e.complete();
-	  		}
-	  	);
+	doInfinite (): Promise<any> {
+	  return new Promise((resolve) => {
+		setTimeout(() => {
+		  let offset = this.items.length;
+		  this.bookmarks.getBookmarks(this.auth.currentUser.id, offset, this.filters)
+		  	.subscribe(
+		  		items => {
+		  			this.items = this.items.concat(items);
+		  			if(items.length < 10)
+		  				this.reachedEnd = true;
+		  			resolve();
+		  		},
+		  		error => console.log(<any>error),
+		  		() => {
+		  			// this.loading = false;
+		  			// e.complete();
+		  		}
+		  	);
+	    }, 500);
+	  });
 	}
 
 }

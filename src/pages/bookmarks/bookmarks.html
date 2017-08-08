@@ -5,11 +5,11 @@
 		  <ion-icon name="menu"></ion-icon>
 		</button>
 		<ion-title>Following</ion-title>
-		<ion-buttons end>
+		<!-- <ion-buttons end>
 		  <button ion-button (click)="sortTapped()">
 		    Sort
 		  </button>
-		</ion-buttons>
+		</ion-buttons> -->
 	</ion-navbar>
 
 </ion-header>
@@ -23,7 +23,7 @@
 		<card-component *ngFor="let item of items" (click)="showCard($event, item)" [item]="item" [showTopComment]="false"></card-component>
 	</ion-list>
 
-	<ion-infinite-scroll *ngIf="!reachedEnd" (ionInfinite)="doInfinite($event)">
+	<ion-infinite-scroll *ngIf="!reachedEnd" enabled="!reachedEnd" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">
 		<ion-infinite-scroll-content></ion-infinite-scroll-content>
 	</ion-infinite-scroll>
 

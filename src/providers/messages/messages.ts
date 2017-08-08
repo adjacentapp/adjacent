@@ -16,7 +16,7 @@ export class Message {
     this.user = new User(user.id, user.fir_name, user.las_name, user.email, user.photo_url);
     this.text = text;
     this.timestamp = timestamp;
-    this.user = user;
+    // this.user = user;
   }
 }
 
@@ -47,14 +47,14 @@ export class MessagesProvider {
           .map(this.extractData)
           .map((data) => {
             return data.map((convo) => {
-              return new Conversation(convo.conversation_id, convo.other, [convo.last_message], convo.timestamp);
+              return new Conversation(convo.conversation_id, convo.other, convo.messages, convo.timestamp);
             });
           })
           .catch(this.handleError);
   }
 
-  getMessages(user_id, offset): Observable<any> {
-    let query = '?user_id=' + user_id + '&offset=' + offset;
+  getMessages(convo_id, offset): Observable<any> {
+    let query = '?convo_id=' + convo_id + '&offset=' + offset;
     let url = globs.BASE_API_URL + 'get_messages.php' + query;
     return this.http.get(url)
           .map(this.extractData)
@@ -66,7 +66,7 @@ export class MessagesProvider {
           .catch(this.handleError);
   }
 
-  postMessage (data): Observable<any> {
+  post(data): Observable<any> {
     let url = globs.BASE_API_URL + 'post_message.php';
     return this.http.post(url, data)
             .map(this.extractData)
