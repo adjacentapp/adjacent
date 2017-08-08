@@ -1,22 +1,21 @@
 <?php
 	header('Access-Control-Allow-Origin: *');
-	header('Access-Control-Allow-Headers: *');
-	// header('Content-Type: application/json');
+	// header('Access-Control-Allow-Headers: *');
+	header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 	require_once('../db_connect.php');
-
 	$db = connect_db();
-
-	// Decode card into JSON
+	
 	$postdata = file_get_contents("php://input");
 	$data = json_decode($postdata);
-	@$conversation_id = mysqli_real_escape_string($db, $data->conversation_id);
-	@$new_conversation = $data->conversation_id ? false : true;
-	@$user_id = mysqli_real_escape_string($db, $data->user_id);
+	@$conversation_id = $data->conversation_id ? mysqli_real_escape_string($db, $data->conversation_id) : null;
+	@$card_id = $data->card_id ? mysqli_real_escape_string($db, $data->card_id) : 0;
+	// @$new_conversation = $data->conversation_id ? false : true;
+	@$user_id = mysqli_real_escape_string($db, $data->user->id);
 	@$other_id = mysqli_real_escape_string($db, $data->other_id);
 	@$text = mysqli_real_escape_string($db, $data->text);
 
-	// Create new conversation if none exists
-	if($new_conversation){
+	if(!$conversation_id){
+		// Create new conversation
 	 	$query =	"INSERT INTO conversations " .
 	 				"(author_id, other_id, card_id, message_time) " .
 	 				"VALUES (" .
@@ -24,15 +23,20 @@
 	 				", " .
 	 					$other_id .
 	 				", " .
-	 					0 .
+	 					$card_id .
 	 				", " .
 	 					"now()" .
 	 				")";
 	 	$res = mysqli_query($db, $query);
 	 	$conversation_id = mysqli_insert_id($db);
 	 }
+	 else {
+	 	// Update conversation timestamp
+	 	$query =	"UPDATE conversations SET message_time = now() WHERE conversation_id = {$conversation_id}";
+	 	$res = mysqli_query($db, $query);
+	 }
 
-	 echo $conversation_id;
+	 // echo $conversation_id;
  	
  	// Insert new message
  	$query =	"INSERT INTO messages " .
@@ -47,26 +51,19 @@
  	$res = mysqli_query($db, $query);
  	$message_id = mysqli_insert_id($db);
 
- 	// Update conversation timestamp
- 	if(!$new_conversation){
-	 	$query =	"UPDATE conversations " .
-	 				"SET message_time = now() " .
-	 				"WHERE conversation_id = " . $conversation_id;
-	 	$res = mysqli_query($db, $query);
-	 }
-
 
 	 // Check if user is blocked
 	$query =	"SELECT * FROM silencers " .
 				"WHERE user_id = " . $other_id .
 				" AND other_id = " . $user_id;
-	if(mysqli_num_rows($res)>0){
-		// Close connection
-		mysqli_free_result($res);
-		mysqli_close($db);
-		exit();
-	}
-
+	$res = mysqli_query($db, $query);
+	if(is_a($res, 'mysqli_result'))
+		if(mysqli_num_rows($res)>0){
+			// Close connection
+			mysqli_free_result($res);
+			mysqli_close($db);
+			exit();
+		}
 
   	// Post receipts
 	$query =	"INSERT INTO message_receipts " .
@@ -126,5 +123,7 @@
  	// Close connection
  	mysqli_free_result($res);
 	mysqli_close($db);
-	exit();
+	// exit();
+	$msg = (object)array("id" => $message_id, "conversation_id" => $conversation_id, "user_id" => $user_id, "other_id" => $other_id, "text" => $text, "card_id" => $card_id);
+	exit(json_encode($msg));
 ?>

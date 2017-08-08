@@ -60,6 +60,7 @@
 	$query =	"SELECT * FROM silencers " .
 				"WHERE user_id = " . $other_id .
 				" AND other_id = " . $user_id;
+	$res = mysqli_query($db, $query);
 	if(mysqli_num_rows($res)>0){
 		// Close connection
 		mysqli_free_result($res);

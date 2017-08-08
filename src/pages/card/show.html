@@ -5,14 +5,13 @@
     </button>
     <ion-buttons end *ngIf="founder">
       <button ion-button (click)="iterateTapped()">
-        <!-- <ion-icon name="refresh"></ion-icon> -->
         Edit
       </button>
     </ion-buttons>
     <ion-buttons end *ngIf="!founder">
-      <!-- <button ion-button icon-only (click)="historyTapped('3 weeks')">
-        3W <ion-icon name="refresh"></ion-icon>
-      </button> -->
+      <button ion-button icon-only (click)="goToMessage()">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -23,9 +22,8 @@
   </ion-refresher>
 
   <card-component [item]="item" [showTopComment]="false" [showDetails]="true"></card-component>
-
   <ion-row>
     <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="wall.prependComment($event)"></new-comment-component>
-    <wall-component #wall [card_id]="item.id"></wall-component>
+    <wall-component #wall [card_id]="item.id" [card]="item"></wall-component>
   </ion-row>
 </ion-content>

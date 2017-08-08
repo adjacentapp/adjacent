@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
 import { NewCardPage } from '../../pages/card/new';
+import { ShowMessagePage } from '../../pages/messages/show';
 
 @Component({
   selector: 'show-card-page',
@@ -34,8 +35,20 @@ export class ShowCardPage {
     });
   }
 
-  historyTapped (age) {
-     alert("View card's version history. Last iteration: " + age + " ago.")
+  goToMessage(){
+    this.navCtrl.push(ShowMessagePage, {
+      item: {
+        id: null,
+        anonymous: this.item.anonymous==1,
+        card_id: this.item.anonymous==1 ? this.item.id : 0, // card_id 0 is normal peer-peer convo
+        other_id: this.item.founder_id,
+        messages: [],
+        other: this.item.anonymous==1 ? null : {
+          id: this.item.founder_id,
+          fir_name: this.item.who
+        }
+      }
+    }); 
   }
 
   doFollow (e, item){

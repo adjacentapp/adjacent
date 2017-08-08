@@ -94,7 +94,7 @@
 	// while($row = mysqli_fetch_assoc($res))
 	// 	$card = $row;
 
-	$card = (object)array("id" => $card_id, "founder_id" => $founder_id, "pitch" => $pitch, "photo_url" => $photo_url, "background" => $who, "stage" => $stage, "challenge" => $challenge, "challenge_details" => $challenge_details, "anonymous" => $anonymous, "industry_string" => $industry, "networks" => $networks, "comments" => $comments, "followers" => $followers);
+	$card = (object)array("id" => $card_id, "founder_id" => $founder_id, "pitch" => $pitch, "photo_url" => $photo_url, "who" => $who, "stage" => $stage, "challenge" => $challenge, "challenge_details" => $challenge_details, "anonymous" => $anonymous, "industry" => $industry, "networks" => $networks, "comments" => $comments, "followers" => $followers);
 
 	if(is_a($res, 'mysqli_result')) mysqli_free_result($res);
 	mysqli_close($db);

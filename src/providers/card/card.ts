@@ -60,7 +60,7 @@ export class CardProvider {
           .map(this.extractData)
           .map((data) => {
             let manip = data.map((item, i) => {
-              return new Card(item.id, item.founder_id, item.pitch, item.industry_string, item.background, item.challenge, item.challenge_detail, item.stage, item.distance, item.comments, item.following, item.followers, item.anonymous, item.topComment);
+              return new Card(item.id, item.founder_id, item.pitch, item.industry, item.who, item.challenge, item.challenge_detail, item.stage, item.distance, item.comments, item.following, item.followers, item.anonymous, item.topComment);
              });
             console.log(manip);
             return manip;
@@ -85,7 +85,7 @@ export class CardProvider {
             .map(this.extractData)
             .map((item) => {
               console.log(item);
-              return new Card(item.id, item.founder_id, item.pitch, item.industry_string, item.background, item.challenge, item.challenge_detail, item.stage, 0, item.comments, false, item.followers, item.anonymous);
+              return new Card(item.id, item.founder_id, item.pitch, item.industry_string, item.who, item.challenge, item.challenge_detail, item.stage, 0, item.comments, false, item.followers, item.anonymous);
             })
             .catch(this.handleError)
   }
@@ -94,10 +94,6 @@ export class CardProvider {
     let url = globs.BASE_API_URL + 'delete_card.php';
     return this.http.post(url, {id: card_id})
             .map(this.extractData)
-            // .map((item) => {
-            //   console.log(item);
-            //   return new Card(item.id, item.founder_id, item.pitch, item.industry_string, item.background, item.challenge, item.challenge_detail, item.stage, 0, item.comments, false, item.followers, item.anonymous);
-            // })
             .catch(this.handleError)
   }
 

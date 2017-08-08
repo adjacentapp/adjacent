@@ -50,7 +50,6 @@ export class DiscoverPage {
 
 	slideChanged() {
 		let currentIndex = this.slides.getActiveIndex();
-		console.log('Current index is', currentIndex);
 		if(!this.reachedEnd && !this.dealing && currentIndex >= this.items.length - 2) // deal more cards when 2 away from end
 			this.dealCards();
 	}

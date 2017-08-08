@@ -10,7 +10,7 @@
 		</ion-refresher>
 
 		<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
-		<h3 *ngIf="!loading && notifications.length===0">No notifications wtf</h3>
+		<h3 *ngIf="!loading && notifications.length===0">No notifications</h3>
 
 
 		<ion-list *ngIf="!loading && notifications.length > 0">

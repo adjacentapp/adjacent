@@ -1,8 +1,11 @@
 <ion-item *ngIf="item.user" text-wrap>
-  <ion-avatar item-left (click)="goToProfile($event, item.user.id)">
-    <div *ngIf='item.user.photo_url' [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
+  <ion-avatar item-left (click)="goToProfile($event, item.user.id)" class="{{item.user.id == card.founder_id ? 'founder' : ''}}">
+    <div *ngIf='(card && card.anonymous!=1 || item.user.id != card.founder_id) && item.user.photo_url' [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
+    <!-- <div *ngIf='anonymousFounder' class='img-bg {{card.industry ? card.industry.replace(" ","_") : ""}}'></div> -->
+    <ion-icon *ngIf="card && card.anonymous==1 && item.user.id == card.founder_id" name="bulb" color="primary"></ion-icon>
   </ion-avatar>
-  <h3 (click)="goToProfile($event, item.user.id)">{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
+  <h3 *ngIf="!anonymousFounder" (click)="goToProfile($event, item.user.id)">{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
+  <h3 *ngIf="anonymousFounder">Anonymous Founder</h3>
   <p>{{item.message}}</p>
   <div *ngIf="showVotes" item-right text-center class='voting {{vote==1?"upvoted":(vote==-1?"downvoted":"")}}'>
   	<ion-icon name="md-arrow-dropup" (click)="upvote($event, item)" color="{{vote == 1?'balanced':'secondary'}}"></ion-icon><br/>
@@ -16,7 +19,7 @@
       {{item.responses.length>0 ? item.responses.length + " Replies" : "Reply"}}
     </h6>
     <div class="new-comment-wrapper" *ngIf="item.expanded">
-      <comment-component *ngFor="let response of item.responses" [item]="response" [showVotes]="false"></comment-component>
+      <comment-component *ngFor="let response of item.responses" [item]="response" [showVotes]="false" [card]="card"></comment-component>
       <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.card_id" [response_to]="item.id" (newComment)="appendResponse($event)"></new-comment-component>
     </div>
   </div>

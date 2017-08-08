@@ -53,6 +53,19 @@ ion-avatar {
 		background-position: 50% 50%;
 		min-height: inherit;
 	}
+
+	&.founder {
+		border: solid 3px color($colors, primary);
+		position: relative;
+	}
+
+	ion-icon {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-size: 1.5em;
+	}
 }
 
 // Industry BG's

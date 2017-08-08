@@ -299,7 +299,7 @@
 		$cards[$key] = (object)array(
 			"id"		=> 	$card['id'],
 			"founder_id"=> 	$card['author_id'],
-			"industry"	=> 	0,
+			"industry"	=> 	$card['industry_string'],
 			"pitch"		=>	$card['idea'],
 			"distance"	=>	$card['distance'],
 			"comments"	=>	$card['comments'],
@@ -307,6 +307,7 @@
 			"following"	=>	$card['saved'],
 			"followers"	=>	$card['followers'],
 			"anonymous"	=>	$card['anonymous'],
+			"who"		=>	$card['background'],
 		);
 	}
 

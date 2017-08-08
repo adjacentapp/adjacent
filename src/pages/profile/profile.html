@@ -9,6 +9,11 @@
         Edit
       </button>
     </ion-buttons>
+    <ion-buttons end *ngIf="!founder">
+      <button ion-button icon-only (click)="goToMessage()">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

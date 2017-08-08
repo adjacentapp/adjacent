@@ -31,7 +31,7 @@
 		}
 
 		// Get comments
-		$query = 	"SELECT * FROM card_walls " .
+		$query = 	"SELECT * FROM card_walls" .
 					" WHERE card_id IN ( " . implode($card_ids, ", ") . " )" .
 					" AND prompt_id IS NULL";
 		$res = mysqli_query($db, $query);
@@ -41,7 +41,7 @@
 					$cards[$key]['comments'][] = $row['id'];
 
 		// Get other followers
-		$query = 	"SELECT * FROM bookmarks " .
+		$query = 	"SELECT * FROM bookmarks" .
 					" WHERE card_id IN ( " . implode($card_ids, ", ") . " )" .
 					" AND card_active = 1" .
 					" AND active = 1";

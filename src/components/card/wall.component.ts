@@ -9,7 +9,7 @@ import { WallProvider } from '../../providers/wall/wall';
 })
 export class WallComponent {
   @Input() card_id: string;
-  // @Input() prependComment: any;
+  @Input() card: any;
   comments: any[] = [];
   loading: boolean;
 

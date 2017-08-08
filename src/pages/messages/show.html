@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{item.other.fir_name}}</ion-title>
+    <ion-title>{{loading ? "" : (item.other ? item.other.fir_name : (item.card ? item.card.who : "") )}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -8,6 +8,10 @@
 	<ion-infinite-scroll *ngIf="!reachedEnd" enabled="!reachedEnd" (ionInfinite)="$event.waitFor(doInfinite())" position="top">
 		<ion-infinite-scroll-content></ion-infinite-scroll-content>
 	</ion-infinite-scroll>
+
+  <h5 *ngIf="item.anonymous">The founder has chosen to remain anonymous for this idea.</h5>
+
+  <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 	
 	<message *ngFor="let msg of item.messages" [item]="msg"></message>
 </ion-content>

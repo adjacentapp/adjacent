@@ -4,16 +4,19 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
 import { User } from '../../providers/auth/auth';
+import { Card } from '../../providers/card/card';
 
 export class Message {
   id: number;
   user: User;
+  card: Card;
   text: string;
   timestamp: any;
   
-  constructor (id: number, user: any, text: string, timestamp: any) {
+  constructor (id: number, user: any, card: any, text: string, timestamp: any) {
     this.id = id;
-    this.user = new User(user.id, user.fir_name, user.las_name, user.email, user.photo_url);
+    this.user = user ? new User(user.id, user.fir_name, user.las_name, user.email, user.photo_url) : null;
+    this.card = card ? new Card(card.id, card.founder_id, card.pitch, card.industry, card.who, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following, card.followers, card.anonymous) : null;
     this.text = text;
     this.timestamp = timestamp;
     // this.user = user;
@@ -23,14 +26,16 @@ export class Message {
 export class Conversation {
   id: number;
   other: User;
+  card: Card;
   messages: Message[];
   timestamp: any;
   
-  constructor (id: number, other: any, messages: any[], timestamp: any) {
+  constructor (id: number, other: any, card: any, messages: any[], timestamp: any) {
     this.id = id;
-    this.other = new User(other.id, other.fir_name, other.las_name, other.email, other.photo_url);
+    this.other = other ? new User(other.id, other.fir_name, other.las_name, other.email, other.photo_url) : null;
+    this.card = card ? new Card(card.id, card.founder_id, card.pitch, card.industry, card.who, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following, card.followers, card.anonymous) : null;
     this.timestamp = timestamp;
-    this.messages = messages.map((msg) => new Message(msg.id, msg.user, msg.text, msg.timestamp));
+    this.messages = messages.map((msg) => new Message(msg.id, msg.user, msg.card, msg.text, msg.timestamp));
   }
 }
 
@@ -40,14 +45,15 @@ export class MessagesProvider {
 
   constructor (private http: Http) {}
 
-  getConversations(user_id): Observable<any> {
+  getConversations(user_id, other_id?, card_id?): Observable<any> {
     let query = '?user_id=' + user_id;
+    query += (other_id ? '&other_id='+other_id : '') + (card_id ? '&card_id='+card_id : '');
     let url = globs.BASE_API_URL + 'get_conversations.php' + query;
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
             return data.map((convo) => {
-              return new Conversation(convo.conversation_id, convo.other, convo.messages, convo.timestamp);
+              return new Conversation(convo.conversation_id, convo.other, convo.card, convo.messages, convo.timestamp);
             });
           })
           .catch(this.handleError);
@@ -60,7 +66,7 @@ export class MessagesProvider {
           .map(this.extractData)
           .map((data) => {
             return data.map((msg) => {
-              return new Message(msg.id, msg.user, msg.text, msg.timestamp);
+              return new Message(msg.id, msg.user, msg.card, msg.text, msg.timestamp);
             });
           })
           .catch(this.handleError);

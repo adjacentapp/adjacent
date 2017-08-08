@@ -4,6 +4,7 @@ import { MessagesProvider, Message, Conversation } from '../../providers/message
 import { AuthProvider } from '../../providers/auth/auth';
 import { ShowMessagePage } from './show';
 import { ProfilePage } from '../../pages/profile/profile';
+import { ShowCardPage } from '../../pages/card/show';
 
 // @IonicPage()
 @Component({
@@ -36,6 +37,13 @@ export class MessagesPage {
     event.stopPropagation();
     this.navCtrl.push(ProfilePage, {
       user_id: user_id
+    });
+  }
+
+  goToCard(event, item) {
+    event.stopPropagation();
+    this.navCtrl.push(ShowCardPage, {
+      item: item
     });
   }
 

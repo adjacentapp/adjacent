@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AuthProvider, User } from '../../providers/auth/auth';
 import { ProfilePage } from '../../pages/profile/profile';
+import { ShowCardPage } from '../../pages/card/show';
 
 @Component({
   selector: 'message',
@@ -18,10 +19,16 @@ export class MessageComponent {
   	this.other = this.item.user.id !== this.auth.currentUser.id;
   }
 
-  goToProfile(event, user_id) {
-  	event.stopPropagation();
-  	this.navCtrl.push(ProfilePage, {
-  		user_id: user_id
-  	});
+  avatarTapped(event, item){
+    event.stopPropagation();
+    
+    if(item.user)
+      this.navCtrl.push(ProfilePage, {
+        user_id: item.user.id
+      });
+    else if(item.card)
+      this.navCtrl.push(ShowCardPage, {
+        item: item.card
+      });
   }
 }

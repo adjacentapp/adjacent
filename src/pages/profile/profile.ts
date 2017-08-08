@@ -6,6 +6,7 @@ import { EditProfilePage } from '../profile/edit';
 import { ProfileProvider, Profile } from '../../providers/profile/profile';
 import { AuthProvider } from '../../providers/auth/auth';
 import * as globs from '../../app/globals'
+import { ShowMessagePage } from '../../pages/messages/show';
 
 @Component({
 	selector: 'profile-page',
@@ -49,6 +50,20 @@ export class ProfilePage {
 			item: item,
 			callback: handleCallback
 		});
+	}
+
+	goToMessage(){
+	  this.navCtrl.push(ShowMessagePage, {
+	    item: {
+	      id: null,
+	      card_id: 0, // card_id 0 is normal peer-peer convo
+	      messages: [],
+	      other: {
+	        id: this.profile.user.id,
+	        fir_name: this.profile.user.fir_name
+	      }
+	    }
+	  }); 
 	}
 
 	showContributions(event) {
