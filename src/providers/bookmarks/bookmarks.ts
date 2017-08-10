@@ -12,15 +12,14 @@ export class BookmarksProvider {
   
   constructor (private http: Http) {}
   
-  getBookmarks(user_id, offset, filters): Observable<any[]> {
+  getBookmarks(user_id, offset): Observable<any[]> {
     let query = '?user_id=' + user_id + '&offset=' + offset;
-    // query += filters
-    let url = globs.BASE_API_URL + 'get_my_bookmarks.php' + query;
+    let url = globs.BASE_API_URL + 'get_bookmarks.php' + query;
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
-            return data.map((card) => {
-              return new Card(card.id, card.founder_id, card.pitch, card.industry, card.background, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following, card.followers, card.anonymous);
+            return data.map((item) => {
+              return new Card(item);
              });
           })
           .catch(this.handleError);

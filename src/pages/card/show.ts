@@ -39,31 +39,13 @@ export class ShowCardPage {
     this.navCtrl.push(ShowMessagePage, {
       item: {
         id: null,
-        anonymous: this.item.anonymous==1,
-        card_id: this.item.anonymous==1 ? this.item.id : 0, // card_id 0 is normal peer-peer convo
-        other_id: this.item.founder_id,
+        card_id: this.item.id,
         messages: [],
-        other: this.item.anonymous==1 ? null : {
-          id: this.item.founder_id,
-          fir_name: this.item.who
+        other: {
+          id: this.item.founder_id
         }
       }
     }); 
-  }
-
-  doFollow (e, item){
-    e.stopPropagation();
-    let data = {
-      user_id: this.auth.currentUser.id,
-      card_id: item.id,
-      new_entry: !item.following
-    };
-    this.card.follow(data).subscribe(
-      success => console.log(success),
-      error => console.log(error)
-    );
-    // dangerous optimism!
-    item.following = !item.following;
   }
 
   doRefresh (e) {

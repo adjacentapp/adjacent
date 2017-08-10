@@ -20,11 +20,11 @@ export class ShowMessagePage {
     
     if(!this.item.id){
       this.loading = true;
-      this.msg.getConversations(this.auth.currentUser.id, this.item.other_id, this.item.card_id)
+      this.msg.getConversations(this.auth.currentUser.id, this.item.other.id, this.item.card_id)
         .subscribe(
           items => {
-            if(items.length)
-              this.item = items[0];
+            this.item = items[0];
+            this.reachedEnd = this.item.messages.length < 10;
           },
           error => console.log(<any>error),
           () => {
@@ -41,8 +41,7 @@ export class ShowMessagePage {
       card_id: this.item.card_id || 0
 	};
   	
-  	if(this.item.messages.length < 10)
-		this.reachedEnd = true;
+    this.reachedEnd = this.item.messages.length < 10;
   }
 
   ionViewDidEnter() {
@@ -75,15 +74,10 @@ export class ShowMessagePage {
     		  	.subscribe(
     		  		items => {
     		  			this.item.messages = items.concat(this.item.messages);
-    		  			if(items.length < 10)
-    		  				this.reachedEnd = true;
+                this.reachedEnd = items.length < 10;
     		  			resolve();
     		  		},
-    		  		error => console.log(<any>error),
-    		  		() => {
-    		  			// this.loading = false;
-    		  			// e.complete();
-    		  		}
+    		  		error => console.log(<any>error)
     		  	);
     		  }, 500);
 	  });

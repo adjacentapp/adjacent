@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Followers</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+	<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
+
+	<ion-list>
+		<ion-item *ngFor="let item of items" (click)="goToProfile($event, item)">
+      
+	      <ion-avatar item-left>
+	        <div [ngStyle]="{'background-image': 'url(' + (item.photo_url || '') + ')'}"></div>
+	      </ion-avatar>
+	      <h3>{{item.fir_name + ' ' + item.las_name}}</h3>
+
+	      <!-- <p></p> -->
+
+	    </ion-item>
+	</ion-list>
+
+	<ion-infinite-scroll *ngIf="!reachedEnd" enabled="!reachedEnd" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+
+
+</ion-content>

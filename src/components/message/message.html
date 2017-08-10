@@ -1,6 +1,6 @@
 <ion-item text-wrap>
 	<ion-avatar *ngIf="other" item-left (click)="avatarTapped($event, item)">
-	    <div *ngIf='item.user && item.user.photo_url' [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
+	    <div *ngIf='!item.card' [ngStyle]="{'background-image': 'url(' + item.user.photo_url || '' + ')'}"></div>
 	    <div *ngIf='item.card' class='img-bg {{item.card.industry ? item.card.industry.replace(" ","_") : ""}}'></div>
     </ion-avatar>
 

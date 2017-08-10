@@ -9,8 +9,8 @@
       </button>
     </ion-buttons>
     <ion-buttons end *ngIf="!founder">
-      <button ion-button icon-only (click)="goToMessage()">
-        <ion-icon name="chatbubbles-outline"></ion-icon>
+      <button ion-button (click)="goToMessage()">
+        Message
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -23,7 +23,7 @@
 
   <card-component [item]="item" [showTopComment]="false" [showDetails]="true"></card-component>
   <ion-row>
-    <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="wall.prependComment($event)"></new-comment-component>
-    <wall-component #wall [card_id]="item.id" [card]="item"></wall-component>
+    <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="wall.prependComment($event)" [founder_id]="item.founder_id"></new-comment-component>
+    <wall-component #wall [card_id]="item.id" [founder_id]="item.founder_id"></wall-component>
   </ion-row>
 </ion-content>

@@ -4,9 +4,10 @@ import { Platform, MenuController, Nav, AlertController } from 'ionic-angular';
 import { DiscoverPage } from '../pages/discover/discover';
 import { ProfilePage } from '../pages/profile/profile';
 import { NewCardPage } from '../pages/card/new';
-import { BookmarksPage } from '../pages/bookmarks/bookmarks';
+// import { BookmarksPage } from '../pages/bookmarks/bookmarks';
 import { ShowCardPage } from '../pages/card/show';
 import { MessagesPage } from '../pages/messages/index';
+import { FoundedPage } from '../pages/founded/founded';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -24,12 +25,12 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage:any = 'LoginPage';
-  profPage:{title: string, component: any, icon: string} = { title: 'Profile', component: ProfilePage, icon: 'person' };
+  profPage:{title: string, component: any, icon: string} = { title: 'Profile', component: ProfilePage, icon: 'md-person' };
   pages: Array<{title: string, component: any, icon: string}> = [
-    // { title: 'Profile', component: ProfilePage, icon: 'person' },
-    { title: 'Pitch My Idea', component: NewCardPage, icon: 'bulb' },
-    { title: "Ideas I'm Following", component: BookmarksPage, icon: 'bookmark' },
-    { title: "Messages", component: MessagesPage, icon: 'chatbubbles' },
+    { title: 'Pitch an Idea', component: NewCardPage, icon: 'md-create' },
+    { title: 'My Ideas', component: FoundedPage, icon: 'md-bulb' },
+    // { title: "Ideas I'm Following", component: BookmarksPage, icon: 'bookmark' },
+    { title: "Messages", component: MessagesPage, icon: 'md-chatbubbles' },
   ];
   username = '';
   email = '';

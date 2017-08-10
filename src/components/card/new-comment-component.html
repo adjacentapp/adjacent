@@ -1,10 +1,18 @@
-<ion-item text-wrap>
+<ion-item text-wrap [ngClass]="founder ? 'founder' : ''">
+  
   <ion-avatar item-left>
-    <div *ngIf='item.user.photo_url' [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
+    <div *ngIf="!founder" [ngStyle]="{'background-image': 'url(' + (item.user.photo_url || '') + ')'}"></div>
+    <ion-icon *ngIf="founder" name="md-bulb" color="primary"></ion-icon>
   </ion-avatar>
-  <h3>{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
-  <ion-textarea [(ngModel)]="item.message" type="text" placeholder="Share your own constructive feedback"></ion-textarea>
+  
+  <h3 *ngIf="!founder">{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
+  <h3 *ngIf="founder">Founder</h3>
+  
+  <ion-textarea *ngIf="!founder" [(ngModel)]="item.message" type="text" placeholder="Share your own constructive feedback"></ion-textarea>
+  <ion-textarea *ngIf="founder" [(ngModel)]="item.message" type="text" placeholder="Share additional info about your idea"></ion-textarea>
+  
   <div class="post-btn-wrapper" item-right text-center>
     <button *ngIf="!item.response" ion-button round [disabled]="!item.message.length" (click)="postComment($event, item)">{{item.response_to ? "Reply" : "Post"}}</button>
   </div>
+
 </ion-item>

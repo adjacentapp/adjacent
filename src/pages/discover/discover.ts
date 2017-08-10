@@ -71,19 +71,4 @@ export class DiscoverPage {
 				}
 			);
 	}
-
-	doFollow(e, item){
-		e.stopPropagation();
-		let data = {
-		  user_id: this.auth.currentUser.id,
-		  card_id: item.id,
-		  new_entry: !item.following
-		};
-		this.card.follow(data).subscribe(
-			success => console.log(success),
-			error => this.errorMessage = <any>error
-		);
-		// dangerous optimism!
-		item.following = !item.following;
-	}
 }

@@ -9,9 +9,9 @@
         Edit
       </button>
     </ion-buttons>
-    <ion-buttons end *ngIf="!founder">
-      <button ion-button icon-only (click)="goToMessage()">
-        <ion-icon name="chatbubbles-outline"></ion-icon>
+    <ion-buttons end *ngIf="!myself">
+      <button ion-button (click)="goToMessage()">
+        Message
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -30,17 +30,15 @@
 
     <div *ngIf="profile.skills.length">
       <h5>Skills</h5>
-      <div class="skill" *ngFor="let skill of profile.skills">#{{skill}}</div>
+      <p>
+        <span class="skill" *ngFor="let skill of profile.skills">#{{skill}}</span>
+      </p>
     </div>
 
     <!-- <h5>Member of: {{networkCount}} Network{{networkCount === 1 ? '' : 's'}}</h5> -->
-    
-    <!-- <h5>{{myself? 'My ':''}}Contribution score: 28</h5> -->
 
-    <h5>{{myself? 'My ':''}}Ideas</h5>
-    <ion-list>
-      <card-component *ngFor="let item of profile.cards" (click)="showCard($event, item)" [item]="item" [showTopComment]="false"></card-component>
-    </ion-list>
+    <bookmarks [user_id]=(profile.user.id)></bookmarks>
+
   </div>
 
 </ion-content>

@@ -23,14 +23,20 @@
 
       <button ion-item (click)="logout()" detail-none>
         Logout
-        <ion-icon item-right name="log-out"></ion-icon>
+        <ion-icon item-right name="md-log-out"></ion-icon>
       </button>
 
     </ion-list>
+
+    <button id="mission-btn" ion-item (click)="logout()" detail-none>
+      <ion-icon item-right name="information"></ion-icon>
+      The Adjacent Mission
+    </button>
+
   </ion-content>
 </ion-menu>
 
-<notification-center-component [inheritedContent]="content" (goToCard)="goToCard($event)" (goToProfile)="goToProfile($event)"> -->
+<notification-center-component [inheritedContent]="content" (goToCard)="goToCard($event)" (goToProfile)="goToProfile($event)">
 </notification-center-component>
 
 <ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav>

@@ -1,6 +1,6 @@
 <ion-list>
 	<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
-	<comment-component *ngFor="let comment of comments" [item]="comment" [card]="card"></comment-component>
+	<comment-component *ngFor="let comment of comments" [item]="comment" [founder_id]="founder_id"></comment-component>
 </ion-list>
 
 <!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

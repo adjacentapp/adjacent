@@ -1,12 +1,11 @@
 <ion-card>
 
   <ion-card-content>
-    <!-- <div class='img-bg {{industries[item.industry].replace(" ","_")}}'></div> -->
     <div class='img-bg {{item.industry ? item.industry.replace(" ","_") : ""}}'></div>
     <ion-list>
       <ion-title *ngIf="showDetails">The Vision</ion-title>
       <ion-item text-wrap>
-        <ion-icon name="bulb" item-start></ion-icon>
+        <ion-icon name="md-bulb" item-start></ion-icon>
         <h2>Pitch</h2>
         <p>{{item.pitch}}</p>
       </ion-item>
@@ -56,18 +55,16 @@
         <ion-icon name="bookmark"></ion-icon>
         <div>{{item.following ? item.followers.length + ' Follower'+(item.followers.length!==1 ? 's' : '') : 'Follow'}}</div>
       </button>
-      <button *ngIf="founder" ion-button icon-left clear small color="primary" (click)="$event.preventDefault();$event.stopPropagation();">
-        <ion-icon *ngIf="!item.anonymous" name="bulb"></ion-icon>
-        <div *ngIf="!item.anonymous"><!-- Founder -->{{item.followers.length}} Follower{{item.followers.length!==1 ? 's' : ''}}</div>
-        <ion-icon *ngIf="item.anonymous" name="eye-off"></ion-icon>
-        <div *ngIf="item.anonymous"><!-- Anonymous -->{{item.followers.length}} Follower{{item.followers.length!==1 ? 's' : ''}}</div>
+      <button *ngIf="founder" ion-button icon-left clear small color="primary" (click)="goToFollowers($event, item)">
+        <ion-icon name="md-bulb"></ion-icon>
+        {{item.followers.length}} Follower{{item.followers.length!==1 ? 's' : ''}}
       </button>
     </ion-col>
   </ion-row>
   
   <ion-row *ngIf="showTopComment">
-    <comment-component *ngIf="item.topComment" [item]="item.topComment" [showVotes]="showTopCommentVotes"></comment-component>
-    <new-comment-component *ngIf="!item.topComment" (click)="$event.stopPropagation()" [card_id]="item.card_id" (newComment)="newTopComment($event)"></new-comment-component>
+    <comment-component *ngIf="item.topComment" [item]="item.topComment" [showVotes]="showTopCommentVotes" [founder_id]="item.founder_id"></comment-component>
+    <new-comment-component *ngIf="!item.topComment" (click)="$event.stopPropagation()" [card_id]="item.card_id" (newComment)="newTopComment($event)" [founder_id]="item.founder_id"></new-comment-component>
   </ion-row>
 
 </ion-card>

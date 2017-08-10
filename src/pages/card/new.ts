@@ -27,10 +27,10 @@ export class NewCardPage {
     	industry: null,
     	pitch: '',
       who: '',
-      location: true,
+      // location: true,
       // lat: 0,
       // lon: 0,
-    	anonymous: false,
+    	// anonymous: false,
       challenge: null,
       challenge_details: '',
     	stage: 0,
@@ -52,8 +52,8 @@ export class NewCardPage {
   deleteCard(e){
     e.preventDefault();
     let alert = this.alertCtrl.create({
-      title: 'Delete Card?',
-      message: 'This cannot be undone. You can toggle "Anonymous" to hide this idea from your profile instead.',
+      title: 'Delete Card',
+      message: 'Are you sure? This cannot be undone.',
       buttons: [
         {
           text: 'Cancel',

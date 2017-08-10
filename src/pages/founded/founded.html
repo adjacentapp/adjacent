@@ -1,0 +1,30 @@
+<ion-header>
+
+	<ion-navbar>
+		<button ion-button menuToggle>
+		  <ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>My Ideas</ion-title>
+		<ion-buttons end>
+		  <button ion-button (click)="goToNewCard($event)">
+		    Create
+		  </button>
+		</ion-buttons>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+	<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
+
+	<ion-list>
+		<card-component *ngFor="let item of items" (click)="showCard($event, item)" [item]="item" [showTopComment]="false"></card-component>
+	</ion-list>
+
+	<ion-infinite-scroll *ngIf="!reachedEnd" enabled="!reachedEnd" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+
+</ion-content>

@@ -16,7 +16,7 @@ export class Message {
   constructor (id: number, user: any, card: any, text: string, timestamp: any) {
     this.id = id;
     this.user = user ? new User(user.id, user.fir_name, user.las_name, user.email, user.photo_url) : null;
-    this.card = card ? new Card(card.id, card.founder_id, card.pitch, card.industry, card.who, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following, card.followers, card.anonymous) : null;
+    this.card = card ? new Card(card) : null;
     this.text = text;
     this.timestamp = timestamp;
     // this.user = user;
@@ -33,7 +33,7 @@ export class Conversation {
   constructor (id: number, other: any, card: any, messages: any[], timestamp: any) {
     this.id = id;
     this.other = other ? new User(other.id, other.fir_name, other.las_name, other.email, other.photo_url) : null;
-    this.card = card ? new Card(card.id, card.founder_id, card.pitch, card.industry, card.who, card.challenge, card.challenge_detail, card.stage, card.distance, card.comments, card.following, card.followers, card.anonymous) : null;
+    this.card = card ? new Card(card) : null;
     this.timestamp = timestamp;
     this.messages = messages.map((msg) => new Message(msg.id, msg.user, msg.card, msg.text, msg.timestamp));
   }

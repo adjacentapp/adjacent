@@ -130,6 +130,19 @@ export class AuthProvider {
     });
   }
 
+  getFollowers(card_id, offset, limit): Observable<any[]> {
+    let query = '?card_id=' + card_id + '&offset=' + offset + '&limit=' + limit;
+    let url = globs.BASE_API_URL + 'get_followers.php' + query;
+    return this.http.get(url)
+          .map(this.extractData)
+          .map((data) => {
+            return data.map((item, i) => {
+              return new User(item.id, item.fir_name, item.las_name, item.email, item.photo_url);
+             });
+          })
+          .catch(this.handleError);
+  }
+
 
   private extractData(res: Response) {
     let body = res.json();

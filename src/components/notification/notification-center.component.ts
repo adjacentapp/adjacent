@@ -19,8 +19,9 @@ export class NotificationCenterComponent {
 
   ngOnInit() {
     this.loading = true;
-    this.notifications.push(new Notification('Title', 'and the message too.', null, null));
-    this.notifications.push(new Notification('Title', 'and the message too.', null, true));
+    // this.notifications.push(new Notification('Title', 'and the message too.', null, null));
+    // this.notifications.push(new Notification('Title', 'and the message too.', null, true));
+
     // this.wall.getWall(this.card_id)
     //   .subscribe(
     //     comments => {this.comments = comments; console.log(this.comments)},

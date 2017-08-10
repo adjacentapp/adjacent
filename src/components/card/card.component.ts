@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { CardProvider } from '../../providers/card/card';
+import { CardProvider, Card } from '../../providers/card/card';
+import { FollowersPage } from '../../pages/followers/followers';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { AuthProvider } from '../../providers/auth/auth';
 import * as globs from '../../app/globals'
@@ -10,22 +11,12 @@ import * as globs from '../../app/globals'
   templateUrl: 'card-component.html'
 })
 export class CardComponent {
-  @Input() item: {
-    id: number,
-    founder_id: number,
-    industry: string,
-    pitch: string,
-    distance: string,
-    following: boolean,
-    comments: any,
-    topComment: any,
-  };
-  // @Input() handleTap: any;
+  @Input() item: Card;
   @Input() showTopComment: boolean = true;
   @Input() showTopCommentVotes: boolean = true;
   @Input() showDetails: boolean = false;
   founder: boolean = false;
-  industries: string[] = globs.INDUSTRIES;
+  // industries: string[] = globs.INDUSTRIES;
   stages: string[] = globs.STAGES;
 
   constructor(
@@ -41,11 +32,6 @@ export class CardComponent {
     // item is now accessible
     if(this.item.founder_id == this.auth.currentUser.id) this.founder = true;
   }
-
-  // itemTapped(event, item) {
-  //   if(this.handleTap)
-  //     this.handleTap(event, item);
-  // }
 
   newTopComment(item){
     // for new-comment shortcut: set newComment as topComment
@@ -65,21 +51,17 @@ export class CardComponent {
     );
     // dangerous optimism!
     item.following = !item.following;
-
-    if(globs.firstFollow){
-      globs.setFirstFollowFalse();
-      // this.firstFollowToast();
-    }
+    if(item.following)
+      item.followers.push(this.auth.currentUser.id);
+    else
+      item.followers.splice(  item.followers.indexOf(this.auth.currentUser.id), 1 );
   }
 
-  firstFollowToast() {
-    let toast = this.toastCtrl.create({
-      message: 'You will be notified when the founder iterates on this idea.',
-      duration: 6000,
-      position: 'bottom',
-      showCloseButton: true,
+  goToFollowers(e, item){
+    e.stopPropagation();
+    this.navCtrl.push(FollowersPage, {
+      card_id: item.id
     });
-    toast.present();
   }
 
   shareTapped(e, item){

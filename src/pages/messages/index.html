@@ -19,16 +19,16 @@
 	<ion-list>
 		<ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
       
-      <ion-avatar *ngIf="item.other" item-left (click)="goToProfile($event, item.other.id)">
+      <ion-avatar *ngIf="!item.card" item-left (click)="goToProfile($event, item.other.id)">
         <div *ngIf='item.other.photo_url' [ngStyle]="{'background-image': 'url(' + item.other.photo_url + ')'}"></div>
       </ion-avatar>
       <h3 *ngIf="item.other">{{item.other.fir_name + ' ' + item.other.las_name}}</h3>
 
       <ion-avatar *ngIf="item.card" item-left (click)="goToCard($event, item.card)">
         <div class='img-bg {{item.card.industry ? item.card.industry.replace(" ","_") : ""}}'></div>
-        <!-- <ion-icon *ngIf="card && card.anonymous==1 && item.user.id == card.founder_id" name="bulb" color="primary"></ion-icon> -->
+        <!-- <ion-icon *ngIf="card && card.anonymous==1 && item.user.id == card.founder_id" name="md-bulb" color="primary"></ion-icon> -->
       </ion-avatar>
-      <h3 *ngIf="item.card">{{item.card.who}}</h3>
+      <h3 *ngIf="item.card">{{item.card.pitch}}</h3>
 
       <p>
         {{item.messages[item.messages.length-1].user.id==auth.currentUser.id ? 'You: ' : ''}}

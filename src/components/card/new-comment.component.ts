@@ -9,8 +9,10 @@ import { WallProvider } from '../../providers/wall/wall';
 })
 export class NewCommentComponent {
   @Input() card_id: string;
+  @Input() founder_id: number;
   @Input() response_to: string = null;
   @Output() newComment: EventEmitter<any> = new EventEmitter();
+  founder: boolean = false;
 
   item: {
     message: string,
@@ -28,6 +30,10 @@ export class NewCommentComponent {
       card_id: this.card_id,
       user: this.auth.currentUser,
     }
+  }
+
+  ngOnInit(){
+    this.founder = this.founder_id == this.auth.currentUser.id;
   }
 
   postComment(e, item) {

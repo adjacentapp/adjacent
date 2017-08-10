@@ -11,10 +11,10 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class CommentComponent {
   @Input() item: Comment;
-  @Input() card: any = {};
+  @Input() founder_id: number;
   @Input() showVotes: boolean = true;
   vote: number;
-  anonymousFounder: boolean = false;
+  founder: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private wall: WallProvider, private auth: AuthProvider) {}
 
@@ -26,13 +26,13 @@ export class CommentComponent {
       if(disliker_id == this.auth.currentUser.id)
         this.vote = -1;
 
-    this.anonymousFounder = this.card && this.card.anonymous==1 && this.item.user.id == this.card.founder_id;
+    this.founder = this.founder_id == this.item.user.id;
   }
 
   goToProfile(event, user_id) {
   	event.stopPropagation();
-    
-    if(this.anonymousFounder && user_id == this.card.founder_id) return;
+  
+    if(this.founder) return;
 
   	this.navCtrl.push(ProfilePage, {
   		user_id: user_id

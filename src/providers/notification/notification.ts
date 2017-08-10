@@ -13,10 +13,9 @@ export class Notification {
   constructor(title: string, message: string, card: any, user: any) {
     this.title = title;
     this.message = message;
-    // this.card = card
-    this.card = new Card(48, 1, "a service that will retrofit your dumb-car to be a self-driving car.", "Art", "Bg", "Chall", null, 0, 2, [], null, [], false);
-    if(user)
-      this.user = new User(1, 'Sal', 'Saia', "salulos@gmail.com", "https://graph.facebook.com/10154226234631397/picture?type=large");
+    // this.card = new Card(48, 1, "a service that will retrofit your dumb-car to be a self-driving car.", "Art", "Bg", "Chall", null, 0, 2, [], null, [], false);
+    // if(user)
+    //   this.user = new User(1, 'Sal', 'Saia', "salulos@gmail.com", "https://graph.facebook.com/10154226234631397/picture?type=large");
   }
 }
 
