@@ -43,6 +43,12 @@ export class AuthProvider {
               if(data.valid){
                 this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token);
                 this.valid = true;
+                localStorage.token = token;
+                localStorage.user_id = data.user_id;
+                localStorage.fir_name = data.fir_name;
+                localStorage.las_name = data.las_name;
+                localStorage.email = data.email;
+                localStorage.photo_url = data.photo_url;
               }
               else {
                 this.valid = false;
@@ -53,13 +59,14 @@ export class AuthProvider {
   }
 
   login(credentials): Observable<any> {
-    let pass = this.sha256(globs.ENCRYPTION_KEY + credentials.password);
     let url = globs.BASE_API_URL + 'login.php';
-    url += '?email=' + credentials.email + '&pass=' + pass;
-    return this.http.get(url)
+    let data = {
+      email: credentials.email,
+      pass: this.sha256(globs.ENCRYPTION_KEY + credentials.password)
+    }
+    return this.http.post(url, data)
             .map(this.extractData)
             .map((data) => {
-              console.log(data);
               if(data.valid){
                 this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token);
                 this.valid = true;
@@ -108,11 +115,6 @@ export class AuthProvider {
                 
               })
               .catch(this.handleError);
-      // At this point store the credentials to your backend!
-      // return Observable.create(observer => {
-      //   observer.next(true);
-      //   observer.complete();
-      // });
     }
   }
   
@@ -130,7 +132,7 @@ export class AuthProvider {
     });
   }
 
-  getFollowers(card_id, offset, limit): Observable<any[]> {
+  public getFollowers(card_id, offset, limit): Observable<any[]> {
     let query = '?card_id=' + card_id + '&offset=' + offset + '&limit=' + limit;
     let url = globs.BASE_API_URL + 'get_followers.php' + query;
     return this.http.get(url)
@@ -140,6 +142,17 @@ export class AuthProvider {
               return new User(item.id, item.fir_name, item.las_name, item.email, item.photo_url);
              });
           })
+          .catch(this.handleError);
+  }
+
+  public registerPushToken(token): Observable<any[]> {
+    let url = globs.BASE_API_URL + 'post_device_token.php';
+    let data = {
+      user_id: this.currentUser.id,
+      token: token
+    }
+    return this.http.post(url, data)
+          .map(this.extractData)
           .catch(this.handleError);
   }
 

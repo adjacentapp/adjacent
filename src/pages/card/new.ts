@@ -42,9 +42,14 @@ export class NewCardPage {
   }
 
   submitCard(){
-    this.showLoading();
+    // this.showLoading();
     this.card.post(this.item).subscribe(
-      success => this.navCtrl.pop(),
+      success => {
+        this.navCtrl.pop();
+        this.navCtrl.push(ShowCardPage, {
+          item: this.item
+        });
+       },
       error => console.log(error)
     );
   }

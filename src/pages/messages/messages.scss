@@ -1,5 +1,8 @@
 page-message {
-
+	h3 {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }
 
 show-page-message {

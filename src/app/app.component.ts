@@ -8,6 +8,7 @@ import { NewCardPage } from '../pages/card/new';
 import { ShowCardPage } from '../pages/card/show';
 import { MessagesPage } from '../pages/messages/index';
 import { FoundedPage } from '../pages/founded/founded';
+import { MissionPage } from '../pages/mission/mission';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,7 +17,6 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 import { AuthProvider } from '../providers/auth/auth';
 import { GlobalsProvider } from '../providers/globals/globals';
-
 
 @Component({
   templateUrl: 'app.html'
@@ -40,44 +40,18 @@ export class MyApp {
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public ga: GoogleAnalytics,
+    // public ga: GoogleAnalytics,
     private auth: AuthProvider,
     private globsProv: GlobalsProvider,
     private alertCtrl: AlertController
   ){
-    this.initializeApp();
-    this.checkDeepLink();
     this.getGlobs();
-  }
-
-  public logout() {
-    let alert = this.alertCtrl.create({
-      title: 'Logout?',
-      message: 'Are you sure you want to logout?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Logout',
-          handler: () => {
-            this.auth.logout().subscribe(succ => {
-              this.menu.close();
-              this.nav.setRoot('LoginPage');
-            });
-          }
-        }
-      ]
+    this.platform.ready().then( () => {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+        this.initGA();
+        this.checkDeepLink();
     });
-    alert.present();
-  }
-
-  checkDeepLink() {
-    console.log('deep linking');
   }
 
   getGlobs() {
@@ -88,23 +62,21 @@ export class MyApp {
       );
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-
-      this.ga.startTrackerWithId('UA-86377634-1')
-         .then(() => {
-           console.log('Google analytics is ready now');
-              this.ga.trackView('test');
-           // Tracker is ready
-           // You can now track pages or set additional information such as AppVersion or UserId
-         })
-         .catch(e => console.log('Error starting GoogleAnalytics', e));
-    });
+  initGA() {
+    // this.ga.startTrackerWithId('UA-86377634-1')
+    //    .then(() => {
+    //      console.log('Google analytics is ready now');
+    //         this.ga.trackView('test');
+    //      // Tracker is ready
+    //      // You can now track pages or set additional information such as AppVersion or UserId
+    //    })
+    //    .catch(e => console.log('Error starting GoogleAnalytics', e));
   }
+
+  checkDeepLink() {
+    console.log('deep linking');
+  }
+
 
   openPage(page) {
     this.menu.close();
@@ -123,5 +95,32 @@ export class MyApp {
     this.nav.push(ProfilePage, {
       user_id: item
     });
+  }
+
+  goToMission() {
+    this.menu.close();
+    this.nav.push(MissionPage);
+  }
+
+  logout() {
+    let alert = this.alertCtrl.create({
+      title: 'Logout?',
+      message: 'Are you sure you want to logout?',
+      buttons: [{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => console.log('Cancel clicked')
+        },
+        {
+          text: 'Logout',
+          handler: () => {
+            this.auth.logout().subscribe(succ => {
+              this.menu.close();
+              this.nav.setRoot('LoginPage');
+            });
+          }
+      }]
+    });
+    alert.present();
   }
 }

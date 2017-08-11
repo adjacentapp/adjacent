@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Create</ion-title>
+    <ion-title>{{item.id ? "Edit" : "Create"}}</ion-title>
     <!-- <ion-buttons end>
       <button ion-button (click)="shareTapped()">
         Share
@@ -74,7 +74,7 @@
       </ion-item>
       <p>This post will only be visible to members of the selected networks.</p>
 
-      <button ion-button block round type="submit" [disabled]="!cardForm.form.valid">Share</button>
+      <button ion-button block round type="submit" [disabled]="!cardForm.form.valid">{{this.item.id ? "Save" : "Share"}}</button>
 
       <br/>
       <button *ngIf="this.item.id" ion-button block round color="danger" (click)="deleteCard($event)">Delete Card</button>

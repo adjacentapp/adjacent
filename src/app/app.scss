@@ -88,6 +88,7 @@ ion-avatar {
 	background: #f0f0f0;
 	height: 30px;
 	width: 30px;
+	left: 1px;
 
 	ion-icon {
 		position: absolute;
@@ -99,6 +100,24 @@ ion-avatar {
 }
 
 // Industry BG's
+ion-avatar {
+	position: relative;
+	.img-bg:before {
+		opacity: 0.7;
+	}
+}
+ion-card.card ion-card-content,
+ion-avatar {
+	.img-bg,
+	.img-bg:before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+}
 .img-bg {
 	background-size: cover;
 	background-color: #666;

@@ -15,7 +15,7 @@
     <h6 (click)="item.expanded=!item.expanded">
       <ion-icon name="ios-arrow-down" *ngIf="!item.expanded"></ion-icon>
       <ion-icon name="ios-arrow-up" *ngIf="item.expanded"></ion-icon>
-      {{item.responses.length>0 ? item.responses.length + " Replies" : "Reply"}}
+      {{item.responses.length>0 ? (item.responses.length==1 ? "1 Reply" : item.responses.length + " Replies") : "Reply"}}
     </h6>
     <div class="new-comment-wrapper" *ngIf="item.expanded">
       <comment-component *ngFor="let response of item.responses" [item]="response" [showVotes]="false" [founder_id]="founder_id"></comment-component>

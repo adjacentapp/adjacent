@@ -9,11 +9,22 @@ discover-page {
 			font-size: 1.8rem;
 			height: 60vh;
 		}
+
+		/* tablets/desktops */
+		@media (min-width: 500px) {
+			max-width: 500px;
+			margin: 0 auto;
+		}
 	}
 
 	#tut-card {
-		ion-card.card .card-content {
-			height: calc(60vh + 145px);
+		ion-card.card {
+			.img-bg {
+				bottom: 0;
+			}
+			.card-content {
+				height: calc(60vh + 145px);
+			}
 		}
 
 		h1 {

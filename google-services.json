@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "432969043178",
+    "firebase_url": "https://adjacent-6d68f.firebaseio.com",
+    "project_id": "adjacent-6d68f",
+    "storage_bucket": "adjacent-6d68f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432969043178:android:2e84d14f48bf6166",
+        "android_client_info": {
+          "package_name": "com.medy.adjacentapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432969043178-u06pkf4mjoam37ggrp99eehdvah12r90.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkkveOvpyqdkZdjCpdylZNGeSEXZg7znQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
