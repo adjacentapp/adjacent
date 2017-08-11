@@ -38,8 +38,8 @@ export class WallProvider {
 
   constructor (private http: Http) {}
 
-  getWall (card_id): Observable<any[]> {
-    let query = '?card_id=' + card_id;
+  getWall (card_id, offset, limit): Observable<any[]> {
+    let query = '?card_id=' + card_id + '&offset=' + offset + '&limit=' + limit;
     let url = this.base_url + 'get_card_wall.php' + query;
     return this.http.get(url)
           .map(this.extractData)
@@ -64,26 +64,6 @@ export class WallProvider {
   }
 
   vote(item): Observable<any> {
-    // $scope.likePost = function(post){
-    //   if(!post.liked){
-    //     cardFactory.likeWallPost(post.id, post.card_id, user.id, true);
-    //     post.liked = true;
-
-    //     post.likes.push(user.id);
-    //   }
-    //   else {
-    //     cardFactory.likeWallPost(post.id, post.card_id, user.id, false);
-    //     post.liked = false;
-
-    //     var likes = [];
-    //     angular.forEach(post.likes, function(like){
-    //       if(like != user.id)
-    //         likes.push(like);
-    //     });
-    //     post.likes = likes;
-    //   }
-    // };
-
     let url = globs.BASE_API_URL + 'like_wall_post.php';
     return this.http.post(url, item)
             .map(this.extractData)

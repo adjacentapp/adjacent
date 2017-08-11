@@ -1,7 +1,9 @@
 comment-component {
+	
 	margin-top: -10px;
 	margin-bottom: 10px;
-	
+	.item { background: transparent; }
+
 	ion-item {
 		align-items: flex-start !important;
 

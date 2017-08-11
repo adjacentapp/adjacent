@@ -12,10 +12,10 @@ import { ShowMessagePage } from '../../pages/messages/show';
 export class ShowCardPage {
   item: any;
   founder: boolean = false;
-  callback: any;
+  deleteCallback: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider) {
-    this.callback = this.navParams.get('callback');
+    this.deleteCallback = this.navParams.get('deleteCallback');
     this.item = navParams.get('item');
     if(this.item.founder_id == this.auth.currentUser.id) this.founder = true;
   }
@@ -23,15 +23,14 @@ export class ShowCardPage {
   iterateTapped = () => {
     let handleCallback = (_params) => {
       return new Promise((resolve, reject) => {
-        this.callback(_params).then(()=>{
+        this.deleteCallback(_params).then(()=>{
           resolve();
          });
       });
     }
-
     this.navCtrl.push(NewCardPage, {
       item: this.item,
-      callback: handleCallback
+      deleteCallback: handleCallback
     });
   }
 
@@ -48,15 +47,4 @@ export class ShowCardPage {
     }); 
   }
 
-  doRefresh (e) {
-  	setTimeout(function(){
-  		e.complete();
-  	}, 1000);
-  	// this.service.getCard()
-  	// .subscribe(
-  	// 	data => this.item = data.results,
-  	// 	err => console.log(err),
-  	// 	() => e.complete()
-  	// );
-  }
 }

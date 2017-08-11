@@ -19,7 +19,7 @@
     </h6>
     <div class="new-comment-wrapper" *ngIf="item.expanded">
       <comment-component *ngFor="let response of item.responses" [item]="response" [showVotes]="false" [founder_id]="founder_id"></comment-component>
-      <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.card_id" [response_to]="item.id" (newComment)="appendResponse($event)"></new-comment-component>
+      <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.card_id" [response_to]="item.id" (newComment)="appendResponse($event)" [founder_id]="founder_id"></new-comment-component>
     </div>
   </div>
 </ion-item>

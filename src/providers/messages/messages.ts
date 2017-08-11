@@ -45,9 +45,10 @@ export class MessagesProvider {
 
   constructor (private http: Http) {}
 
-  getConversations(user_id, other_id?, card_id?): Observable<any> {
+  getConversations(user_id, other_id?, card_id?, offset?, limit?): Observable<any> {
     let query = '?user_id=' + user_id;
     query += (other_id ? '&other_id='+other_id : '') + (card_id ? '&card_id='+card_id : '');
+    query += (offset ? '&offset='+offset : '') + (limit ? '&limit='+limit : '');
     let url = globs.BASE_API_URL + 'get_conversations.php' + query;
     return this.http.get(url)
           .map(this.extractData)

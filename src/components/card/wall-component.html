@@ -1,8 +1,8 @@
 <ion-list>
 	<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
-	<comment-component *ngFor="let comment of comments" [item]="comment" [founder_id]="founder_id"></comment-component>
+	<comment-component *ngFor="let item of items" [item]="item" [founder_id]="founder_id"></comment-component>
 </ion-list>
 
-<!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+<ion-infinite-scroll *ngIf="!reachedEnd" enabled="!reachedEnd" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">
 	<ion-infinite-scroll-content></ion-infinite-scroll-content>
-</ion-infinite-scroll> -->
+</ion-infinite-scroll>

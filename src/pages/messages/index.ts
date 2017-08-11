@@ -16,12 +16,16 @@ export class MessagesPage {
   items: any[];
   filters: any = [];
   reachedEnd: boolean = false;
+  limit: number = 10;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public msg: MessagesProvider, private auth: AuthProvider) {
   	this.loading = true;
-  	this.msg.getConversations(this.auth.currentUser.id)
+    this.msg.getConversations(this.auth.currentUser.id, null, null, 0, this.limit)
   		.subscribe(
-  			items => this.items = items,
+  			items => {
+          this.items = items;
+          this.reachedEnd = items.length < this.limit;
+        },
   			error => console.log(<any>error),
   			() => this.loading = false
   		);
@@ -56,6 +60,23 @@ export class MessagesPage {
           e.complete();
         }
       );
+  }
+
+  doInfinite (): Promise<any> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        let offset = this.items.length;
+        this.msg.getConversations(this.auth.currentUser.id, null, null, offset, this.limit)
+          .subscribe(
+          items => {
+            this.items = this.items.concat(items);
+            this.reachedEnd = items.length < this.limit;
+            resolve();
+          },
+          error => console.log(<any>error)
+        );
+      }, 500);
+    });
   }
 
 }

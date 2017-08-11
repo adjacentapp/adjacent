@@ -13,6 +13,11 @@
 </ion-header>
 
 <ion-content no-bounce>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 
   <ion-slides *ngIf="!loading" (ionSlideDidChange)="slideChanged()">

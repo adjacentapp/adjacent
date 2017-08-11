@@ -29,8 +29,15 @@ export class FoundedPage {
 	}
 
 	showCard(event, item) {
+		let handleCallback = (_params) => {
+		  return new Promise((resolve, reject) => {
+	    	this.items = this.items.filter(item => item.id !== _params.remove_id);
+		    resolve();
+		  });
+		}
 		this.navCtrl.push(ShowCardPage, {
-			item: item
+			item: item,
+			deleteCallback: handleCallback
 		});
 	}
 

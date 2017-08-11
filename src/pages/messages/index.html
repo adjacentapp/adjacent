@@ -37,8 +37,8 @@
     </ion-item>
 	</ion-list>
 
-	<!-- <ion-infinite-scroll *ngIf="!reachedEnd" (ionInfinite)="doInfinite($event)">
-		<ion-infinite-scroll-content></ion-infinite-scroll-content>
-	</ion-infinite-scroll> -->
+	<ion-infinite-scroll *ngIf="!reachedEnd" enabled="!reachedEnd" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

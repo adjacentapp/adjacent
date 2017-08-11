@@ -5,6 +5,7 @@ import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
 import { ShowCardPage } from '../../pages/card/show';
 import { ProfilePage } from '../../pages/profile/profile';
+import { FoundedPage } from '../../pages/founded/founded';
 
 @Component({
   selector: 'new-card-page',
@@ -14,7 +15,7 @@ export class NewCardPage {
   loading: Loading;
   item: any;
   valid: boolean = false;
-  callback: any;
+  deleteCallback: any;
 
   private industries = globs.INDUSTRIES;
   private challenges = globs.SKILLS;
@@ -22,7 +23,7 @@ export class NewCardPage {
   private networks = globs.NETWORKS;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
-    this.callback = this.navParams.get('callback');
+    this.deleteCallback = this.navParams.get('deleteCallback');
     this.item = navParams.get('item') || {
     	industry: null,
     	pitch: '',
@@ -42,13 +43,21 @@ export class NewCardPage {
   }
 
   submitCard(){
-    // this.showLoading();
+    this.showLoading();
     this.card.post(this.item).subscribe(
       success => {
-        this.navCtrl.pop();
-        this.navCtrl.push(ShowCardPage, {
-          item: this.item
-        });
+        if(this.item.id) // edit
+          this.navCtrl.pop();
+        else {            // create
+          // this.navCtrl.push(ShowCardPage, {item: success}).then(() => {
+          this.navCtrl.push(FoundedPage).then(() => {
+            let index = this.navCtrl.getActive().index;
+             if(index == 3) // through Founded
+               this.navCtrl.remove(index - 2, 2);
+             else if (index == 2) // direct from sidemenu
+               this.navCtrl.remove(index - 1, 1);
+           });
+         }
        },
       error => console.log(error)
     );
@@ -74,14 +83,12 @@ export class NewCardPage {
             this.card.delete(this.item.id).subscribe(
               success => {
                 let params = {
-                  remove_id: this.item.id,
-                  user_id: this.auth.currentUser.id
+                  remove_id: this.item.id
                 };
-                console.log(this);
-                this.callback(params).then(()=>{
+                this.deleteCallback(params).then(()=>{
                   this.navCtrl.remove(this.navCtrl.getActive().index - 1, 1);
                   this.navCtrl.pop();
-                });                
+                });
               },
               error => console.log(error)
             );

@@ -43,8 +43,15 @@ export class DiscoverPage {
 	 }
 
 	showCard(event, item) {
+		let handleCallback = (_params) => {
+		  return new Promise((resolve, reject) => {
+	    	this.items = this.items.filter(item => item.id !== _params.remove_id);
+		    resolve();
+		  });
+		}		
 		this.navCtrl.push(ShowCardPage, {
-			item: item
+			item: item,
+			deleteCallback: handleCallback
 		});
 	}
 
@@ -70,5 +77,17 @@ export class DiscoverPage {
 					this.dealing = false;
 				}
 			);
+	}
+
+	doRefresh (e) {
+	  this.card.getDeck(this.auth.currentUser.id, 0)
+	  	.subscribe(
+	  		items => {
+	  			this.items = items;
+	  			this.slides.slideTo(1, 400);
+	  		},
+	  		error => this.errorMessage = <any>error,
+	  		() => e.complete()
+	  	);
 	}
 }
