@@ -27,7 +27,7 @@
 
  	$query =	"SELECT * FROM cards" .
  				" WHERE id IN ( '" . implode($collab_card_ids, "', '") . "' )" .
- 				" AND active = 1" .
+ 				" AND active = 1 OR active = -1" .
  				" ORDER BY update_time DESC";
  	$res = mysqli_query($db, $query);
 

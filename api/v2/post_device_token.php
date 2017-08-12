@@ -1,34 +1,27 @@
 <?php
 	header('Access-Control-Allow-Origin: *');
-	header('Access-Control-Allow-Headers: *');
-	// header('Content-Type: application/json');
+	// header('Access-Control-Allow-Headers: *');
+	header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 	require_once('../db_connect.php');
-
 	$db = connect_db();
 
-	// Decode card into JSON
 	$postdata = file_get_contents("php://input");
-	@$push_token = $data->push_token ? mysqli_real_escape_string($db, $data->push_token) : false;
-
-	// update device token
-	if($push_token){
-		// create new token
-		$query =	"SELECT * FROM devices " .
-				"WHERE token = '" . $push_token . "' ";
-		$res = mysqli_query($db, $query);
-		if (mysqli_num_rows($res) === 0){
-			$query =	"INSERT INTO devices " .
-							"(token)" .
-						" VALUES (" .
-							"'" . $push_token . "'" .
-						")";
-			$res = mysqli_query($db, $query);
-		}
+	$data = json_decode($postdata);
+	if($data->user_id && $data->token){
+		@$user_id = mysqli_real_escape_string($db, $data->user_id);
+		@$token = mysqli_real_escape_string($db, $data->token);
 	}
+	else
+		exit();
 
+	// Delete all records for this device
+	$query =	"DELETE FROM devices WHERE token = '{$token}'";
+	$res = mysqli_query($db, $query);
 
- 	// Close connection
- 	mysqli_free_result($res);
+	// Create new record for this user
+	$query =	"INSERT INTO devices (user_id, token) VALUES ({$user_id}, '{$token}')";
+	$res = mysqli_query($db, $query);
+
 	mysqli_close($db);
 	exit();
 ?>

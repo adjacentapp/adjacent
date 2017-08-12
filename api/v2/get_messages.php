@@ -11,7 +11,7 @@
 		exit('no convo_id');
 	
 	$offset = isset($_GET['offset']) ? mysqli_real_escape_string($db, $_GET['offset']) : 0;
-	$limit = 10;
+	$limit = isset($_GET['limit']) ? mysqli_real_escape_string($db, $_GET['limit']) : 10;
 
  	$query =	"SELECT * FROM messages WHERE conversation_id = {$convo_id} ORDER BY time DESC LIMIT {$limit} OFFSET {$offset}";
 	$res = mysqli_query($db, $query);

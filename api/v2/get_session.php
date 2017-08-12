@@ -2,7 +2,6 @@
 	header('Access-Control-Allow-Origin: *');
 	header('Access-Control-Allow-Headers: *');
 	require_once('../db_connect.php');
-
 	$db = connect_db();
 
 	// Check for email address arguments
@@ -38,7 +37,7 @@
  			unset($row['password']);
  			unset($row['bio']);
 
- 			// exit if unverfied and signup > 48hrs ago
+ 			// exit if unverfied and signup > 2 days ago
 	 		if(!$row['verified'])
  				if(strtotime($row['created_at']) <= strtotime('-48 hours')){
  					$row['expired'] = true;
@@ -121,6 +120,7 @@
 
 	 	$user[0]['valid'] = true;
 
+	 	if(is_a($res, 'mysqli_result')) mysqli_free_result($res);
 	 	mysqli_close($db);
  		exit(json_encode($user[0], JSON_PRETTY_PRINT));
  	}

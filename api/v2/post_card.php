@@ -25,32 +25,7 @@
 	$comments = [];
 	$followers = [];
 	
-	if($card_id) {
-		$query =	"UPDATE cards SET " .
-						"idea = '{$pitch}', " .
-						"industry_string = '{$industry}', " .
-						"photo_url = " . ($photo_url ? "'{$photo_url}'" : "null") . ", " .
-						"background = " . ($who ? "'{$who}'" : "null") . ", " .
-						"stage = " . ($stage ? "{$stage}" : "null") . ", " .
-						"challenge = " . ($challenge ? "'{$challenge}'" : "null") . ", " .
-						"challenge_details = " . ($challenge_details ? "'{$challenge_details}'" : "null") . ", " .
-						"anonymous = {$anonymous}, " .
-						"lat = " . ($lat ? "'{$lat}'" : "null") . ", " .
-						"lon = " . ($lon ? "'{$lon}'" : "null") . " " .
-					"WHERE id = {$card_id}";
-		$res = mysqli_query($db, $query);
-
-		$query = 	"SELECT * FROM card_walls WHERE card_id = {$card_id} AND prompt_id IS NULL";
-		$res = mysqli_query($db, $query);
-		while($row = mysqli_fetch_assoc($res))
-			$comments[] = $row;
-
-		$query = 	"SELECT * FROM bookmarks WHERE card_id = {$card_id} AND card_active = 1 AND active = 1";
-		$res = mysqli_query($db, $query);
-		while($row = mysqli_fetch_assoc($res))
-			$followers[] = $row['user_id'];
-	}
-	else {
+	if(!$card_id) {
 	 	$query =	"INSERT INTO cards " .
 	 				"(author_id, idea, industry_string, photo_url, background, stage, challenge, challenge_details, anonymous, message_time, lat, lon) " .
 	 				"VALUES (" .
@@ -85,6 +60,43 @@
 					"(user_id, card_id, accepted, status) " .
 					"VALUES ({$founder_id}, {$card_id}, 1, 'owner')";
 		$res = mysqli_query($db, $query);
+	}
+	else {
+		$query =	"UPDATE cards SET " .
+						"idea = '{$pitch}', " .
+						"industry_string = '{$industry}', " .
+						"photo_url = " . ($photo_url ? "'{$photo_url}'" : "null") . ", " .
+						"background = " . ($who ? "'{$who}'" : "null") . ", " .
+						"stage = " . ($stage ? "{$stage}" : "null") . ", " .
+						"challenge = " . ($challenge ? "'{$challenge}'" : "null") . ", " .
+						"challenge_details = " . ($challenge_details ? "'{$challenge_details}'" : "null") . ", " .
+						"anonymous = {$anonymous}, " .
+						"lat = " . ($lat ? "'{$lat}'" : "null") . ", " .
+						"lon = " . ($lon ? "'{$lon}'" : "null") . " " .
+					"WHERE id = {$card_id}";
+		$res = mysqli_query($db, $query);
+
+		$query = 	"SELECT * FROM card_walls WHERE card_id = {$card_id} AND prompt_id IS NULL";
+		$res = mysqli_query($db, $query);
+		while($row = mysqli_fetch_assoc($res))
+			$comments[] = $row;
+
+		$query = 	"SELECT * FROM bookmarks WHERE card_id = {$card_id} AND card_active = 1 AND active = 1";
+		$res = mysqli_query($db, $query);
+		while($row = mysqli_fetch_assoc($res))
+			$followers[] = $row['user_id'];
+
+		// Update followers
+ 		$follower_ids = array();
+	 	$query =	"SELECT user_id FROM bookmarks WHERE card_active = 1 AND active = 1 AND card_id = {$card_id}";
+ 		$res = mysqli_query($db, $query);
+ 	 	while($row = mysqli_fetch_assoc($res))
+ 	 		$follower_ids[] = $row['user_id'];
+
+	 	// include 'functions.php';
+	 	// var_dump($follower_ids);
+	 	require_once('push_notification.php');
+	 	notify_followers($follower_ids, $card_id);
 	}
 
 

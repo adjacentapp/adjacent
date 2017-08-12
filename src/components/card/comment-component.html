@@ -5,7 +5,7 @@
   </ion-avatar>
   <h3 *ngIf="!founder" (click)="goToProfile($event, item.user.id)">{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
   <h3 *ngIf="founder">Founder</h3>
-  <p>{{item.message}}</p>
+  <p (click)="checkForLink(item.message)">{{item.message}}</p>
   <div *ngIf="showVotes" item-right text-center class='voting {{vote==1?"upvoted":(vote==-1?"downvoted":"")}}'>
   	<ion-icon name="md-arrow-dropup" (click)="upvote($event, item)" color="{{vote == 1?'balanced':'secondary'}}"></ion-icon><br/>
   	{{item.score}}<br/>

@@ -25,6 +25,19 @@ export class BookmarksProvider {
           .catch(this.handleError);
   }
 
+  getContributions(user_id, offset): Observable<any[]> {
+    let query = '?user_id=' + user_id + '&offset=' + offset;
+    let url = globs.BASE_API_URL + 'get_contributions.php' + query;
+    return this.http.get(url)
+          .map(this.extractData)
+          .map((data) => {
+            return data.map((item) => {
+              return new Card(item);
+             });
+          })
+          .catch(this.handleError);
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body.data || body || { };

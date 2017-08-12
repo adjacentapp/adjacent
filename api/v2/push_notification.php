@@ -1,6 +1,72 @@
 <?php
 
-error_reporting(0); //RISKY!!!
+require_once('../db_connect.php');
+$db = connect_db();
+
+function notify_followers($user_ids, $card_id){
+	global $db;
+	foreach($user_ids as $u_id){
+		$query =	"INSERT INTO receipts (user_id, card_id, post_id)" .
+					" VALUES ({$u_id}, {$card_id}, NULL)";
+		$res = mysqli_query($db, $query);
+	}
+	if(count($user_ids))
+		notify( $user_ids, "New Update", "An idea that you are following was just upated. Give the founder some feedback!" );
+}
+
+function notify_respondee($user_id, $card_id, $post_id){
+	global $db;
+	$query =	"INSERT INTO receipts (user_id, card_id, post_id)" .
+				" VALUES ({$user_id}, {$card_id}, {$post_id})";
+	$res = mysqli_query($db, $query);
+	notify( [$user_id], "New Response", "Somone replied to your feedback." );
+}
+
+function notify_founder($user_id, $card_id, $post_id, $response_to){
+	global $db;
+	$query =	"INSERT INTO receipts (user_id, card_id, post_id)" .
+				" VALUES ({$u_id}, {$card_id}, {$post_id})";
+	$res = mysqli_query($db, $query);
+	if(!$response_to)
+		notify( [$user_id], "New Feedback", "Somone shared feedback on your idea." );
+	else
+		notify( [$user_id], "New Feedback Response", "Somone replied to feedback on your idea." );
+}
+
+function notify($user_ids, $title, $message){
+	global $db;
+
+	// Update badge_count
+	$query =	"UPDATE users SET badge_count = badge_count + 1 WHERE user_id IN (" . implode($user_ids, ", ") . " )";
+	$res = mysqli_query($db, $query);
+	
+	// Get device tokens
+	$query =	"SELECT * FROM devices WHERE user_id IN (" . implode($user_ids, ", ") . " )";
+	$res = mysqli_query($db, $query);
+	$tokens = array();
+	while($row = mysqli_fetch_assoc($res))
+		$tokens[] = $row;
+
+	// Push notification to all devices of each user
+	$query =	"SELECT * FROM users WHERE user_id IN (" . implode($user_ids, ", ") . " )";
+	$res = mysqli_query($db, $query);
+	while($row = mysqli_fetch_assoc($res)){
+		$badge_count = $row['badge_count'];
+		$user_tokens = array();
+		foreach($tokens as $key => $token)
+			if($token['user_id'] == $row['user_id']){
+				$user_tokens[] = $token['token'];
+				// Log notification to server
+				// $query =	"INSERT INTO push_notification_log " .
+				// 			"(user_id, token, title, message, badge_count) " .
+				// 			"VALUES ( {$row['user_id']}, '{$token['token']}', '{$title}', '{$message}', {$badge_count} )";
+				$log = mysqli_query($db, $query);
+			}
+
+		push_notification($title, $message, $user_tokens, $badge_count);
+	}
+}
+
 
 $gcm_key = 'AAAAZM73TOo:APA91bFsn2VE9Vj7YR4c5cyxB4ekv7HjdW5PCXquKaGoJoMmZL1L9x6V90qjo4MhMC5sGnr33sbuUyAoLhlNKDyFB3vM_SlCcCf_-0Vzi8EtUcUTTSer6tbYGOGBx8hLIaLMrWf7-nVCRuMkYjPJDq3Mnk0ts0rqbg';
 $apns_pass = 'TheBeautifulPossible2016';
@@ -8,11 +74,8 @@ $apns_pass = 'TheBeautifulPossible2016';
 function push_notification($title, $message, $tokens, $badge_count=null, $url=null){
 	global $gcm_key, $apns_pass;
 
-	return;
-
 	$message = strlen($message) > 120 ? substr($message,0,120) . "..." : $message;
 	$message = stripslashes($message);
-
 
 	//----------iOS
 	for($i=0; $i<count($tokens); $i++){
@@ -45,8 +108,15 @@ function push_notification($title, $message, $tokens, $badge_count=null, $url=nu
 		$fp = stream_socket_client('ssl://gateway.push.apple.com:2195', $err, $errstr, 120, STREAM_CLIENT_CONNECT, $ctx);
 
 		$payload = json_encode($body);
-		$msg = chr(0).pack('n',32).pack('H*', str_replace(' ', '', $deviceToken)).pack('n',strlen($payload)).$payload;
+		// $msg = chr(0).pack('n',32).pack('H*', str_replace(' ', '', $deviceToken)).pack('n',strlen($payload)).$payload;
+		// ^^ throwing:  Warning: pack(): Type H: illegal hex digit l in 
+		$msg = 	chr(0)
+				.pack( 'n', 32 )
+				.pack( 'H*', str_replace( ' ', '', sprintf('%u', CRC32($deviceToken)) ) )
+				.pack( 'n', strlen($payload) )
+				.$payload;
 		// print "" . $payload . "\n";
+		
 		fwrite($fp, $msg);
 		fclose($fp);
 	}
@@ -68,7 +138,7 @@ function push_notification($title, $message, $tokens, $badge_count=null, $url=nu
 
 	$fields = array(
 		'registration_ids' 	=> $tokens,
-		'data'			=> $msg
+		'data'				=> $msg
 	);
 	$headers = array(
 		'Authorization: key=' . $gcm_key,
@@ -89,8 +159,6 @@ function push_notification($title, $message, $tokens, $badge_count=null, $url=nu
 
 function update_badge($tokens, $badge_count){
 	global $gcm_key, $apns_pass;
-
-	return;
 
 	//----------iOS
 	for($i=0; $i<count($tokens); $i++){
@@ -116,7 +184,6 @@ function update_badge($tokens, $badge_count){
 		fwrite($fp, $msg);
 		fclose($fp);
 	}
-
 
 	//----------Android CURL
 	// $msg = array(

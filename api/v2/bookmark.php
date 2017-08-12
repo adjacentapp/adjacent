@@ -63,14 +63,14 @@
 		  	//=======================================Push notifications
 		  	$founder_id;
 		  	$query =	"SELECT * FROM cards WHERE id = {$card_id}";
-				$res = mysqli_query($db, $query);
+			$res = mysqli_query($db, $query);
 		  	while($row = mysqli_fetch_assoc($res)){
 		  		$founder_id = $row['author_id'];
 		  		$message = $row['idea'];
 		  	}
 
 		  	// Create notification
-		  	$query =	"SELECT * FROM users WHERE user_id = " . $user_id;
+		  	$query =	"SELECT * FROM users WHERE user_id = {$user_id}";
 		  	$res = mysqli_query($db, $query);
 		  	while($row = mysqli_fetch_assoc($res)){
 		  		$fir_name = $row['fir_name'] ? $row['fir_name'] : 'Anonymous';
@@ -88,13 +88,13 @@
 		  		while($device_row = mysqli_fetch_assoc($res))
 			  		$tokens[] = $device_row['token'];
 
-		  	require_once('push_notification.php');
-		  	// fix
+		  // 	require_once('push_notification.php');
+		  // 	// fix
 
-		 	$title = $fir_name . " is now following your card";
-		 	$url = 'adjacentapp://' . 'collaboration/' . $card_id;
+		 	// $title = $fir_name . " is now following your card";
+		 	// $url = 'adjacentapp://' . 'collaboration/' . $card_id;
 
-		 	push_notification($title, $message, $tokens, $badge_count, $url);
+		 	// push_notification($title, $message, $tokens, $badge_count, $url);
 
 		} // end if (create bookmark)
 	}

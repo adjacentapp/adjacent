@@ -1,54 +1,34 @@
 <?php
 	header('Access-Control-Allow-Origin: *');
 	header('Access-Control-Allow-Headers: *');
-	// header('Content-Type: application/json');
 	require_once('../db_connect.php');
-
 	$db = connect_db();
 
-	if( isset($_GET['card_id']) ) {
+	if( isset($_GET['card_id']) )
 		$card_id = mysqli_real_escape_string($db, $_GET['card_id']);
-	} else {
+	else
 		exit('no card_id');
-	}
-	$names = isset($_GET['names']) ? true : false;
+	$offset = isset($_GET['offset']) ? mysqli_real_escape_string($db, $_GET['offset']) : 0;
+	$limit = isset($_GET['limit']) ? mysqli_real_escape_string($db, $_GET['limit']) : 20;
 
-	// Query database
- 	$query =	"SELECT * FROM bookmarks " .
- 				"WHERE card_id = " . $card_id .
- 				" AND card_active = 1" .
- 				" AND active = 1";
- 	$res = mysqli_query($db, $query);
-
- 	$followers = array();
-
- 	if(!$res) exit(json_encode($followers));
-
- 	// Create JSON from database results
 	$user_ids = [];
-	while($row = mysqli_fetch_assoc($res)){
-		$followers[] = $row;
+ 	$query =	"SELECT user_id FROM bookmarks WHERE card_id = {$card_id}" .
+ 				" AND card_active = 1 AND active = 1" .
+ 				" ORDER BY updated_at DESC LIMIT {$limit} OFFSET {$offset}";
+ 	$res = mysqli_query($db, $query);
+ 	while($row = mysqli_fetch_assoc($res))
 		$user_ids[] = $row['user_id'];
-	}
 
-	// Get names for each user
-	if($names){
-		$query =	"SELECT * FROM users " .
-					"WHERE user_id IN ( " . implode($user_ids, ", ") . " )";
-		$res = mysqli_query($db, $query);
+	if(!count($user_ids)) exit(json_encode(array()));
 
-		while($row = mysqli_fetch_assoc($res))
-			foreach($followers as $key => $f)
-				if($f['user_id'] == $row['user_id']){
-					$followers[$key]['fir_name'] = $row['fir_name'];
-					$followers[$key]['las_name'] = $row['las_name'];
-					$followers[$key]['photo_url'] = $row['photo_url'];
-				}
-	}
+	$followers = array();
+	$query = 	"SELECT user_id as id, email, fir_name, las_name, photo_url FROM users " .
+				" WHERE user_id IN ( " . implode($user_ids, ", ") . " )";
+	$res = mysqli_query($db, $query);
+	while($row = mysqli_fetch_assoc($res))
+		$followers[] = $row;
 
-	// Close connection and ID
  	mysqli_free_result($res);
  	mysqli_close($db);
- 	exit(json_encode($followers));
-
+ 	exit(json_encode($followers, JSON_PRETTY_PRINT));
 ?>

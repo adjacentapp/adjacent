@@ -22,18 +22,12 @@
 	$lat = isset($_GET['lat']) ? mysqli_real_escape_string($db, $_GET['lat']) : false;
 	$lon = isset($_GET['lon']) ? mysqli_real_escape_string($db, $_GET['lon']) : false;
 
-	// Order cards by score
- 	function compare($a, $b){
-		if($a['score'] == $b['score']) return 0;
-		return ($a['score'] < $b['score']) ? 1 : -1;
-	}
-
 	// get user's offest
-	$user_offset = 0;
-	$query =	"SELECT * FROM users WHERE user_id = " . $user_id;
-	$res = mysqli_query($db, $query);
-	while($row = mysqli_fetch_assoc($res))
-		$offset += $row['discover_offset'];
+	// $user_offset = 0;
+	// $query =	"SELECT * FROM users WHERE user_id = " . $user_id;
+	// $res = mysqli_query($db, $query);
+	// while($row = mysqli_fetch_assoc($res))
+	// 	$offset += $row['discover_offset'];
 
  	// Ordering algorithm weighing by newness, activity, and likes
  	$cards = array();
@@ -170,129 +164,103 @@
 		}
 	}
 
-	// Check if each card is bookmarked by the user
-	$query = 	"SELECT * FROM bookmarks " .
-				" WHERE card_id IN ( " . implode($card_ids, ", ") . " )" .
-				" AND card_active = 1" .
-				" AND active = 1";
-	$res = mysqli_query($db, $query);
+	if(count($card_ids)){
+		// Check if each card is bookmarked by the user
+		$query = 	"SELECT * FROM bookmarks " .
+					" WHERE card_id IN ( " . implode($card_ids, ", ") . " )" .
+					" AND card_active = 1" .
+					" AND active = 1";
+		$res = mysqli_query($db, $query);
 
-	while($row = mysqli_fetch_assoc($res))
-		foreach($cards as $key => $card)
-			if($card['id'] == $row['card_id']){
-				$cards[$key]['followers'][] = $row['user_id'];
-				if($row['user_id'] == $user_id && !$tissueTesting)
-					$cards[$key]['saved'] = true;
-			}
+		while($row = mysqli_fetch_assoc($res))
+			foreach($cards as $key => $card)
+				if($card['id'] == $row['card_id']){
+					$cards[$key]['followers'][] = $row['user_id'];
+					if($row['user_id'] == $user_id && !$tissueTesting)
+						$cards[$key]['saved'] = true;
+				}
 
-	// Check if each card is liked by the user
-	$query = 	"SELECT * FROM likes " .
-				" WHERE card_id IN ( " . implode($card_ids, ", ") . " )" .
-				" AND card_active = 1" .
-				" AND active = 1";
-	$res = mysqli_query($db, $query);
+		// Check if each card is liked by the user
+		$query = 	"SELECT * FROM likes " .
+					" WHERE card_id IN ( " . implode($card_ids, ", ") . " )" .
+					" AND card_active = 1" .
+					" AND active = 1";
+		$res = mysqli_query($db, $query);
 
-	while($row = mysqli_fetch_assoc($res))
-		foreach($cards as $key => $card)
-			if($card['id'] == $row['card_id']){
-				$cards[$key]['likes'][] = $row['user_id'];
-				if($row['user_id'] == $user_id)
-					$cards[$key]['liked'] = true;
+		while($row = mysqli_fetch_assoc($res))
+			foreach($cards as $key => $card)
+				if($card['id'] == $row['card_id']){
+					$cards[$key]['likes'][] = $row['user_id'];
+					if($row['user_id'] == $user_id)
+						$cards[$key]['liked'] = true;
 
-	}
+		}
 
-	// Check user's member status
-	$query = 	"SELECT * FROM collaborations " .
-				" WHERE card_id IN ( " . implode($card_ids, ", ") . " )";
-	$res = mysqli_query($db, $query);
+		// Get number of comments on this card
+		$query = 	"SELECT * FROM card_walls " .
+					" WHERE card_id IN ( " . implode($card_ids, ", ") . " )" .
+					" AND prompt_id IS NULL";
+		$res = mysqli_query($db, $query);
 
-	foreach($cards as $key => $card) {
-		$cards[$key]['team'] = array();
-		$cards[$key]['requests'] = array();
-	}
+		while($row = mysqli_fetch_assoc($res))
+			foreach($cards as $key => $card)
+				if($card['id'] == $row['card_id'])
+					$cards[$key]['comments'][] = $row;
 
-	while($row = mysqli_fetch_assoc($res)){
+		// No empty fields
 		foreach($cards as $key => $card){
-			if($card['id'] == $row['card_id']){
-				// Get user's membership status
-				if($card['author_id'] == $user_id)
-					$cards[$key]['member'] = "2";
-				else if($row['user_id'] == $user_id)
-					$cards[$key]['member'] = $row['accepted'];
+			$cards[$key]['distance'] = array_key_exists('distance', $card) ? $card['distance'] : null;
+			$cards[$key]['topComment'] = array();
+		}
 
-				// Construct team array
-				if($row['user_id'] == $card['author_id'])
-				// if($card['author_id'] == $user_id)
-					$cards[$key]['team'][] = $row['user_id'];
-				else if($row['accepted'] == "1")
-					$cards[$key]['team'][] = $row['user_id'];
-				else if($row['accepted'] != "0")
-					$cards[$key]['requests'][] = $row['user_id'];
+		// Get topComment
+		$topCommentUserIds = [];
+		$query =	"SELECT * from (" .
+						"SELECT card_walls.*, (" .
+							"SELECT SUM(active) as score FROM wall_post_likes WHERE post_id = card_walls.id" .
+						") AS score FROM card_walls WHERE response_to IS NULL ORDER BY score DESC" .
+					") AS x WHERE card_id IN (".implode($card_ids,", ") . ") GROUP BY card_id ORDER BY score DESC";
+		$res = mysqli_query($db, $query);
+		while($row = mysqli_fetch_assoc($res)){
+			foreach($cards as $key => $card){
+				if($card['id'] == $row['card_id']){
+					$cards[$key]['topComment'] = $row;
+					$topCommentUserIds[] = $row['user_id'];
+				}
 			}
 		}
-	}
-
-	// Get number of comments on this card
-	$query = 	"SELECT * FROM card_walls " .
-				" WHERE card_id IN ( " . implode($card_ids, ", ") . " )" .
-				" AND prompt_id IS NULL";
-	$res = mysqli_query($db, $query);
-
-	while($row = mysqli_fetch_assoc($res))
-		foreach($cards as $key => $card)
-			if($card['id'] == $row['card_id'])
-				$cards[$key]['comments'][] = $row;
-
-	// No empty fields
-	foreach($cards as $key => $card){
-		$cards[$key]['distance'] = array_key_exists('distance', $card) ? $card['distance'] : null;
-		$cards[$key]['topComment'] = array();
-	}
-
-	// Get topComment
-	$topCommentUserIds = [];
-	$query =	"SELECT * from (" .
-					"SELECT card_walls.*, (" .
-						"SELECT SUM(active) as score FROM wall_post_likes WHERE post_id = card_walls.id" .
-					") AS score FROM card_walls WHERE response_to IS NULL ORDER BY score DESC" .
-				") AS x WHERE card_id IN (".implode($card_ids,", ") . ") GROUP BY card_id ORDER BY score DESC";
-	$res = mysqli_query($db, $query);
-	while($row = mysqli_fetch_assoc($res)){
-		foreach($cards as $key => $card){
-			if($card['id'] == $row['card_id']){
-				$cards[$key]['topComment'] = $row;
-				$topCommentUserIds[] = $row['user_id'];
-			}
-		}
-	}
-	// Get topComment likes
- 	$query =	"SELECT * FROM wall_post_likes" .
- 				" WHERE card_id IN ( " . implode($card_ids, ", ") . " )";
-	$res = mysqli_query($db, $query);
- 	while($like = mysqli_fetch_assoc($res))
- 		foreach($cards as $key => $card)
- 			if(array_key_exists('id', $card['topComment']) && $card['topComment']['id'] == $like['post_id']){
- 				if($tissueTesting){
- 					if ($like['active'] == 1)
- 						$cards[$key]['topComment']['likes'][] = '-99';
- 					else if ($like['active'] == -1)
- 						$cards[$key]['topComment']['dislikes'][] = '-99';
- 				}
- 				else {
-	 				if ($like['active'] == 1)
-	 					$cards[$key]['topComment']['likes'][] = $like['user_id'];
-	 				else if ($like['active'] == -1)
-	 					$cards[$key]['topComment']['dislikes'][] = $like['user_id'];
+		// Get topComment likes
+	 	$query =	"SELECT * FROM wall_post_likes" .
+	 				" WHERE card_id IN ( " . implode($card_ids, ", ") . " )";
+		$res = mysqli_query($db, $query);
+	 	while($like = mysqli_fetch_assoc($res))
+	 		foreach($cards as $key => $card)
+	 			if(array_key_exists('id', $card['topComment']) && $card['topComment']['id'] == $like['post_id']){
+	 				if($tissueTesting){
+	 					if ($like['active'] == 1)
+	 						$cards[$key]['topComment']['likes'][] = '-99';
+	 					else if ($like['active'] == -1)
+	 						$cards[$key]['topComment']['dislikes'][] = '-99';
+	 				}
+	 				else {
+		 				if ($like['active'] == 1)
+		 					$cards[$key]['topComment']['likes'][] = $like['user_id'];
+		 				else if ($like['active'] == -1)
+		 					$cards[$key]['topComment']['dislikes'][] = $like['user_id'];
+		 			}
 	 			}
- 			}
-	// Get topComment user info
-	$query = 	"SELECT user_id as id, email, fir_name, las_name, photo_url FROM users " .
-				" WHERE user_id IN ( " . implode($topCommentUserIds, ", ") . " )";
-	$res = mysqli_query($db, $query);
-	while($row = mysqli_fetch_assoc($res))
-		foreach($cards as $key => $card)
-			if(array_key_exists('user_id', $card['topComment']) && $card['topComment']['user_id'] == $row['id'])
-				$cards[$key]['topComment']['user'] = $row;
+		// Get topComment user info
+		$query = 	"SELECT user_id as id, email, fir_name, las_name, photo_url FROM users " .
+					" WHERE user_id IN ( " . implode($topCommentUserIds, ", ") . " )";
+		$res = mysqli_query($db, $query);
+		while($row = mysqli_fetch_assoc($res))
+			foreach($cards as $key => $card)
+				if(array_key_exists('user_id', $card['topComment']) && $card['topComment']['user_id'] == $row['id'])
+					// if($row['id'] == $card['author_id'])
+						// $cards[$key]['topComment']['user'] = (object)array("id" => -69, "email" => "anon", "fir_name" => "Founder", "las_name" => "", "photo_url" => "");
+					// else
+						$cards[$key]['topComment']['user'] = $row;
+	} // end if count(card_ids)
 
 	// Reformat keys
 	foreach($cards as $key => $card){
@@ -311,7 +279,7 @@
 		);
 	}
 
- 	if($res) mysqli_free_result($res);
+ 	if(is_a($res, 'mysqli_result')) mysqli_free_result($res);
  	mysqli_close($db);
  	exit( json_encode($cards, JSON_PRETTY_PRINT) );
 ?>

@@ -41,7 +41,7 @@
 	$new_sub_offset = $sub_offset;
 	$step = 25; // arbitrary chunk for filtering through
 
-	$query =		"SELECT * FROM cards WHERE active = 1" .
+	$query =		"SELECT * FROM cards WHERE active = 1 OR active = -1" .
 					" AND type IN (" . $types . ")";
 	$res = 			mysqli_query($db, $query);
 	$card_max = 	mysqli_num_rows($res);
@@ -64,7 +64,7 @@
 
 		$query =	"SELECT * FROM cards" .
 					" WHERE type IN (" . $types . ")" .
-					" AND active = 1";
+					" AND active = 1 OR active = -1";
 
 		if($order_by=='recent' || $order_by=='special')
 			$query .=	" ORDER BY create_time DESC";

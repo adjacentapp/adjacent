@@ -4,6 +4,8 @@ import { NgModule, ErrorHandler } 	                from '@angular/core';
 import { MyApp } 								    from './app.component';
 import { IonicApp, IonicModule, IonicErrorHandler }	from 'ionic-angular';
 import { Push, PushObject, PushOptions }			from '@ionic-native/push';
+import { Camera } 									from '@ionic-native/camera';
+import { InAppBrowser }								from '@ionic-native/in-app-browser';
 
 import { StatusBar } 			from '@ionic-native/status-bar';
 import { SplashScreen } 		from '@ionic-native/splash-screen';
@@ -40,6 +42,7 @@ import { GlobalsProvider } 		from '../providers/globals/globals';
 import { NotificationProvider }	from '../providers/notification/notification';
 import { MessagesProvider } 	from '../providers/messages/messages';
 import { BookmarksComponent }	from '../components/bookmarks/bookmarks';
+import { ContributionsComponent } from '../components/contributions/contributions';
 
 @NgModule({
   declarations: [
@@ -63,7 +66,8 @@ import { BookmarksComponent }	from '../components/bookmarks/bookmarks';
     NotificationCenterComponent,
     NotificationComponent,
     MessageComponent,
-    BookmarksComponent
+    BookmarksComponent,
+    ContributionsComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +105,9 @@ import { BookmarksComponent }	from '../components/bookmarks/bookmarks';
     GlobalsProvider,
     NotificationProvider,
     MessagesProvider,
-    Push
+    Push,
+    Camera,
+    InAppBrowser
   ]
 })
 export class AppModule {}

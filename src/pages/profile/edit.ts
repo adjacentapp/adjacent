@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import 'rxjs/add/operator/map';
 import { ShowCardPage } from '../card/show';
 import { ProfileProvider } from '../../providers/profile/profile';
@@ -21,7 +22,8 @@ export class EditProfilePage {
 		private profileProvider: ProfileProvider, 
 		private auth: AuthProvider, 
 		private loadingCtrl: LoadingController, 
-		private alertCtrl: AlertController
+		private alertCtrl: AlertController,
+		private camera: Camera
 	) {
 		this.profile = navParams.get('profile');
 	}
@@ -39,12 +41,14 @@ export class EditProfilePage {
 
 
 	uploadPhoto(){
-		let alert = this.alertCtrl.create({
-		  title: 'Under Construction',
-		  subTitle: "Photo uploading is not yet supported.",
-		  buttons: ['OK']
-		});
-		alert.present(prompt);
+		// this.camera.getPicutre().then((imageData) => {
+		//  // imageData is either a base64 encoded string or a file URI
+		//  // If it's base64:
+		//  let base64Image = 'data:image/jpeg;base64,' + imageData;
+		// }, (err) => {
+		//  // Handle error
+		// });
+		// https://ionicframework.com/docs/native/camera/
 	}
 
 	showLoading() {

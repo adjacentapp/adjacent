@@ -4,6 +4,7 @@ import { ProfilePage } from '../../pages/profile/profile';
 import { ShowCardPage } from '../../pages/card/show';
 import { WallProvider, Comment } from '../../providers/wall/wall';
 import { AuthProvider } from '../../providers/auth/auth';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @Component({
   selector: 'comment-component',
@@ -16,7 +17,7 @@ export class CommentComponent {
   vote: number;
   founder: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private wall: WallProvider, private auth: AuthProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private wall: WallProvider, private auth: AuthProvider, private iab: InAppBrowser) {}
 
   ngOnInit() {
     for (let liker_id of this.item.likes)
@@ -27,7 +28,23 @@ export class CommentComponent {
         this.vote = -1;
 
     this.founder = this.founder_id == this.item.user.id;
+
+    // this.item.message = urlify(this.item.message);
   }
+
+  urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, function(url) {
+        return '<a href="' + url + '">' + url + '</a>';
+    });
+  }
+
+  checkForLink(text){
+    let urlRegex = /(https?:\/\/[^\s]+)/g;
+    console.log(urlRegex);
+    // this.iab.create(urlRegex);
+  }
+
 
   goToProfile(event, user_id) {
   	event.stopPropagation();
