@@ -42,6 +42,20 @@ export class ShowMessagePage {
 	};
   	
     this.reachedEnd = this.item.messages.length < 10;
+
+    setInterval(() => {
+      this.msg.getNewMessages(this.item.id, this.item.other.id, this.item.messages.length ? this.item.messages[this.item.messages.length-1].id : null)
+        .subscribe(
+          items => {
+            this.item.messages = this.item.messages.concat(items);
+            if(items.length)
+              setTimeout(() => {
+                this.content.scrollToBottom();
+              }, 500);
+           },
+          error => console.log(<any>error)
+        );
+    }, 5000);
   }
 
   ionViewDidEnter() {
@@ -56,14 +70,17 @@ export class ShowMessagePage {
   	  success => {
         if(!this.draft.conversation_id)
           this.draft.conversation_id = success.conversation_id;
-  	  	this.item.messages.push({...this.draft});
-  	  	this.draft.text = '';
-  	  	setTimeout(() => {
-          this.content.scrollToBottom();
-        }, 500);
+        this.item.messages[this.item.messages.length-1].id = success.id
   	  },
   	  error => console.log(error)
   	);
+    // dangerous optimism!!
+    let newMsg = {...this.draft}
+    this.item.messages.push(newMsg);
+    this.draft.text = '';
+    setTimeout(() => {
+      this.content.scrollToBottom();
+    }, 500);
   }
 
   doInfinite (): Promise<any> {

@@ -4,7 +4,7 @@ import { Platform, MenuController, Nav, AlertController } from 'ionic-angular';
 import { DiscoverPage } from '../pages/discover/discover';
 import { ProfilePage } from '../pages/profile/profile';
 import { NewCardPage } from '../pages/card/new';
-// import { BookmarksPage } from '../pages/bookmarks/bookmarks';
+import { BookmarksPage } from '../pages/bookmarks/bookmarks';
 import { ShowCardPage } from '../pages/card/show';
 import { MessagesPage } from '../pages/messages/index';
 import { FoundedPage } from '../pages/founded/founded';
@@ -29,7 +29,7 @@ export class MyApp {
   pages: Array<{title: string, component: any, icon: string}> = [
     { title: 'Pitch an Idea', component: NewCardPage, icon: 'md-create' },
     { title: 'My Ideas', component: FoundedPage, icon: 'md-bulb' },
-    // { title: "Ideas I'm Following", component: BookmarksPage, icon: 'bookmark' },
+    { title: "Following", component: BookmarksPage, icon: 'md-bookmark' },
     { title: "Messages", component: MessagesPage, icon: 'md-chatbubbles' },
   ];
   username = '';
@@ -76,7 +76,6 @@ export class MyApp {
   checkDeepLink() {
     console.log('deep linking');
   }
-
 
   openPage(page) {
     this.menu.close();

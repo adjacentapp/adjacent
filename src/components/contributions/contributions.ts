@@ -11,6 +11,7 @@ import { BookmarksProvider } from '../../providers/bookmarks/bookmarks';
 })
 export class ContributionsComponent {
   @Input() user_id: number;
+  @Input() myself: boolean;
   items: Card[];
   loading: boolean;
   reachedEnd: boolean = false;
@@ -20,7 +21,7 @@ export class ContributionsComponent {
 
   ngOnInit() {
   	this.loading = true;
-  	this.bookmarks.getContributions(this.user_id, 0)
+  	this.bookmarks.getContributions(this.user_id, 0, this.limit)
   		.subscribe(
   			items => {
   				this.items = items;
@@ -41,7 +42,7 @@ export class ContributionsComponent {
     return new Promise((resolve) => {
   	  setTimeout(() => {
   	    let offset = this.items.length;
-  	    this.bookmarks.getContributions(this.user_id, offset)
+  	    this.bookmarks.getContributions(this.user_id, offset, this.limit)
   	  	  .subscribe(
   	  		items => {
   	  			this.items = this.items.concat(items);

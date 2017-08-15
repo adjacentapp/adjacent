@@ -118,6 +118,7 @@ export class LoginPage {
               //TODO: Your logic here
               // this.nav.push(DetailsPage, { message: data.message });
               alert('gotothepage? ---- ' + data.message);
+              console.log(data);
             }
           }]
         });
@@ -127,6 +128,7 @@ export class LoginPage {
         //TODO: Your logic on click of push notification directly
         // this.nav.push(DetailsPage, { message: data.message });
         alert('Can this work as deeplinking? --- ' + data.message);
+        console.log(data);
         console.log('Push notification clicked');
       }
     });

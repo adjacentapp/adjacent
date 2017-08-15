@@ -1,58 +1,62 @@
 <ion-card>
-
-  <ion-card-content>
+  
+  <ion-card-content [ngClass]="showDetails ? 'open' : 'closed'">
     <div class='img-bg {{item.industry ? item.industry.replace(" ","_") : ""}}'></div>
-    <ion-list>
-      <ion-title *ngIf="showDetails">The Vision</ion-title>
-      <ion-item text-wrap>
-        <ion-icon name="md-bulb" item-start></ion-icon>
-        <h2>Pitch</h2>
-        <p>{{item.pitch}}</p>
-      </ion-item>
-      <ion-item *ngIf="showDetails" text-wrap>
-        <ion-icon name="briefcase" item-start></ion-icon>
-        <h2>Industry</h2>
-        <p>{{item.industry}}</p>
-      </ion-item>
-      <ion-item text-wrap>
-        <ion-icon name="warning" item-start></ion-icon>
-        <h2>Current Obstacle</h2>
-        <p>{{item.challenge}}</p>
-        <h2 *ngIf="showDetails && item.challenge_details">Obstacle Details</h2>
-        <p *ngIf="showDetails && item.challenge_details">{{item.challenge_details}}</p>
-      </ion-item>
-      <ion-title *ngIf="showDetails">The Founder</ion-title>
-      <ion-item text-wrap>
-        <ion-icon name="person" item-start></ion-icon>
-        <h2 *ngIf="showDetails || true">My Background</h2>
-        <p class='oneline'>{{item.who}}</p>
-      </ion-item>
-      <ion-item text-wrap *ngIf="showDetails">
-        <ion-icon name="stats" item-start></ion-icon>
-        <h2 *ngIf="showDetails || true">Stage</h2>
-        <p>{{stages[item.stage]}}</p>
-      </ion-item>
-    </ion-list>
 
-    <h2 text-center *ngIf="!showDetails">See more</h2>
+    <div class='section'>
+      <h1 class='section-title'><span>Pitch</span><i>{{item.industry}}</i></h1>
+      <div class='section-content'>
+        <h2 *ngIf="showDetails">The Idea</h2>
+        <div>{{item.pitch}}</div>
+      </div>
+      <div class='section-content' *ngIf="showDetails && item.details">
+        <h2>The Details</h2>
+        <div>{{item.details}}</div>
+      </div>
+      <div class='section-content' *ngIf="showDetails && item.challenge_names.length">
+        <h2>Looking For</h2>
+        <div>{{item.challenge_names.join(", ")}}</div>
+      </div>
+      <div class='section-content' *ngIf="showDetails && item.challenge_details">
+        <h2>More Info</h2>
+        <div *ngIf="showDetails && item.challenge_details">{{item.challenge_details}}</div>
+      </div>
+    </div>
 
+    <div class='section' *ngIf="!showDetails && item.challenge_names.length">
+      <div class='section-content footer'>
+        <h2><ion-icon name="warning"></ion-icon> Looking For</h2>
+        <div>{{item.challenge_names.join(", ")}}</div>
+      </div>
+    </div>
+
+    <div class='section' *ngIf="showDetails && item.who">
+      <h1 class='section-title'>Founder</h1>
+      <div class='section-content'>
+        <h2>Background</h2>
+        <div>{{item.who}}</div>
+      </div>
+    </div>
+
+    <!-- <h2 text-center *ngIf="!showDetails">See more</h2> -->
   </ion-card-content>
-  <ion-row>
+
+  <ion-row *ngIf="!hideButtons">
     <ion-col col-4>
       <button ion-button icon-left clear small color='secondary'>
-        <ion-icon name="chatboxes"></ion-icon>
+        <ion-icon name="md-chatboxes"></ion-icon>
         <div>{{item.comments.length || ''}} Comment{{item.comments.length>1?'s':''}}</div>
       </button>
     </ion-col>
     <ion-col col-4>
       <button ion-button icon-left clear small color='secondary' (click)="shareTapped($event, item)">
-        <ion-icon name="share-alt"></ion-icon>
+        <ion-icon name="md-share-alt"></ion-icon>
         <div>Share</div>
       </button>
     </ion-col>
     <ion-col col-4>
       <button *ngIf="!founder" ion-button icon-left clear small color="{{item.following ? 'primary' : 'secondary'}}" (click)="followTapped($event, item)">
-        <ion-icon name="bookmark"></ion-icon>
+        <ion-icon name="md-bookmark"></ion-icon>
         <div>{{item.following ? item.followers.length + ' Follower'+(item.followers.length!==1 ? 's' : '') : 'Follow'}}</div>
       </button>
       <button *ngIf="founder" ion-button icon-left clear small color="primary" (click)="goToFollowers($event, item)">

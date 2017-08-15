@@ -4,8 +4,10 @@
 
 <ion-list>
   <card-component *ngFor="let item of items"  (click)="showCard($event, item)" [item]="item" [showTopCommentVotes]="false"></card-component>
+  <div class='empty' *ngIf="!loading && !items.length && myself">Comment on other's ideas to see your contributions here.</div>
+  <div class='empty' *ngIf="!loading && !items.length && !myself">User has not made any contributions yet.</div>
 </ion-list>
 
-<ion-infinite-scroll *ngIf="!reachedEnd" enabled="!reachedEnd" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">
+<ion-infinite-scroll *ngIf="!reachedEnd && !loading" enabled="!reachedEnd && !loading" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">
 	<ion-infinite-scroll-content></ion-infinite-scroll-content>
 </ion-infinite-scroll>

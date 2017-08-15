@@ -13,15 +13,11 @@ import { ShowMessagePage } from '../../pages/messages/show';
 	templateUrl: 'profile.html'
 })
 export class ProfilePage {
-	// @Input() user_id: string;
 	loading: boolean;
 	user_id: number;
 	myself: boolean = false;
 	profile: Profile;
-	contributions: Array<any>;
-
-	private networks = globs.NETWORKS;
-	private networkCount = Math.round( Math.random()*10 );
+	skills = globs.SKILLS;
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, private profileProvider: ProfileProvider, private auth: AuthProvider) {
 		this.loading = true;
@@ -48,11 +44,6 @@ export class ProfilePage {
 	      }
 	    }
 	  }); 
-	}
-
-	showContributions(event) {
-		alert('my contributions');
-		// this.navCtrl.push(ShowContributionsPage);
 	}
 
 	editTapped() {

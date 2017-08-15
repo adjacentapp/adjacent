@@ -25,8 +25,8 @@ export class BookmarksProvider {
           .catch(this.handleError);
   }
 
-  getContributions(user_id, offset): Observable<any[]> {
-    let query = '?user_id=' + user_id + '&offset=' + offset;
+  getContributions(user_id, offset, limit): Observable<any[]> {
+    let query = '?user_id=' + user_id + '&offset=' + offset + '&limit=' + limit;
     let url = globs.BASE_API_URL + 'get_contributions.php' + query;
     return this.http.get(url)
           .map(this.extractData)

@@ -1,8 +1,9 @@
 <ion-list>
 	<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 	<comment-component *ngFor="let item of items" [item]="item" [founder_id]="founder_id"></comment-component>
+	<!-- <div class='empty margin' *ngIf="!loading && !items.length">No comments yet</div> -->
 </ion-list>
 
-<ion-infinite-scroll *ngIf="!reachedEnd" enabled="!reachedEnd" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">
+<ion-infinite-scroll *ngIf="!reachedEnd && !loading" enabled="!reachedEnd && !loading" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">
 	<ion-infinite-scroll-content></ion-infinite-scroll-content>
 </ion-infinite-scroll>

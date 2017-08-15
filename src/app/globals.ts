@@ -51,14 +51,14 @@ export const STAGES: string[] = [
 	'$$$'
 ];
 
-export let SKILLS: string[] = [
-	'Business',
-	'Customer Discovery',
-	'Design',
-	'Development',
-	'Marketing',
-	'User Experience',
-	'Customer discovery'
+export let SKILLS: any[] = [
+	{ id: '1', name: 'Business' },
+	{ id: '2', name: 'Customer Discovery' },
+	{ id: '3', name: 'Design' },
+	{ id: '4', name: 'Development' },
+	{ id: '5', name: 'Marketing' },
+	{ id: '6', name: 'User Experience' },
+	{ id: '7', name: 'Customer discovery' }
 ];
 export let setSkills = (skills) => {
 	SKILLS = skills;

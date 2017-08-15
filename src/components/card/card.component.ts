@@ -15,9 +15,8 @@ export class CardComponent {
   @Input() showTopComment: boolean = true;
   @Input() showTopCommentVotes: boolean = true;
   @Input() showDetails: boolean = false;
+  @Input() hideButtons: boolean = false;
   founder: boolean = false;
-  // industries: string[] = globs.INDUSTRIES;
-  stages: string[] = globs.STAGES;
 
   constructor(
     public navCtrl: NavController, 
@@ -59,6 +58,8 @@ export class CardComponent {
 
   goToFollowers(e, item){
     e.stopPropagation();
+    if(!item.followers.length)
+      return;
     this.navCtrl.push(FollowersPage, {
       card_id: item.id
     });
@@ -67,10 +68,10 @@ export class CardComponent {
   shareTapped(e, item){
     e.stopPropagation();
     this.socialSharing.share(
-      "Check out this idea I found in the Adjacent!", // message
-      null,   // subject
-      "www/assets/img/anon_photo.png", // file
-      null  //url
+      "Check out this idea I found in Adjacent -- " + item.pitch, // message
+      "Shared from Adjacent",   // subject
+      "www/assets/img/industries/" + item.industry.replace(" ","_") + ".jpg", // file
+      "adjacentapp://idea/" + item.id  //url
      ); 
   }
 

@@ -11,7 +11,7 @@
     </ion-buttons>
     <ion-buttons end *ngIf="!myself">
       <button ion-button (click)="goToMessage()">
-        Message
+        Message User
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -28,17 +28,17 @@
     <h3>{{profile.user.fir_name + ' ' + profile.user.las_name}}</h3>
     <p>{{profile.bio}}</p>
 
-    <div *ngIf="profile.skills.length">
-      <h5>Skills</h5>
+    <div *ngIf="profile.skill_names.length">
+      <h5>Skill</h5>
       <p>
-        <span class="skill" *ngFor="let skill of profile.skills">#{{skill}}</span>
+        <span class="skill" *ngFor="let name of profile.skill_names">#{{name}}</span>
       </p>
     </div>
 
     <!-- <h5>Member of: {{networkCount}} Network{{networkCount === 1 ? '' : 's'}}</h5> -->
 
     <!-- <bookmarks [user_id]=(profile.user.id)></bookmarks> -->
-    <contributions [user_id]=(profile.user.id)></contributions>
+    <contributions [user_id]=(profile.user.id) [myself]="myself"></contributions>
 
   </div>
 

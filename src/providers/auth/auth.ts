@@ -14,8 +14,8 @@ export class User {
  
   constructor(id: number, fir_name: string, las_name: string, email: string, photo_url: string, token?: string) {
   	this.id = id;
-    this.fir_name = fir_name;
-    this.las_name = las_name;
+    this.fir_name = !fir_name || fir_name == 'null' || fir_name == 'NULL' ? 'Entrepreneur' : fir_name;
+    this.las_name = !las_name || las_name == 'null' || las_name == 'NULL' ? '' : las_name;
     this.email = email;
     this.photo_url = photo_url;
     if(token) this.token = token;

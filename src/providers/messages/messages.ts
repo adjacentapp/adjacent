@@ -73,6 +73,19 @@ export class MessagesProvider {
           .catch(this.handleError);
   }
 
+  getNewMessages(convo_id, other_id, last_id?): Observable<any> {
+    let query = '?convo_id=' + convo_id + '&other_id=' + other_id + (last_id ? '&last_id=' + last_id : '');
+    let url = globs.BASE_API_URL + 'get_new_messages.php' + query;
+    return this.http.get(url)
+          .map(this.extractData)
+          .map((data) => {
+            return data.map((msg) => {
+              return new Message(msg.id, msg.user, msg.card, msg.text, msg.timestamp);
+            });
+          })
+          .catch(this.handleError);
+  }
+
   post(data): Observable<any> {
     let url = globs.BASE_API_URL + 'post_message.php';
     return this.http.post(url, data)

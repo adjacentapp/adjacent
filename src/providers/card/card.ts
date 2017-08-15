@@ -10,10 +10,12 @@ export class Card {
   id: number;
   founder_id: number;
   pitch: string;
+  details: string;
   industry: string;
   who: string;
-  challenge: string;
-  challenge_detail: string;
+  challenge_ids: number[];
+  challenge_names: string[];
+  challenge_details: string;
   stage: number;
   distance: number;
   created_at: string;
@@ -27,10 +29,14 @@ export class Card {
     this.id = item.id;
     this.founder_id = item.founder_id;
     this.pitch = item.pitch;
+    this.details = item.details || '';
     this.industry = item.industry || globs.INDUSTRIES[(Math.round(Math.random()*(globs.INDUSTRIES.length-1)))];
     this.who = item.who || 'Anonymous Entrepreneur';
-    this.challenge = item.challenge || 'N/A';
-    this.challenge_detail = item.challenge_detail || '';
+    this.challenge_ids = item.challenge_ids || [];
+    this.challenge_names = item.challenge_ids ? globs.SKILLS
+                        .filter(item => this.challenge_ids.indexOf(item.id) >= 0)
+                        .map(item => item.name) : [];
+    this.challenge_details = item.challenge_details || '';
     this.stage = item.stage;
     this.distance = item.distance || (Math.round(Math.random()*50));
     this.followers = item.followers || [];

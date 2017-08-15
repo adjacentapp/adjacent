@@ -3,7 +3,7 @@ import { NavController, NavParams, AlertController, LoadingController, Loading }
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import 'rxjs/add/operator/map';
 import { ShowCardPage } from '../card/show';
-import { ProfileProvider } from '../../providers/profile/profile';
+import { ProfileProvider, Profile } from '../../providers/profile/profile';
 import { AuthProvider } from '../../providers/auth/auth';
 import * as globs from '../../app/globals'
 
@@ -13,7 +13,7 @@ import * as globs from '../../app/globals'
 })
 export class EditProfilePage {
 	loading: Loading;
-	profile: {fir_name: string, las_name: string, photo_url: string, bio: string, skills: string};
+	profile: Profile;
 	skills = globs.SKILLS;
 
 	constructor(
@@ -37,6 +37,13 @@ export class EditProfilePage {
 				this.showError(error);
 			}
 		);
+	}
+
+	public updateNamesByIds(){
+		this.profile.skill_names = globs.SKILLS
+	            .filter(item => this.profile.skill_ids.indexOf(item.id) >= 0)
+	            .map(item => item.name);
+	    console.log(this.profile.skill_names);
 	}
 
 

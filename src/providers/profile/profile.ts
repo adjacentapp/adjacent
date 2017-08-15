@@ -9,21 +9,23 @@ import { Card } from '../../providers/card/card';
 
 export class Profile {
   user: User;
-  skills: string;
+  skill_ids: number[];
+  skill_names: string[];
   bio: string;
-  cards: Card[];
 
-  constructor(user: User, skills: string, bio: string, cards: any[]) {
+  constructor(user: User, skill_ids: any[], bio: string) {
     this.user = user;
-    this.skills = skills;
     this.bio = bio;
-    this.cards = cards;
+    this.skill_ids = skill_ids;
+    
+    this.skill_names = globs.SKILLS
+                        .filter(item => skill_ids.indexOf(item.id) >= 0)
+                        .map(item => item.name);
   }
 }
 
 @Injectable()
 export class ProfileProvider {
-  // items: Array<{pitch: string, distance: string}>;
 
   constructor (private http: Http) {}
 
@@ -34,12 +36,8 @@ export class ProfileProvider {
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
-            // console.log(data);
-            let user = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url);
-            let cards = data.cards.map((card) => {
-              return new Card(card);
-            });
-            return new Profile(user, data.skills, data.bio, cards);
+            let user = new User(data.id, data.fir_name, data.las_name, data.email, data.photo_url);
+            return new Profile(user, data.skill_ids, data.bio);
           })
           .catch(this.handleError);
   }

@@ -1,9 +1,28 @@
 new-card-page {
 	textarea {
-		height: 4em;
+		height: 6em;
 	}
+	.long textarea {
+		height: 10em;
+	}
+
 	p {
-		color: color($colors, primary);
-		margin: 1em 1em 5em;
+		white-space: normal;
+		text-align: center;
+	}
+
+	ion-select {
+		min-height: 36px;
+	}
+
+	.grid {
+		-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	    justify-content: space-between;
+	}
+
+	ion-card-content, form, ion-slide, .slide-zoom, .grid {
+		height: 100%;
+		// position: relative;
 	}
 }

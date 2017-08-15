@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { NavController, NavParams, LoadingController, Loading, AlertController } from 'ionic-angular';
+import { Component, Input, ViewChild } from '@angular/core';
+import { NavController, NavParams, LoadingController, Loading, AlertController, Slides, ViewController } from 'ionic-angular';
 import * as globs from '../../app/globals'
 import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -12,8 +12,10 @@ import { FoundedPage } from '../../pages/founded/founded';
   templateUrl: 'new.html'
 })
 export class NewCardPage {
+  @ViewChild(Slides) slides: Slides;
   loading: Loading;
   item: any;
+  untouched_item: any;
   valid: boolean = false;
   deleteCallback: any;
 
@@ -22,24 +24,77 @@ export class NewCardPage {
   private stages = globs.STAGES;
   private networks = globs.NETWORKS;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private viewCtrl: ViewController) {
     this.deleteCallback = this.navParams.get('deleteCallback');
-    this.item = navParams.get('item') || {
+    this.item = {...navParams.get('item')} || {
     	industry: null,
-    	pitch: '',
+      pitch: '',
+    	details: '',
       who: '',
-      // location: true,
-      // lat: 0,
-      // lon: 0,
-    	// anonymous: false,
-      challenge: null,
+      challenge_ids: [],
       challenge_details: '',
-    	stage: 0,
-      networks: 0,
+    	// stage: 0,
+      // networks: 0,
       founder_id: this.auth.currentUser.id,
     };
 
-    console.log(this.item);
+    // we want EITHER navParams('item') to be updated on SUBMIT,
+    // or this.item can === navParams('item'), in which case it's always udated
+      // but we need to figure out how to reset it on CANCEL
+      // seems like another case fo the callback trick (currentl being used for DELETE)
+    // which ever method is chosen, apply the same to Profile as well
+  }
+
+  public updateNamesByIds(){
+    this.item.challenge_names = globs.SKILLS
+              .filter(item => this.item.challenge_ids.indexOf(item.id) >= 0)
+              .map(item => item.name);
+      console.log(this.item.challenge_names);
+  }
+
+  ionViewDidLoad() {
+    this.viewCtrl.showBackButton(false);
+    this.slides.lockSwipes(true);
+  }
+
+  nextSlide(e){
+    e.preventDefault();
+    this.slides.lockSwipes(false);
+    this.slides.slideNext(400);
+    this.slides.lockSwipes(true);
+  }
+
+  prevSlide(e){
+    e.preventDefault();
+    this.slides.lockSwipes(false);
+    this.slides.slidePrev(400);
+    this.slides.lockSwipes(true);
+  }
+
+  cancel(e){
+    e.preventDefault();
+    if(this.item.industry || this.item.pitch.length || this.item.details.length || this.item.who.length || this.item.challenge || this.item.challenge_details.length){
+        let alert = this.alertCtrl.create({
+          title: this.item.id ? 'Discard Changes' : 'Discard Idea',
+          message: 'Are you sure? ' + (this.item.id ? 'Changes will be lost.' : 'Information will be lost.'),
+          buttons: [
+            {
+              text: 'Stay',
+              role: 'cancel',
+              handler: () => { console.log('Cancel clicked'); }
+            },
+            {
+              text: 'Discard',
+              handler: () => {
+                this.navCtrl.pop();
+              }
+            }
+          ]
+      });
+      alert.present();
+    }
+    else
+      this.navCtrl.pop();
   }
 
   submitCard(){
@@ -49,7 +104,6 @@ export class NewCardPage {
         if(this.item.id) // edit
           this.navCtrl.pop();
         else {            // create
-          // this.navCtrl.push(ShowCardPage, {item: success}).then(() => {
           this.navCtrl.push(FoundedPage).then(() => {
             let index = this.navCtrl.getActive().index;
              if(index == 3) // through Founded
@@ -72,9 +126,7 @@ export class NewCardPage {
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
+          handler: () => console.log('Cancel clicked')
         },
         {
           text: 'Delete',
