@@ -43,15 +43,24 @@ export class DiscoverPage {
 	 }
 
 	showCard(event, item) {
-		let handleCallback = (_params) => {
+		let handleDelete = (_params) => {
 		  return new Promise((resolve, reject) => {
 	    	this.items = this.items.filter(item => item.id !== _params.remove_id);
 		    resolve();
 		  });
-		}		
+		}
+		let handleUpdate = (updated) => {
+		  return new Promise((resolve, reject) => {
+		  	for (let i=0; i<this.items.length; i++)
+		  		if(this.items[i].id == updated.id)
+		  			this.items[i] = {...updated};
+		  	resolve();
+		  });
+		}
 		this.navCtrl.push(ShowCardPage, {
 			item: item,
-			deleteCallback: handleCallback
+			deleteCallback: handleDelete,
+			updateCallback: handleUpdate
 		});
 	}
 

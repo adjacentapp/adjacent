@@ -18,31 +18,28 @@ export class NewCardPage {
   untouched_item: any;
   valid: boolean = false;
   deleteCallback: any;
+  updateCallback: any;
 
   private industries = globs.INDUSTRIES;
   private challenges = globs.SKILLS;
-  private stages = globs.STAGES;
-  private networks = globs.NETWORKS;
+  // private stages = globs.STAGES;
+  // private networks = globs.NETWORKS;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private viewCtrl: ViewController) {
     this.deleteCallback = this.navParams.get('deleteCallback');
-    this.item = {...navParams.get('item')} || {
+    this.updateCallback = this.navParams.get('updateCallback');
+    this.item = navParams.get('item') ? {...navParams.get('item')} : {
     	industry: null,
       pitch: '',
     	details: '',
       who: '',
       challenge_ids: [],
+      challenge_names: [],
       challenge_details: '',
     	// stage: 0,
       // networks: 0,
       founder_id: this.auth.currentUser.id,
     };
-
-    // we want EITHER navParams('item') to be updated on SUBMIT,
-    // or this.item can === navParams('item'), in which case it's always udated
-      // but we need to figure out how to reset it on CANCEL
-      // seems like another case fo the callback trick (currentl being used for DELETE)
-    // which ever method is chosen, apply the same to Profile as well
   }
 
   public updateNamesByIds(){
@@ -101,8 +98,11 @@ export class NewCardPage {
     this.showLoading();
     this.card.post(this.item).subscribe(
       success => {
-        if(this.item.id) // edit
-          this.navCtrl.pop();
+        if(this.item.id){ // edit
+          this.updateCallback(success).then(()=>{
+            this.navCtrl.pop();
+          });
+        }
         else {            // create
           this.navCtrl.push(FoundedPage).then(() => {
             let index = this.navCtrl.getActive().index;
@@ -120,7 +120,7 @@ export class NewCardPage {
   deleteCard(e){
     e.preventDefault();
     let alert = this.alertCtrl.create({
-      title: 'Delete Card',
+      title: 'Delete Idea',
       message: 'Are you sure? This cannot be undone.',
       buttons: [
         {

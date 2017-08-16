@@ -65,6 +65,18 @@ card-component,
 						&.footer {
 							margin: 0;
 							padding: 2px 0 2px;
+							div {
+								/* autoprefixer: off */
+								-webkit-box-orient: vertical;
+								/* autoprefixer: on */
+								box-orient: vertical;
+								text-decoration: none;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								display: -webkit-box;
+								-webkit-line-clamp: 1;
+								position: relative;
+							}
 						}
 					}
 				}

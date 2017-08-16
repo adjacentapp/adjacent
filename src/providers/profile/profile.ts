@@ -17,7 +17,6 @@ export class Profile {
     this.user = user;
     this.bio = bio;
     this.skill_ids = skill_ids;
-    
     this.skill_names = globs.SKILLS
                         .filter(item => skill_ids.indexOf(item.id) >= 0)
                         .map(item => item.name);
@@ -47,8 +46,8 @@ export class ProfileProvider {
     return this.http.post(url, data)
             .map(this.extractData)
             .map((data) => {
-              console.log(data);
-              return data;
+              let user = new User(data.id, data.fir_name, data.las_name, data.email, data.photo_url);
+              return new Profile(user, data.skill_ids, data.bio);
             })
             .catch(this.handleError);
   }

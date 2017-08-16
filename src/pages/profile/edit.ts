@@ -15,6 +15,7 @@ export class EditProfilePage {
 	loading: Loading;
 	profile: Profile;
 	skills = globs.SKILLS;
+	updateCallback: any;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -25,14 +26,18 @@ export class EditProfilePage {
 		private alertCtrl: AlertController,
 		private camera: Camera
 	) {
-		this.profile = navParams.get('profile');
+		this.profile = {...navParams.get('profile')};
+		this.updateCallback = navParams.get('updateCallback');
 	}
 
 	saveProfile() {
 		this.showLoading();
-		this.profileProvider.updateProfile(this.profile).subscribe(profile => {
-			this.navCtrl.pop();
-		},
+		this.profileProvider.updateProfile(this.profile).subscribe(
+			profile => {
+				this.updateCallback(profile).then(()=>{
+				  	this.navCtrl.pop();
+				});
+			},
 			error => {
 				this.showError(error);
 			}
@@ -43,7 +48,6 @@ export class EditProfilePage {
 		this.profile.skill_names = globs.SKILLS
 	            .filter(item => this.profile.skill_ids.indexOf(item.id) >= 0)
 	            .map(item => item.name);
-	    console.log(this.profile.skill_names);
 	}
 
 

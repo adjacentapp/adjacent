@@ -47,8 +47,15 @@ export class ProfilePage {
 	}
 
 	editTapped() {
+		let handleUpdate = (_params) => {
+		  return new Promise((resolve, reject) => {
+		    this.profile = {..._params};
+		    resolve();
+		  });
+		}
 		this.navCtrl.push(EditProfilePage, {
-			profile: this.profile
+			profile: this.profile,
+			updateCallback: handleUpdate
 		});
 	}
 }

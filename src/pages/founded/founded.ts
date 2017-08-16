@@ -35,9 +35,18 @@ export class FoundedPage {
 		    resolve();
 		  });
 		}
+		let handleUpdate = (updated) => {
+		  return new Promise((resolve, reject) => {
+		  	for (let i=0; i<this.items.length; i++)
+		  		if(this.items[i].id == updated.id)
+		  			this.items[i] = {...updated};
+		  	resolve();
+		  });
+		}
 		this.navCtrl.push(ShowCardPage, {
 			item: item,
-			deleteCallback: handleCallback
+			deleteCallback: handleCallback,
+			updateCallback: handleUpdate
 		});
 	}
 
