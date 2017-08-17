@@ -1,11 +1,13 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <ion-buttons start>
+      <button ion-button (click)="cancel($event)">
+        Cancel
+      </button>
+    </ion-buttons>
     <ion-title>Edit Profile</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="saveProfile()">Save</button>
+      <button ion-button (click)="saveProfile()" [disabled]="photoUpload.loading">Save</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -14,10 +16,15 @@
 <ion-content padding>
   <div *ngIf='profile'>    
 
-    <ion-avatar [ngClass]="'large'" (click)="uploadPhoto()">
+    <ion-avatar [ngClass]="'large'" (click)="tappedPhoto($event)">
+    <!-- <ion-avatar [ngClass]="'large'" (click)="uploadImage()"> -->
       <div [ngStyle]="{'background-image': 'url(' + profile.user.photo_url + ')'}"></div>
-      <ion-icon name="camera"></ion-icon>
+      <ion-icon name="camera" *ngIf="!photoUpload.loading"></ion-icon>
+      <ion-spinner *ngIf="photoUpload.loading"></ion-spinner>
     </ion-avatar>
+    
+    <input #fileInput id='upload' style='display:none;' type="file" name="fileToUpload" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+    <span class='upload-message'>{{photoUpload.msg}}</span>
     
     <ion-item>
       <ion-label stacked>First Name</ion-label>

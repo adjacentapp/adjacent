@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { Platform, NavController, NavParams, ToastController, AlertController, ActionSheetController, LoadingController, Loading, ViewController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+// import { FileTransfer } from '@ionic-native/file-transfer';
+import { FilePath } from '@ionic-native/file-path';
 import 'rxjs/add/operator/map';
-import { ShowCardPage } from '../card/show';
 import { ProfileProvider, Profile } from '../../providers/profile/profile';
 import { AuthProvider } from '../../providers/auth/auth';
 import * as globs from '../../app/globals'
+
+declare var cordova: any;
 
 @Component({
 	selector: 'edit-profile-page',
@@ -16,19 +20,42 @@ export class EditProfilePage {
 	profile: Profile;
 	skills = globs.SKILLS;
 	updateCallback: any;
+	photoUpload = {
+		valid: true,
+		msg: '',
+		loading: false
+	};
+	lastImage: string = null;
 
 	constructor(
+		public platform: Platform,
 		public navCtrl: NavController, 
 		public navParams: NavParams, 
 		private profileProvider: ProfileProvider, 
 		private auth: AuthProvider, 
 		private loadingCtrl: LoadingController, 
 		private alertCtrl: AlertController,
-		private camera: Camera
+		private actionSheetCtrl: ActionSheetController,
+		private toastCtrl: ToastController,
+		private camera: Camera,
+		// private transfer: FileTransfer, 
+		private file: File, 
+		private filePath: FilePath,
+		private viewCtrl: ViewController
 	) {
 		this.profile = {...navParams.get('profile')};
+		this.profile.user = {...navParams.get('profile').user}
 		this.updateCallback = navParams.get('updateCallback');
 	}
+
+	ionViewDidLoad() {
+	  this.viewCtrl.showBackButton(false);
+	}
+
+	cancel(e){
+    	e.preventDefault();
+    	this.navCtrl.pop();
+    }
 
 	saveProfile() {
 		this.showLoading();
@@ -50,16 +77,95 @@ export class EditProfilePage {
 	            .map(item => item.name);
 	}
 
+	tappedPhoto(e){
+		e.preventDefault();
+		let actionSheet = this.actionSheetCtrl.create({
+			title: 'Select Image Source',
+			buttons: [{
+				text: 'Select from Library',
+			  handler: () => { this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY); }
+		  },{
+		    text: 'Use Camera',
+		    handler: () => { this.takePicture(this.camera.PictureSourceType.CAMERA); }
+		  },{
+        text: 'Cancel',
+        role: 'cancel'
+      }]
+		});
+		actionSheet.present();
+	}
 
-	uploadPhoto(){
-		// this.camera.getPicutre().then((imageData) => {
-		//  // imageData is either a base64 encoded string or a file URI
-		//  // If it's base64:
-		//  let base64Image = 'data:image/jpeg;base64,' + imageData;
-		// }, (err) => {
-		//  // Handle error
-		// });
-		// https://ionicframework.com/docs/native/camera/
+	takePicture(sourceType){
+		let options: CameraOptions = {
+		  quality: 50,
+		  destinationType: this.camera.DestinationType.FILE_URI,
+		  encodingType: this.camera.EncodingType.JPEG,
+		  mediaType: this.camera.MediaType.PICTURE,
+		  cameraDirection: this.camera.Direction.FRONT,
+		  correctOrientation: true,
+		  saveToPhotoAlbum: false,
+		  sourceType: sourceType
+		}
+
+		this.camera.getPicture(options).then((imagePath) => {
+			this.photoUpload.loading = true;
+			// Special handling for Android library
+			if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+			  this.filePath.resolveNativePath(imagePath)
+			    .then(filePath => {
+			      let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+			      let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+			      this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+			    });
+			} else {
+			  var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+			  var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+			  this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+			}	            
+		}, (err) => {
+		 this.showError(err);
+		});
+	}
+
+	private createFileName() {
+	  var d = new Date(),
+	  n = d.getTime(),
+	  newFileName =  n + ".jpg";
+	  return newFileName;
+	}
+
+	private copyFileToLocalDir(namePath, currentName, newFileName) {
+	  this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+	    this.profileProvider.uploadPhoto(newFileName).then(
+	    	data => {
+	    		console.log('data', data);
+	    		if(data.valid){
+	    			this.profile.user.photo_url = data.photo_url;
+						this.presentToast('Image successfully uploaded.');
+					}
+					else{
+						this.presentToast(data.msg);
+					}
+					this.photoUpload.loading = false;
+	    	},
+	    	err => {
+	    		console.log('error', err);
+	    		this.photoUpload.loading = false;
+	    	}
+	    );
+	  }, error => {
+	    this.presentToast('Error while storing file.');
+	    this.photoUpload.loading = false;
+	  });
+	}
+	 
+	private presentToast(text) {
+	  let toast = this.toastCtrl.create({
+	    message: text,
+	    duration: 2500,
+	    position: 'top'
+	  });
+	  toast.present();
 	}
 
 	showLoading() {
@@ -71,6 +177,7 @@ export class EditProfilePage {
 	}
 
 	showError(text) {
+	  console.log(text);
 	  if(this.loading)
 	    this.loading.dismiss();
 

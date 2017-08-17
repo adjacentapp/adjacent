@@ -1,3 +1,6 @@
+$gray-placeholder: 	#aeb0b3;
+$gray-solid:		#7e8083;
+
 comment-component {
 	
 	margin-top: -10px;
@@ -22,6 +25,8 @@ comment-component {
 				-webkit-line-clamp: 99;
 				font-size: 16px;
 				position: relative;
+
+				color: $gray-solid;
 			}
 			.voting {
 				color: color($colors, secondary);
@@ -32,6 +37,7 @@ comment-component {
 
 				ion-icon {
 					position: relative;
+					font-size: 1.3em;
 					&:after {
 						content: '';
 						position: absolute;
@@ -104,7 +110,8 @@ new-comment-component {
 			margin-left: -2px;
 		}
 		.item .post-btn-wrapper {
-			margin-left: 0;
+			margin-left: 12px;
+			margin-right: 0;
 			.item-button {
 				margin-left: -8px;
 				margin-right: -2px;
@@ -116,6 +123,11 @@ new-comment-component {
 
 new-comment-component {
 	.item-inner {
-			padding-bottom: 20px;
+		padding-bottom: 20px;
+		ion-textarea {
+			.text-input::-webkit-input-placeholder {
+				color: $gray-placeholder;
+			}
+		}
 	}
 }

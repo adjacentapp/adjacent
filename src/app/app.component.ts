@@ -14,6 +14,7 @@ import { MissionPage } from '../pages/mission/mission';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 import { AuthProvider } from '../providers/auth/auth';
 import { GlobalsProvider } from '../providers/globals/globals';
@@ -43,7 +44,8 @@ export class MyApp {
     // public ga: GoogleAnalytics,
     private auth: AuthProvider,
     private globsProv: GlobalsProvider,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private deeplinks: Deeplinks
   ){
     this.getGlobs();
     this.platform.ready().then( () => {
@@ -75,6 +77,18 @@ export class MyApp {
 
   checkDeepLink() {
     console.log('deep linking');
+    this.deeplinks.routeWithNavController(this.nav, {
+      '/idea': ShowCardPage,
+      '/message/:conversationId': MessagesPage
+    }).subscribe((match) => {
+        // match.$route - the route we matched, which is the matched entry from the arguments to route()
+        // match.$args - the args passed in the link
+        // match.$link - the full link data
+        console.log('Successfully matched route', match);
+      }, (nomatch) => {
+        // nomatch.$link - the full link data
+        console.error('Got a deeplink that didn\'t match', nomatch);
+      });
   }
 
   openPage(page) {

@@ -4,8 +4,13 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
-import { User } from '../../providers/auth/auth';
-import { Card } from '../../providers/card/card';
+import { AuthProvider, User } from '../../providers/auth/auth';
+
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
+// import { FilePath } from '@ionic-native/file-path';
+
+declare var cordova: any;
 
 export class Profile {
   user: User;
@@ -26,7 +31,7 @@ export class Profile {
 @Injectable()
 export class ProfileProvider {
 
-  constructor (private http: Http) {}
+  constructor (private http: Http, private auth: AuthProvider, private transfer: FileTransfer, private file: File) {}
 
   getProfile(user_id, my_id): Observable<any> {
     let query = '?user_id=' + user_id + '&my_id=' + my_id;
@@ -46,10 +51,35 @@ export class ProfileProvider {
     return this.http.post(url, data)
             .map(this.extractData)
             .map((data) => {
-              let user = new User(data.id, data.fir_name, data.las_name, data.email, data.photo_url);
+              let user = this.auth.updateCurrentUser(data);
               return new Profile(user, data.skill_ids, data.bio);
             })
             .catch(this.handleError);
+  }
+
+  uploadPhoto (filename): Promise<any> {      
+      let url = globs.BASE_API_URL + 'post_profile_photo.php';
+      let targetPath = cordova.file.dataDirectory + filename;
+      let fileTransfer = this.transfer.create();
+      let options = {
+        fileKey: "file",
+        fileName: filename,
+        chunkedMode: false,
+        mimeType: "multipart/form-data",
+        params : {'fileName': filename}
+      };
+      
+      return new Promise((resolve, reject) => {
+        fileTransfer.upload(targetPath, url, options)
+        .then(data => {
+            let resp = JSON.parse(data.response);
+            resolve(resp);
+        }, err => {
+            this.handleError(err);
+            reject(err);
+        });
+
+      });
   }
 
   private extractData(res: Response) {

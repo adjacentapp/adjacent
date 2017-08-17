@@ -122,6 +122,16 @@ export class AuthProvider {
     return this.currentUser;
   }
 
+  public updateCurrentUser(data) : User {
+    this.currentUser = new User(data.id, data.fir_name, data.las_name, data.email, data.photo_url, this.currentUser.token);
+    localStorage.user_id = data.id;
+    localStorage.fir_name = data.fir_name;
+    localStorage.las_name = data.las_name;
+    localStorage.email = data.email;
+    localStorage.photo_url = data.photo_url;
+    return this.currentUser;
+  }
+
   public logout() {
     this.valid = false;
     localStorage.clear();

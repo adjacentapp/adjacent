@@ -1,10 +1,8 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, LoadingController, Loading, AlertController, Slides, ViewController } from 'ionic-angular';
 import * as globs from '../../app/globals'
 import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
-import { ShowCardPage } from '../../pages/card/show';
-import { ProfilePage } from '../../pages/profile/profile';
 import { FoundedPage } from '../../pages/founded/founded';
 
 @Component({
@@ -20,8 +18,8 @@ export class NewCardPage {
   deleteCallback: any;
   updateCallback: any;
 
-  private industries = globs.INDUSTRIES;
-  private challenges = globs.SKILLS;
+  public industries = globs.INDUSTRIES;
+  public challenges = globs.SKILLS;
   // private stages = globs.STAGES;
   // private networks = globs.NETWORKS;
 

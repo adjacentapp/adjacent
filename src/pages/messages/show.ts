@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
-import { MessagesProvider, Message, Conversation } from '../../providers/messages/messages';
+import { NavController, NavParams, Content } from 'ionic-angular';
+import { MessagesProvider } from '../../providers/messages/messages';
 import { AuthProvider } from '../../providers/auth/auth';
 
-// @IonicPage()
 @Component({
   selector: 'show-page-message',
   templateUrl: 'show.html',

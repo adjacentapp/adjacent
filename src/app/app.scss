@@ -1,5 +1,10 @@
 // http://ionicframework.com/docs/v2/theming/
 
+// body {
+// 	position: relative !important;
+// 	top: 18px !important;
+// 	outline: solid 1px red;
+// }
 
 // App Global Sass
 // --------------------------------------------------
@@ -26,23 +31,28 @@
 
 // Sidemenu
 ion-menu {
-	.toolbar-ios ion-title {
-		padding-right: 115px;
-		// default 90 + 25 for icon width
+	.toolbar ion-title {
+		padding-right: 70px;
+		padding-left: 70px;
 	}
-	div {
-		text-align: center;
-	}
-	ion-icon {
-		width: 25px;
-	}
-	#create-card-btn {
-		// color: green;
-	}
-	#mission-btn {
-		position: absolute;
-		bottom: 0;
-		color: color($colors, secondary);
+	&#left-menu {
+		.toolbar ion-title {
+			padding-right: 95px; // +25 for icon width
+		}
+		div {
+			text-align: center;
+		}
+		ion-icon {
+			width: 25px;
+		}
+		#create-card-btn {
+			// color: green;
+		}
+		#mission-btn {
+			position: absolute;
+			bottom: 0;
+			color: color($colors, secondary);
+		}
 	}
 }
 

@@ -11,6 +11,24 @@ edit-profile-page {
 			opacity: 0.8;
 			text-shadow: 0 0 4px black;
 		}
+		ion-spinner {
+			position: absolute;
+			// top: 50%;
+			// left: 50%;
+			// transform: translate(-50%,-50%);
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0,0,0,0.3);
+			* {	stroke: white !important; }
+			svg {
+				left: 25%;
+				top: 25%;
+				width: 50%;
+				height: 50%;
+			}
+		}
 	}
 	textarea {
 		font-size: 0.9em;

@@ -4,8 +4,12 @@ import { NgModule, ErrorHandler } 	                from '@angular/core';
 import { MyApp } 								    from './app.component';
 import { IonicApp, IonicModule, IonicErrorHandler }	from 'ionic-angular';
 import { Push, PushObject, PushOptions }			from '@ionic-native/push';
+import { InAppBrowser }                             from '@ionic-native/in-app-browser';
 import { Camera } 									from '@ionic-native/camera';
-import { InAppBrowser }								from '@ionic-native/in-app-browser';
+import { Deeplinks }                                from '@ionic-native/deeplinks';
+import { File }                                     from '@ionic-native/file';
+import { FileTransfer }                             from '@ionic-native/file-transfer';
+import { FilePath }                                 from '@ionic-native/file-path';
 
 import { StatusBar } 			from '@ionic-native/status-bar';
 import { SplashScreen } 		from '@ionic-native/splash-screen';
@@ -107,7 +111,11 @@ import { ContributionsComponent } from '../components/contributions/contribution
     MessagesProvider,
     Push,
     Camera,
-    InAppBrowser
+    InAppBrowser,
+    Deeplinks,
+    File,
+    FileTransfer,
+    FilePath
   ]
 })
 export class AppModule {}
