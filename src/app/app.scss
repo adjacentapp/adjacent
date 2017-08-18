@@ -29,6 +29,11 @@
 	margin: 0 auto;
 }
 
+// Header Notification Badges
+ion-header ion-badge {
+	// position: absolute;
+}
+
 // Sidemenu
 ion-menu {
 	.toolbar ion-title {
@@ -37,23 +42,38 @@ ion-menu {
 	}
 	&#left-menu {
 		.toolbar ion-title {
-			padding-right: 95px; // +25 for icon width
+			// padding-right: 95px; // +25 for icon width
 		}
 		div {
 			text-align: center;
 		}
-		ion-icon {
-			width: 25px;
-		}
 		#create-card-btn {
-			// color: green;
+			// color: color($colors, primary);
 		}
 		#mission-btn {
 			position: absolute;
 			bottom: 0;
 			color: color($colors, secondary);
 		}
+		ion-icon,
+		ion-badge {
+			position: absolute;
+			top: 50%;
+			margin-top: 0;
+			-webkit-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+		ion-icon {
+			// width: 25px;
+			right: 8px;
+		}
 	}
+	// .list .item-block {
+	// 	border-bottom: 0.55px solid #c8c7cc;
+	// 	.item-inner {
+	// 		border-bottom: none;
+	// 	}
+	// }
 }
 
 // List border
@@ -91,6 +111,10 @@ ion-avatar {
 	background-size: cover;
 	height: 36px;
 	width: 36px;
+
+  &.card {
+    border-radius: 4px;
+  }
 
 	> div {
 		background-size: cover;

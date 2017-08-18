@@ -29,19 +29,23 @@ export class Conversation {
   card: Card;
   messages: Message[];
   timestamp: any;
+  unread: boolean;
   
-  constructor (id: number, other: any, card: any, messages: any[], timestamp: any) {
+  constructor (id: number, other: any, card: any, messages: any[], timestamp: any, unread: any) {
     this.id = id;
     this.other = other ? new User(other.id, other.fir_name, other.las_name, other.email, other.photo_url) : null;
     this.card = card ? new Card(card) : null;
     this.timestamp = timestamp;
     this.messages = messages.map((msg) => new Message(msg.id, msg.user, msg.card, msg.text, msg.timestamp));
+    this.unread = unread || false;
   }
 }
 
 @Injectable()
 export class MessagesProvider {
   // items: Array<{industry: string, pitch: string, distance: string}>;
+  // notifications: any[] = []; 
+  unread_ids: number[] = [];
 
   constructor (private http: Http) {}
 
@@ -54,14 +58,14 @@ export class MessagesProvider {
           .map(this.extractData)
           .map((data) => {
             return data.map((convo) => {
-              return new Conversation(convo.conversation_id, convo.other, convo.card, convo.messages, convo.timestamp);
+              return new Conversation(convo.conversation_id, convo.other, convo.card, convo.messages, convo.timestamp, convo.unread);
             });
           })
           .catch(this.handleError);
   }
 
-  getMessages(convo_id, offset): Observable<any> {
-    let query = '?convo_id=' + convo_id + '&offset=' + offset;
+  getMessages(convo_id, offset, limit): Observable<any> {
+    let query = '?convo_id=' + convo_id + '&offset=' + offset + '&limit=' + limit;
     let url = globs.BASE_API_URL + 'get_messages.php' + query;
     return this.http.get(url)
           .map(this.extractData)
@@ -94,6 +98,30 @@ export class MessagesProvider {
               console.log(data);
               return data;
             })
+            .catch(this.handleError);
+  }
+
+  getUnreadCount(user_id): Observable<any> {
+    let query = '?user_id=' + user_id;
+    let url = globs.BASE_API_URL + 'get_message_receipts.php' + query;
+    return this.http.get(url)
+          .map(this.extractData)
+          .map((data) => {
+            this.unread_ids = data;
+            // this.unreadCount = data.length;
+            return this.unread_ids;
+          })
+          .catch(this.handleError);
+  }
+
+  markAsRead(user_id, conversation_id): Observable<any> {
+    let data = {
+      user_id: user_id,
+      conversation_id: conversation_id
+    };
+    let url = globs.BASE_API_URL + 'delete_message_receipts.php';
+    return this.http.post(url, data)
+            .map(this.extractData)
             .catch(this.handleError);
   }
 

@@ -17,18 +17,17 @@
 	<h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 
 	<ion-list>
-		<ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+		<ion-item *ngFor="let item of items" (click)="itemTapped($event, item)" [ngClass]="item.unread ? 'unread' : ''">
       
       <ion-avatar *ngIf="!item.card" item-left (click)="goToProfile($event, item.other.id)">
         <div *ngIf='item.other.photo_url' [ngStyle]="{'background-image': 'url(' + item.other.photo_url + ')'}"></div>
       </ion-avatar>
       <h3 *ngIf="!item.card">{{item.other.fir_name + ' ' + item.other.las_name}}</h3>
 
-      <ion-avatar *ngIf="item.card" item-left (click)="goToCard($event, item.card)">
+      <ion-avatar *ngIf="item.card" item-left (click)="goToCard($event, item.card)" class="card">
         <div class='img-bg {{item.card.industry ? item.card.industry.replace(" ","_") : ""}}'></div>
-        <!-- <ion-icon *ngIf="card && card.anonymous==1 && item.user.id == card.founder_id" name="md-bulb" color="primary"></ion-icon> -->
       </ion-avatar>
-      <h3 *ngIf="item.card">{{item.card.pitch}}</h3>
+      <h3 *ngIf="item.card">{{item.card.founder_id != auth.currentUser.id ? 'Founder of: ' : ''}}{{item.card.pitch}}</h3>
 
       <p>
         {{item.messages[item.messages.length-1].user.id==auth.currentUser.id ? 'You: ' : ''}}

@@ -23,10 +23,12 @@
       </div>
     </div>
 
-    <div class='section' *ngIf="!showDetails && item.challenge_names.length">
+    <!-- <div class='section' *ngIf="!showDetails && item.challenge_names.length"> -->
+    <div class='section' *ngIf="!showDetails">
       <div class='section-content footer'>
         <h2><ion-icon name="warning"></ion-icon> Looking For</h2>
-        <div>{{item.challenge_names.join(", ")}}</div>
+        <div *ngIf="item.challenge_names.length">{{item.challenge_names.join(", ")}}</div>
+        <div *ngIf="!item.challenge_names.length">N/A</div>
       </div>
     </div>
 

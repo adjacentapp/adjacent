@@ -9,26 +9,29 @@ import { ShowCardPage } from '../../pages/card/show';
   templateUrl: 'message.html'
 })
 export class MessageComponent {
-  // item: {user: User, text: string};
   @Input() item: any;
+  @Input() founder_id: number;
+  founder: boolean = false;
   other: boolean;
 
   constructor(public navCtrl: NavController, private auth: AuthProvider) {}
 
   ngOnInit() {
   	this.other = this.item.user.id !== this.auth.currentUser.id;
+    this.founder = this.item.user.id  === this.founder_id
   }
 
   avatarTapped(event, item){
     event.stopPropagation();
     
-    if(item.user)
-      this.navCtrl.push(ProfilePage, {
-        user_id: item.user.id
-      });
-    else if(item.card)
-      this.navCtrl.push(ShowCardPage, {
-        item: item.card
-      });
+    // if(item.user)
+    //   this.navCtrl.push(ProfilePage, {
+    //     user_id: item.user.id
+    //   });
+    // else if(item.founder)
+    //   this.navCtrl.push(ShowCardPage, {
+    //     item: item.card
+    //   });
+    //////// ((this.card)) does not exist!
   }
 }

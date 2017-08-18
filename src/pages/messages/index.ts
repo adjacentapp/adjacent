@@ -32,6 +32,14 @@ export class MessagesPage {
   }
 
   itemTapped(event, item) {
+    if(item.unread){
+      this.msg.markAsRead(this.auth.currentUser.id, item.id).subscribe(
+          items => console.log('deleted: ', items),
+          error => console.log(<any>error)
+      );
+      item.unread = false;
+      this.msg.unread_ids = this.msg.unread_ids.filter(convo_id => convo_id !== item.id);
+    }
   	this.navCtrl.push(ShowMessagePage, {
   		item: item
   	});

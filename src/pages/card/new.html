@@ -104,7 +104,7 @@
               <button ion-button block round (click)="prevSlide($event)" outline>Back</button>
             </ion-col>
             <ion-col col-xs-6>
-              <button ion-button block round type="submit" [disabled]="!cardForm.form.valid">Share</button>
+              <button ion-button block round type="submit" [disabled]="!cardForm.form.valid">{{item.id ? "Update" : "Share"}}</button>
             </ion-col>
           </ion-row>
         </ion-grid>

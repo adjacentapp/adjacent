@@ -18,6 +18,7 @@ import { Deeplinks } from '@ionic-native/deeplinks';
 
 import { AuthProvider } from '../providers/auth/auth';
 import { GlobalsProvider } from '../providers/globals/globals';
+import { MessagesProvider } from '../providers/messages/messages';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,11 +28,11 @@ export class MyApp {
 
   rootPage:any = 'LoginPage';
   profPage:{title: string, component: any, icon: string} = { title: 'Profile', component: ProfilePage, icon: 'md-person' };
-  pages: Array<{title: string, component: any, icon: string}> = [
+  pages: Array<{title: string, component: any, icon: string, badge?: number}> = [
     { title: 'Pitch an Idea', component: NewCardPage, icon: 'md-create' },
     { title: 'My Ideas', component: FoundedPage, icon: 'md-bulb' },
     { title: "Following", component: BookmarksPage, icon: 'md-bookmark' },
-    { title: "Messages", component: MessagesPage, icon: 'md-chatbubbles' },
+    { title: "Messages", component: MessagesPage, icon: 'md-chatbubbles', badge: 0 },
   ];
   username = '';
   email = '';
@@ -43,7 +44,8 @@ export class MyApp {
     public splashScreen: SplashScreen,
     // public ga: GoogleAnalytics,
     private auth: AuthProvider,
-    private globsProv: GlobalsProvider,
+    private globs: GlobalsProvider,
+    private msg: MessagesProvider,
     private alertCtrl: AlertController,
     private deeplinks: Deeplinks
   ){
@@ -53,11 +55,26 @@ export class MyApp {
         this.splashScreen.hide();
         this.initGA();
         this.checkDeepLink();
+        this.listenForMessages();
     });
   }
 
+  listenForMessages(){
+    let user_id = this.auth.currentUser ? this.auth.currentUser.id : 0;
+    this.msg.getUnreadCount(user_id)
+      .subscribe(
+        data => {
+          // this.pages.reduce( (prev, curr) => curr.title === "Messages" ? curr : prev ).badge = data.length;
+        },
+        error => console.log(<any>error),
+        () => setTimeout(() => {
+          this.listenForMessages();
+        }, 5000)
+      );
+  }
+
   getGlobs() {
-    this.globsProv.getGlobs()
+    this.globs.getGlobs()
       .subscribe(
         data => console.log(data),
         error => console.log(<any>error)
@@ -87,7 +104,7 @@ export class MyApp {
         console.log('Successfully matched route', match);
       }, (nomatch) => {
         // nomatch.$link - the full link data
-        console.error('Got a deeplink that didn\'t match', nomatch);
+        console.log('Got a deeplink that didn\'t match', nomatch);
       });
   }
 
@@ -101,6 +118,15 @@ export class MyApp {
     this.nav.push(ShowCardPage, {
       item: item
     });
+  }
+
+  jumpToCard(item){
+    this.menu.close();
+    this.nav.push(
+      ShowCardPage,
+      { item: item },
+      { animate: false }
+    );
   }
 
   goToProfile(item) {

@@ -3,6 +3,16 @@ page-message {
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+
+  .item {
+    * { color: #777; }
+    &.unread {
+      * {
+        color: #000;
+        font-weight: bolder;
+      }
+    }
+  }
 }
 
 show-page-message {

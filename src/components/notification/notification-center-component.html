@@ -5,20 +5,19 @@
 		</ion-toolbar>
 	</ion-header>
 	<ion-content>
-		<ion-refresher (ionRefresh)="doRefresh($event)">
-			<ion-refresher-content></ion-refresher-content>
+		<ion-refresher (ionRefresh)="doRefresh($event)" [pullMin]="100" [pullMax]="999">
+      <ion-refresher-content pullingText="Mark all as read"></ion-refresher-content>
 		</ion-refresher>
 
 		<h1 text-center *ngIf="loading"><ion-spinner></ion-spinner></h1>
-		<h3 text-center *ngIf="!loading && notifications.length===0">No notifications</h3>
+		<h3 text-center *ngIf="!loading && notif.items.length===0">No notifications</h3>
 
-
-		<ion-list *ngIf="!loading && notifications.length > 0">
-			<notification-component *ngFor="let notif of notifications" [item]="notif" (click)="notifTapped(notif)" (handleUserTapped)="handleUserTapped($event)">
+		<ion-list *ngIf="!loading && notif.items.length">
+			<notification-component *ngFor="let item of notif.items" [item]="item" (click)="notifTapped(item)" (handleUserTapped)="handleUserTapped($event)">
 			</notification-component>
 		</ion-list>
 
-		<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll *ngIf="!reachedEnd && !loading" (ionInfinite)="doInfinite($event)">
 			<ion-infinite-scroll-content></ion-infinite-scroll-content>
 		</ion-infinite-scroll>
 	</ion-content>

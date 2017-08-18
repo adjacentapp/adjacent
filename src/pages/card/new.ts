@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, Loading, AlertController, Slides, ViewController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, Loading, AlertController, Slides, ViewController, ToastController } from 'ionic-angular';
 import * as globs from '../../app/globals'
 import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -23,7 +23,7 @@ export class NewCardPage {
   // private stages = globs.STAGES;
   // private networks = globs.NETWORKS;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private viewCtrl: ViewController, private toast: ToastController) {
     this.deleteCallback = this.navParams.get('deleteCallback');
     this.updateCallback = this.navParams.get('updateCallback');
     this.item = navParams.get('item') ? {...navParams.get('item')} : {
@@ -57,6 +57,19 @@ export class NewCardPage {
     this.slides.lockSwipes(false);
     this.slides.slideNext(400);
     this.slides.lockSwipes(true);
+    
+    console.log(this.slides.getActiveIndex());
+    if(this.slides.getActiveIndex() === 2)
+      if(this.item.id){
+        let toast = this.toast.create({
+          message: "Followers of this idea will be notified whenever you update, up to once every 24 hours.",
+          // duration: 6000,
+          position: 'bottom',
+          showCloseButton: true,
+          closeButtonText: "OK"
+        });
+        toast.present();
+      }
   }
 
   prevSlide(e){

@@ -1,16 +1,21 @@
 <ion-item *ngIf="item.user" text-wrap [ngClass]="founder ? 'founder' : ''">
+  
   <ion-avatar item-left (click)="goToProfile($event, item.user.id)">
     <div *ngIf="!founder" [ngStyle]="{'background-image': 'url(' + (item.user.photo_url || '') + ')'}"></div>
     <ion-icon *ngIf="founder" name="md-bulb" color="primary"></ion-icon>
   </ion-avatar>
+
   <h3 *ngIf="!founder" (click)="goToProfile($event, item.user.id)">{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
   <h3 *ngIf="founder">Founder</h3>
+
   <p (click)="checkForLink(item.message)">{{item.message}}</p>
+  
   <div *ngIf="showVotes" item-right text-center class='voting {{vote==1?"upvoted":(vote==-1?"downvoted":"")}}'>
   	<ion-icon name="md-arrow-dropup" (click)="upvote($event, item)" color="{{vote == 1?'balanced':'secondary'}}"></ion-icon><br/>
   	{{item.score}}<br/>
   	<ion-icon name="md-arrow-dropdown" (click)="downvote($event, item)" color="{{vote==-1?'danger':'secondary'}}"></ion-icon>
   </div>
+
   <div class="responses" *ngIf="showVotes">
     <h6 (click)="item.expanded=!item.expanded">
       <ion-icon name="ios-arrow-down" *ngIf="!item.expanded"></ion-icon>
@@ -22,4 +27,5 @@
       <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.card_id" [response_to]="item.id" (newComment)="appendResponse($event)" [founder_id]="founder_id"></new-comment-component>
     </div>
   </div>
+  
 </ion-item>

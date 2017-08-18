@@ -16,7 +16,8 @@
         <ion-icon item-right></ion-icon>
       </ion-item>
       <button ion-item *ngFor="let p of pages; let i = index" (click)="openPage(p)" detail-none id="{{i==0?'create-card-btn':''}}">
-        <!-- <ion-icon item-left></ion-icon> -->
+        <!-- <ion-badge item-left color="danger" *ngIf="p.badge">{{p.badge}}</ion-badge> -->
+        <ion-badge item-left color="danger" *ngIf="p.title=='Messages' && msg.unread_ids.length">{{msg.unread_ids.length}}</ion-badge>
         {{p.title}}
         <ion-icon item-right name="{{p.icon}}"></ion-icon>
       </button>
@@ -36,7 +37,7 @@
   </ion-content>
 </ion-menu>
 
-<notification-center-component [inheritedContent]="content" (goToCard)="goToCard($event)" (goToProfile)="goToProfile($event)">
+<notification-center-component [inheritedContent]="content" (goToCard)="jumpToCard($event)" (goToProfile)="goToProfile($event)">
 </notification-center-component>
 
 <ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav>

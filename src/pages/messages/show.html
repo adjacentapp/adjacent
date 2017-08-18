@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{loading ? "" : (item.card ? "Founder" : item.other.fir_name)}}</ion-title> 
+    <ion-title>{{loading ? "" : (item.card && !founder ? "Founder" : item.other.fir_name)}}</ion-title> 
   </ion-navbar>
 </ion-header>
 
@@ -9,11 +9,12 @@
 		<ion-infinite-scroll-content></ion-infinite-scroll-content>
 	</ion-infinite-scroll>
 
-  <h5 *ngIf="item.anonymous">The founder has chosen to remain anonymous for this idea.</h5>
-
   <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 	
-	<message *ngFor="let msg of item.messages" [item]="msg"></message>
+	<message *ngFor="let msg of item.messages" [item]="msg" [founder_id]="this.item.card ? this.item.card.founder_id : null"></message>
+
+  <div class='empty margin' *ngIf="!loading && remindAnonymous">Don't forget you're anonymous here! <br/>Your photo and name will remain hidden within this conversation.</div>
+
 </ion-content>
 
 <ion-footer>

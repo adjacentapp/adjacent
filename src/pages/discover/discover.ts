@@ -3,6 +3,8 @@ import { NavController, NavParams, MenuController, Slides } from 'ionic-angular'
 import { ShowCardPage } from '../../pages/card/show';
 import { CardProvider, Card } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
+import { MessagesProvider } from '../../providers/messages/messages';
+import { NotificationProvider } from '../../providers/notification/notification';
 
 @Component({
 	selector: 'discover-page',
@@ -20,7 +22,7 @@ export class DiscoverPage {
 	username = '';
     email = '';
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider, private msg: MessagesProvider, private notif: NotificationProvider) {
 		this.loading = true;
 		this.getDeck();
 	}
@@ -66,7 +68,7 @@ export class DiscoverPage {
 
 	slideChanged() {
 		let currentIndex = this.slides.getActiveIndex();
-		if(!this.reachedEnd && !this.dealing && currentIndex >= this.items.length - 2) // deal more cards when 2 away from end
+		if(!this.reachedEnd && !this.dealing && currentIndex >= this.items.length - 3) // deal more cards when 3 away from end
 			this.dealCards();
 	}
 

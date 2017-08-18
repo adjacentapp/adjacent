@@ -1,12 +1,14 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+      <ion-icon name="menu" color="{{msg.unread_ids.length && false ? 'danger' : 'primary'}}"></ion-icon>
+       <ion-badge *ngIf="msg.unread_ids.length" color="danger">{{msg.unread_ids.length}}</ion-badge>
     </button>
     <ion-title><img id='title-img' src="./assets/img/title.svg"/></ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="openRightMenu()">
-        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-badge *ngIf="notif.unreadCount" color="danger">{{notif.unreadCount}}</ion-badge>
+        <ion-icon name="notifications-outline" color="{{notif.unreadCount && false ? 'danger' : 'primary'}}"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -14,7 +16,7 @@
 
 <ion-content no-bounce>
 
-  <ion-refresher (ionRefresh)="doRefresh($event)">
+  <ion-refresher [enabled]="!loading" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   
