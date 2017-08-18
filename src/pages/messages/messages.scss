@@ -7,10 +7,9 @@ page-message {
   .item {
     * { color: #777; }
     &.unread {
-      * {
-        color: #000;
-        font-weight: bolder;
-      }
+      * { color: #000; } 
+      h3 { font-weight: 700; }
+      p { font-weight: 500; }
     }
   }
 }

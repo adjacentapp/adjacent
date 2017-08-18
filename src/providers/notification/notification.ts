@@ -47,7 +47,7 @@ export class NotificationProvider {
   getNewNotifications(user_id): Observable<any> {
     let last_id = this.items.length ? this.items[0].id : null;
     let query = '?user_id=' + user_id + (last_id ? '&last_id=' + last_id : '');
-    let url = globs.BASE_API_URL + 'get_new_notifications.php' + query;
+    let url = globs.BASE_API_URL + 'get_notifications.php' + query;
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
@@ -72,9 +72,14 @@ export class NotificationProvider {
 
   markAllAsRead(user_id): Observable<any> {
     let data = {user_id: user_id};
+    console.log(data);
     let url = globs.BASE_API_URL + 'delete_receipts.php';
     return this.http.post(url, data)
             .map(this.extractData)
+            .map((data) => {
+              console.log(data);
+              return data;
+            })
             .catch(this.handleError);
   }
   

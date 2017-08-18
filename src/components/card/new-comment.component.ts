@@ -13,10 +13,11 @@ export class NewCommentComponent {
   @Input() response_to: string = null;
   @Output() newComment: EventEmitter<any> = new EventEmitter();
   founder: boolean = false;
-
+  loading: boolean = false;
   item: {
     message: string,
     card_id: any,
+    response_to: string,
     user: {
       fir_name: string,
       las_name: string,
@@ -24,35 +25,34 @@ export class NewCommentComponent {
     }
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider, private wall: WallProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider, private wall: WallProvider) {}
+
+  ngOnInit(){
+    this.founder = this.founder_id == this.auth.currentUser.id;
     this.item = {
       message: '',
       card_id: this.card_id,
       user: this.auth.currentUser,
+      response_to: this.response_to
     }
-  }
-
-  ngOnInit(){
-    this.founder = this.founder_id == this.auth.currentUser.id;
   }
 
   postComment(e, item) {
     e.stopPropagation();
-
-    let data = {
-      message: item.message,
-      card_id: this.card_id,
-      user: item.user,
-      response_to: this.response_to
-    };
+    this.loading = true;
+    
+    let data = {...this.item};
 
     this.wall.postComment(data).subscribe(
       success => {
         this.newComment.emit(success);
         this.item.message = '';
+        this.loading = false;
       },
       error => console.log(error)
     );
+    // risky lazing
+    // this.newComment.emit(data);
   }
 
 }
