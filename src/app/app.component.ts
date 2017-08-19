@@ -26,7 +26,7 @@ import { MessagesProvider } from '../providers/messages/messages';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage:any = 'LoginPage';
+  // rootPage:any = 'LoginPage';
   profPage:{title: string, component: any, icon: string} = { title: 'Profile', component: ProfilePage, icon: 'md-person' };
   pages: Array<{title: string, component: any, icon: string, badge?: number}> = [
     { title: 'Pitch an Idea', component: NewCardPage, icon: 'md-create' },
@@ -53,6 +53,9 @@ export class MyApp {
     this.platform.ready().then( () => {
         this.statusBar.styleDefault();
         this.splashScreen.hide();
+
+        this.checkCookies();
+
         this.initGA();
         this.checkDeepLink();
         this.listenForMessages();
@@ -141,6 +144,28 @@ export class MyApp {
     this.nav.push(MissionPage);
   }
 
+  checkCookies() {
+    // immediately go to discover if cookies found
+    if(localStorage.token && localStorage.user_id) {
+      this.auth.loginFromLocalStorage();
+      this.nav.setRoot(DiscoverPage);
+      // if token authentication issue, redirect back to login
+      this.auth.checkToken(localStorage.token).subscribe(
+        user => {
+          if(!this.auth.valid) {
+            localStorage.clear();
+            this.showError("Something went wrong. Please sign in again.");
+            this.nav.setRoot('LoginPage');
+          }
+        },
+        error => {
+            this.showError(error);
+        });
+    }
+    else
+      this.nav.setRoot('LoginPage');
+  }
+
   logout() {
     let alert = this.alertCtrl.create({
       title: 'Logout?',
@@ -161,5 +186,14 @@ export class MyApp {
       }]
     });
     alert.present();
+  }
+
+  showError(text) {
+    let alert = this.alertCtrl.create({
+      title: 'Uh Oh',
+      subTitle: text,
+      buttons: ['OK']
+    });
+    alert.present(prompt);
   }
 }

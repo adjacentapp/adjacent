@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http'
+import { Platform, AlertController } from 'ionic-angular'
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
  
 export class User {
   id: number;
@@ -26,8 +28,9 @@ export class User {
 export class AuthProvider {
   valid: boolean = false;
   currentUser: User;
+  // pushToken: string;
 
-  constructor (private http: Http) {}
+  constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController) {}
 
   loginFromLocalStorage(){
     this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url,  localStorage.token);
@@ -49,6 +52,8 @@ export class AuthProvider {
                 localStorage.las_name = data.las_name;
                 localStorage.email = data.email;
                 localStorage.photo_url = data.photo_url;
+                
+                this.registerPushToken();
               }
               else {
                 this.valid = false;
@@ -76,6 +81,8 @@ export class AuthProvider {
                 localStorage.las_name = data.las_name;
                 localStorage.email = data.email;
                 localStorage.photo_url = data.photo_url;
+                
+                this.registerPushToken();
                }
                else
                  this.valid = false;
@@ -106,6 +113,9 @@ export class AuthProvider {
                   localStorage.las_name = '';
                   localStorage.email = data.email;
                   localStorage.photo_url = '';
+
+                  this.registerPushToken();
+                  
                   return this.currentUser;
                  }
                  else{
@@ -140,6 +150,16 @@ export class AuthProvider {
       observer.next(true);
       observer.complete();
     });
+    // let data = {
+    //   token: 
+    // }
+    // let url = globs.BASE_API_URL + 'logout.php';
+    // return this.http.post(url, data )
+    //         .map(this.extractData)
+    //         .map((data) => {
+
+    //         })
+    //         .catch(this.handleError);
   }
 
   public getFollowers(card_id, offset, limit): Observable<any[]> {
@@ -155,15 +175,78 @@ export class AuthProvider {
           .catch(this.handleError);
   }
 
-  public registerPushToken(token): Observable<any[]> {
+  public postPushToken(token): Observable<any[]> {
     let url = globs.BASE_API_URL + 'post_device_token.php';
     let data = {
       user_id: this.currentUser.id,
       token: token
-    }
+    };
     return this.http.post(url, data)
           .map(this.extractData)
           .catch(this.handleError);
+  }
+
+  public registerPushToken() {
+    if (!this.platform.is('cordova')) {
+      console.warn('Push notifications not initialized. Cordova is not available');
+      return;
+    }
+    const options: PushOptions = {
+      android: {
+        senderID: '432969043178'
+      },
+      ios: {
+        alert: 'true',
+        badge: 'true',
+        sound: 'true'
+      },
+      windows: {}
+    };
+    const pushObject: PushObject = this.push.init(options);
+
+    pushObject.on('registration').subscribe((data: any) => {
+      console.log('device token -> ' + data.registrationId);
+      this.postPushToken(data.registrationId).subscribe(
+        success => {
+          console.log('Device token successfully registered');
+         },
+        error => console.log(error)
+      );
+    });
+
+    pushObject.on('notification').subscribe((data: any) => {
+      console.log('message -> ' + data.message);
+      //if user using app and push notification comes
+      if (data.additionalData.foreground) {
+        // if application open, show popup
+        let confirmAlert = this.alertCtrl.create({
+          title: 'New Notification',
+          message: data.message,
+          buttons: [{
+            text: 'Ignore',
+            role: 'cancel'
+          }, {
+            text: 'View',
+            handler: () => {
+              //TODO: Your logic here
+              // this.nav.push(DetailsPage, { message: data.message });
+              alert('gotothepage? ---- ' + data.message);
+              console.log(data);
+            }
+          }]
+        });
+        confirmAlert.present();
+      } else {
+        //if user NOT using app and push notification comes
+        //TODO: Your logic on click of push notification directly
+        // this.nav.push(DetailsPage, { message: data.message });
+        alert('Can this work as deeplinking? --- ' + data.message);
+        console.log(data);
+        console.log('Push notification clicked');
+      }
+    });
+
+    pushObject.on('error').subscribe(error => console.error('Error with Push plugin' + error));
   }
 
 
