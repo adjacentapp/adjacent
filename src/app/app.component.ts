@@ -42,7 +42,7 @@ export class MyApp {
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    // public ga: GoogleAnalytics,
+    public ga: GoogleAnalytics,
     private auth: AuthProvider,
     private globs: GlobalsProvider,
     private msg: MessagesProvider,
@@ -82,14 +82,14 @@ export class MyApp {
   }
 
   initGA() {
-    // this.ga.startTrackerWithId('UA-86377634-1')
-    //    .then(() => {
-    //      console.log('Google analytics is ready now');
-    //         this.ga.trackView('test');
-    //      // Tracker is ready
-    //      // You can now track pages or set additional information such as AppVersion or UserId
-    //    })
-    //    .catch(e => console.log('Error starting GoogleAnalytics', e));
+    this.ga.startTrackerWithId('UA-86377634-1')
+       .then(() => {
+         console.log('Google analytics is ready now');
+         this.ga.trackView('test');
+         // Tracker is ready
+         // You can now track pages or set additional information such as AppVersion or UserId
+       })
+       .catch(e => console.log('Error starting GoogleAnalytics', e));
   }
 
   checkDeepLink() {
