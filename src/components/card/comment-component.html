@@ -17,7 +17,7 @@
   </div>
 
   <div class="responses" *ngIf="showVotes">
-    <h6 (click)="item.expanded=!item.expanded">
+    <h6 (click)="item.expanded=!item.expanded" *ngIf="showReply">
       <ion-icon name="ios-arrow-down" *ngIf="!item.expanded"></ion-icon>
       <ion-icon name="ios-arrow-up" *ngIf="item.expanded"></ion-icon>
       {{item.responses.length>0 ? (item.responses.length==1 ? "1 Reply" : item.responses.length + " Replies") : "Reply"}}

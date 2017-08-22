@@ -168,9 +168,16 @@ ion-avatar {
 	background-size: cover;
 	background-color: #666;
 	&.tut {
-		background-image: url('../assets/img/industries/Bulb.jpg');
-		background-position: 50% 50%;
-		&:before { background: rgba(68,57,153,0.9); }
+		// background-image: url('../assets/img/industries/Bulb.jpg');
+		// background-position: 50% 50%;
+		&:before {
+      // background: rgba(68,57,153,0.9);
+      background: color($colors, primary); /* For browsers that do not support gradients */
+      background: -webkit-linear-gradient(left, color($colors, primary) , color($colors, purp));
+      background: -o-linear-gradient(right, color($colors, primary), color($colors, purp));
+      background: -moz-linear-gradient(right, color($colors, primary), color($colors, purp));
+      background: linear-gradient(to right, color($colors, primary), color($colors, purp));
+    }
 	}
 	&.Agriculture {
 		background-image: url('../assets/img/industries/Agriculture.jpg');

@@ -14,6 +14,7 @@ export class CommentComponent {
   @Input() item: Comment;
   @Input() founder_id: number;
   @Input() showVotes: boolean = true;
+  @Input() showReply: boolean = true;
   vote: number;
   founder: boolean = false;
 

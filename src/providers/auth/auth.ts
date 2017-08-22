@@ -28,7 +28,7 @@ export class User {
 export class AuthProvider {
   valid: boolean = false;
   currentUser: User;
-  // pushToken: string;
+  pushToken: string;
 
   constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController) {}
 
@@ -42,7 +42,6 @@ export class AuthProvider {
     return this.http.get(url)
             .map(this.extractData)
             .map((data) => {
-              console.log(data);
               if(data.valid){
                 this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token);
                 this.valid = true;
@@ -142,24 +141,24 @@ export class AuthProvider {
     return this.currentUser;
   }
 
-  public logout() {
-    this.valid = false;
-    localStorage.clear();
-    return Observable.create(observer => {
-      this.currentUser = null;
-      observer.next(true);
-      observer.complete();
-    });
-    // let data = {
-    //   token: 
-    // }
-    // let url = globs.BASE_API_URL + 'logout.php';
-    // return this.http.post(url, data )
-    //         .map(this.extractData)
-    //         .map((data) => {
-
-    //         })
-    //         .catch(this.handleError);
+  public logout(): Observable<any[]> {
+    let data = {
+      user_id: this.currentUser.id,
+      push_token: this.pushToken,
+      session_token: this.currentUser.token
+    }
+    console.log(data);
+    let url = globs.BASE_API_URL + 'logout.php';
+    return this.http.post(url, data )
+            .map(this.extractData)
+            .map((data) => {
+              this.valid = false;
+              localStorage.clear();
+              this.currentUser = null;
+              this.pushToken = null;
+              console.log(data);
+            })
+            .catch(this.handleError);
   }
 
   public getFollowers(card_id, offset, limit): Observable<any[]> {
@@ -205,10 +204,11 @@ export class AuthProvider {
     const pushObject: PushObject = this.push.init(options);
 
     pushObject.on('registration').subscribe((data: any) => {
-      console.log('device token -> ' + data.registrationId);
+      // console.log('device token -> ' + data.registrationId);
       this.postPushToken(data.registrationId).subscribe(
         success => {
-          console.log('Device token successfully registered');
+          console.log('Device token successfully registered', data.registrationId);
+          this.pushToken = data.registrationId;
          },
         error => console.log(error)
       );

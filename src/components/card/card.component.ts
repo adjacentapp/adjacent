@@ -15,6 +15,7 @@ export class CardComponent {
   @Input() showTopComment: boolean = true;
   @Input() showTopCommentVotes: boolean = true;
   @Input() showDetails: boolean = false;
+  @Input() showReply: boolean = true;
   @Input() hideButtons: boolean = false;
   founder: boolean = false;
 
