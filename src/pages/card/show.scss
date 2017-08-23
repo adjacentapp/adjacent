@@ -1,20 +1,85 @@
 show-card-page {
 
+  .content .scroll-content {
+    border-top: none;
+  }
+
 	card-component {
-		.card {
-			margin: 0;
-			width: 100%;
-			border-radius: 0;
+    margin-top: -1px;
 
-			.card-content {
-				font-size: 1.8rem;
-				height: auto;
+    > .card {
+      margin: 0;
+      width: 100%;
+      border-radius: 0;
 
-				p {
-					-webkit-line-clamp: 999;
-				}
-			}
-		}
+      .card-content {
+        font-size: 1.8rem;
+        height: auto;
+        min-height: auto;
+        padding: 0 0 14px;
+
+        .card {
+          border-radius: 4px;
+          
+          &:first-of-type {
+            margin-top: 0;
+          }
+          &:last-of-type {
+            margin-bottom: 20px;
+          }
+        }
+      }
+    }
+
+    .img-bg {
+      position: relative;
+      height: 8em;
+    }
+
+    .title {
+      position: absolute;
+      top: 3em;
+      transform: translateY(-50%);
+      -webkit-transform: translateY(-50%);
+      padding-top: 0;
+      line-height: 1em;
+    }
+
+    p {
+      -webkit-line-clamp: 999;
+    }
+
 	}
+
+  .Agriculture .card { h2, h3 { color: color($industryColors, Agriculture); }  }
+  .Art .card { h2, h3 { color: color($industryColors, Art); }  }
+  .Architecture .card { h2, h3 { color: color($industryColors, Architecture); }  }
+  .Business .card { h2, h3 { color: color($industryColors, Business); }  }
+  .Computer_Science .card { h2, h3 { color: color($industryColors, Computer_Science); }  }
+  .Design .card { h2, h3 { color: color($industryColors, Design); }  }
+  .Education .card { h2, h3 { color: color($industryColors, Education); }  }
+  .Engineering .card { h2, h3 { color: color($industryColors, Engineering); }  }
+  .Environment .card { h2, h3 { color: color($industryColors, Environment); }  }
+  .Fashion .card { h2, h3 { color: color($industryColors, Fashion); }  }
+  .Finance .card { h2, h3 { color: color($industryColors, Finance); }  }
+  .Gaming .card { h2, h3 { color: color($industryColors, Gaming); }  }
+  .Government .card { h2, h3 { color: color($industryColors, Government); }  }
+  .Healthcare .card { h2, h3 { color: color($industryColors, Healthcare); }  }
+  .Humanities .card { h2, h3 { color: color($industryColors, Humanities); }  }
+  .Journalism .card { h2, h3 { color: color($industryColors, Journalism); }  }
+  .Language .card { h2, h3 { color: color($industryColors, Language); }  }
+  .Law .card { h2, h3 { color: color($industryColors, Law); }  }
+  .Lifestyle .card { h2, h3 { color: color($industryColors, Lifestyle); }  }
+  .Marketing .card { h2, h3 { color: color($industryColors, Marketing); }  }
+  .Math .card { h2, h3 { color: color($industryColors, Math); }  }
+  .Music .card { h2, h3 { color: color($industryColors, Music); }  }
+  .Performing_Arts .card { h2, h3 { color: color($industryColors, Performing_Arts); }  }
+  .Science .card { h2, h3 { color: color($industryColors, Science); }  }
+  .Social_Impact .card { h2, h3 { color: color($industryColors, Social_Impact); }  }
+  .Sports .card { h2, h3 { color: color($industryColors, Sports); }  }
+  .Transportation .card { h2, h3 { color: color($industryColors, Transportation); }  }
+  .Urban_Planning .card { h2, h3 { color: color($industryColors, Urban_Planning); }  }
+  .Writing .card { h2, h3 { color: color($industryColors, Writing); }  }
+
 	
 }

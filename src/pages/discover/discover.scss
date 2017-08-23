@@ -23,6 +23,7 @@ discover-page {
 				bottom: 0;
 			}
 			.card-content {
+        height: 82vh;
 				height: calc(60vh + 145px);
 			}
 		}
@@ -32,7 +33,7 @@ discover-page {
 			position: relative;
 			font-size: 2.2em;
 			line-height: 1.2em;
-      font-weight: 600;
+      // font-weight: 600;
 		}
     h1:nth-of-type(2){
       font-size: 3em;

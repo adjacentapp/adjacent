@@ -1,135 +1,89 @@
 card-component,
 #tut-card {
-	ion-card.card {
+
+  ion-card.card {
+    position: relative;
+    border-radius: 20px;
+    opacity: 0.9999; // weird overflow bug fix for iOS
+
+    comment-component ion-item .item-inner p {
+      -webkit-line-clamp: 3;
+    }
+
+    ion-card-content {
+      position: relative;
+      color: white;
+      font-size: 1.4rem;
+      height: 15em;
+      min-height: 15em;
+      text-align: left;
+
+      &.closed {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .card {
+          box-shadow: none;
+        }
+
+        p {
+          color: white;
+        }
+      }
+
+      h2, h3 {
+        font-weight: bold;
+        color: white;
+      }
+
+      .card, .item {
+        background-color: transparent;
+      }
+
+      p,
+      .card,
+      .item {
+        font-size: inherit;
+      }
+
+    }
+  }
+
+  .title {
+    position: relative;
+    padding: 10px 14px 0;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    color: white;
+    span {
+      font-size: 1.5em;
+      border-right: solid 2px white;
+      padding-right: 10px;
+      margin-right: 10px;
+      font-weight: 500;
+      color: inherit;
+    }
+  }
+
+	p {
+    white-space: normal;
+		/* autoprefixer: off */
+		-webkit-box-orient: vertical;
+		/* autoprefixer: on */
+		box-orient: vertical;
+		text-decoration: none;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 8;
 		position: relative;
-		border-radius: 20px;
-		opacity: 0.9999; // weird overflow bug fix for iOS
+	}
 
-		comment-component ion-item .item-inner p {
-			-webkit-line-clamp: 3;
-		}
-
-		ion-card-content {
-			position: relative;
-			color: white;
-			font-size: 1.4rem;
-			height: 40vh;
-			min-height: 19em;
-			text-align: left;
-
-			h1, h2 {
-				color: inherit;
-			}
-
-			&.open {
-				height: auto;
-				min-height: auto;
-				padding: 8px 16px 30px;
-
-				.section {
-					.section-content {
-						background: white;
-						color: black;
-						div {
-							color: #666;
-						}
-					}
-				}
-			}
-
-			&.closed {
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-
-				.section {
-					.section-title {
-						padding-left: 0;
-						padding-right: 0;
-					}
-
-					.section-content {
-						div {
-							/* autoprefixer: off */
-							-webkit-box-orient: vertical;
-							/* autoprefixer: on */
-							box-orient: vertical;
-							text-decoration: none;
-							overflow: hidden;
-							text-overflow: ellipsis;
-							display: -webkit-box;
-							-webkit-line-clamp: 8;
-							position: relative;
-						}
-
-						&.footer {
-							margin: 0;
-							padding: 2px 0 2px;
-							div {
-								/* autoprefixer: off */
-								-webkit-box-orient: vertical;
-								/* autoprefixer: on */
-								box-orient: vertical;
-								text-decoration: none;
-								overflow: hidden;
-								text-overflow: ellipsis;
-								display: -webkit-box;
-								-webkit-line-clamp: 1;
-								position: relative;
-							}
-						}
-					}
-				}
-			}
-
-			.section {
-				background: transparent;
-				color: white;
-				border: none !important;
-				position: relative;
-
-				.section-title {
-					padding: 10px 14px 0;
-					margin-bottom: 8px;
-					white-space: nowrap;
-					span {
-						font-size: 1.5em;
-						border-right: solid 2px white;
-						padding-right: 10px;
-						margin-right: 10px;
-						font-weight: 500;
-					}
-				}
-
-				.section-content {
-					padding: 14px 14px 0;
-					margin: 0 14px;
-
-					 h2 {
-						// text-transform: uppercase;
-						font-weight: 500;
-					}
-
-					div {
-						color: #eee;
-						font-weight: 500;
-					}
-
-					ion-icon {
-						
-					}
-
-					&:first-of-type {
-						border-top-left-radius: 4px;
-						border-top-right-radius: 4px;
-					}
-					&:last-of-type {
-						border-bottom-right-radius: 4px;
-						border-bottom-left-radius: 4px;
-						padding-bottom: 14px;
-					}
-				}
-			}
+	.footer {
+		margin: 0;
+		p {
+			-webkit-line-clamp: 1;
 		}
 	}
 
@@ -138,7 +92,14 @@ card-component,
 		top: 0;
 		left: 0;
 		right: 0;
-		bottom: 45px;
+		bottom: 0;
 		background-size: cover;
 	}
+
+  .button-row {
+    /* small */
+    @media only screen and (max-device-width : 360px) {
+      .button { font-size: 1.0rem; }
+    }
+  }
 }

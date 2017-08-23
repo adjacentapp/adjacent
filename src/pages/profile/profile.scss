@@ -11,15 +11,22 @@ edit-profile-page {
 		border-radius: 10px;
 		margin: 0 2px;
 		padding: 0 2px;
+    white-space: nowrap;
 	}
 }
 
 // list of cards
-profile-page, page-bookmarks {
+profile-page, page-bookmarks, page-founded {
 	card-component {
-		.card {
+		> .card {
 			margin: 12px 0;
 			width: 100%;
+      .card {
+        margin: 0;
+        &:not(.footer) p {
+          -webkit-line-clamp: 3;
+        }
+      }
 		}
 	}
 }

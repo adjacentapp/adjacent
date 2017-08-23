@@ -26,7 +26,7 @@ $font-path: "../assets/fonts";
 $colors: (
   // primary:    #488aff,
   primary:    #443999,
-  topher:	  #723c99,
+  topher:	    #723c99,
   // secondary:  #32db64,
   secondary:  #8c8c8c,
   // tertiary:	  #c0c0c0,
@@ -36,6 +36,38 @@ $colors: (
   balanced:   #33cd5f,
   purp:       #652d91,
   // #283891
+);
+
+$industryColors: (
+  Agriculture:      rgb(100,70,0),
+  Art:              rgb(0,0,0),
+  Architecture:     rgb(100,0,0),
+  Business:         rgb(0,0,125),
+  Computer_Science: rgb(0,140,0),
+  Design:           rgb(150,80,0),
+  Education:        rgb(150,150,0),
+  Engineering:      rgb(120,20,20),
+  Environment:      rgb(0,100,0),
+  Fashion:          rgb(80,0,0),
+  Finance:          rgb(0,80,0),
+  Gaming:           rgb(0,100,140),
+  Government:       rgb(0,100,140),
+  Healthcare:       rgb(160,40,40),
+  Humanities:       rgb(0,100,120),
+  Journalism:       rgb(50,20,20),
+  Language:         rgb(100,0,100),
+  Law:              rgb(130,130,0),
+  Lifestyle:        rgb(0,150,130),
+  Marketing:        rgb(40,40,40),
+  Math:             rgb(50,0,0),
+  Music:            rgb(70,100,0),
+  Performing_Arts:  rgb(180,60,70),
+  Science:          rgb(10,50,10),
+  Social_Impact:    rgb(30,30,150),
+  Sports:           rgb(0,70,0),
+  Transportation:   rgb(180,110,0),
+  Urban_Planning:   rgb(100,130,0),
+  Writing:          rgb(100,80,0)
 );
 
 
