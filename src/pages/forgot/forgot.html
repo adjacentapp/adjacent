@@ -1,0 +1,28 @@
+<ion-content class="login-content" no-bounce padding>
+
+  <h1 text-center>Password Reset</h1>
+   
+   <div class="login-box">
+     <form (ngSubmit)="reset()" #resetForm="ngForm">
+       <ion-row>
+         <ion-col>
+           <ion-list inset>
+             
+             <ion-item>
+               <ion-input type="email" placeholder="Email" name="email" pattern=".{4,}" [(ngModel)]="email" required email></ion-input>
+             </ion-item>
+             
+           </ion-list>
+         </ion-col>
+       </ion-row>
+       
+       <ion-row>
+         <ion-col class="signup-col">
+           <button ion-button block round type="submit" [disabled]="!resetForm.form.valid">Send Email</button>
+         </ion-col>
+       </ion-row>
+
+     </form>
+  </div>
+
+</ion-content>

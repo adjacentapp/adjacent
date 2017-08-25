@@ -11,9 +11,11 @@
 
   <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 	
-	<message *ngFor="let msg of item.messages" [item]="msg" [founder_id]="this.item.card ? this.item.card.founder_id : null"></message>
+	<message *ngFor="let msg of item.messages" [item]="msg" [founder_id]="item.card ? item.card.founder_id : null"></message>
 
   <div class='empty margin' *ngIf="!loading && remindAnonymous">Don't forget you're anonymous here! <br/>Your photo and name will remain hidden within this conversation.</div>
+
+  <div class='empty margin' *ngIf="!loading && !item.messages.length">There isn’t anything here yet! Send them a message to start a conversation.</div>
 
 </ion-content>
 

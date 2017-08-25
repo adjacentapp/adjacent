@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import { WallProvider } from '../../providers/wall/wall';
 import { NotificationProvider, Notification } from '../../providers/notification/notification';
 import { AuthProvider } from '../../providers/auth/auth';
+import { Badge } from '@ionic-native/badge';
 
 @Component({
   selector: 'notification-center-component',
@@ -18,7 +19,7 @@ export class NotificationCenterComponent {
   reachedEnd: boolean = false;
   limit: number = 10;
 
-  constructor(public http: Http, private wall: WallProvider, private auth: AuthProvider, private notif: NotificationProvider) {
+  constructor(public http: Http, private wall: WallProvider, private auth: AuthProvider, private notif: NotificationProvider, private badge: Badge) {
     this.loading = true;
     this.init();
   }
@@ -64,6 +65,7 @@ export class NotificationCenterComponent {
           error => console.log(<any>error)
       );
       item.unread = false;
+      this.badge.decrease(1);
       this.notif.unreadCount--;
     }
     this.goToCard.emit(item.card);

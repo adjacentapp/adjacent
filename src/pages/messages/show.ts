@@ -70,6 +70,7 @@ export class ShowMessagePage {
                 this.msg.markAsRead(this.auth.currentUser.id, this.item.id).subscribe(
                     items => console.log('auto-marked-as-read: ', items),
                     error => console.log(<any>error)
+                    // make sure in app and os badge's aren't incremented
                 );
               }, 500);
            },

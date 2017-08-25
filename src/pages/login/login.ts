@@ -25,10 +25,16 @@ export class LoginPage {
 
   public checkPassword(){}
   public checkEmail(){}
- 
-  public createAccount() {
-    this.nav.push('RegisterPage');
+
+  public goToPage(name){
+    this.nav.push(name);
   }
+   // public createAccount() {
+  //   this.nav.push('RegisterPage');
+  // }
+  // public forgotPassword() {
+  //   this.nav.push('ForgotPage');
+  // }
  
   public login() {
     this.showLoading();

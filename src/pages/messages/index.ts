@@ -5,6 +5,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { ShowMessagePage } from './show';
 import { ProfilePage } from '../../pages/profile/profile';
 import { ShowCardPage } from '../../pages/card/show';
+import { Badge } from '@ionic-native/badge';
 
 // @IonicPage()
 @Component({
@@ -18,7 +19,7 @@ export class MessagesPage {
   reachedEnd: boolean = false;
   limit: number = 10;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public msg: MessagesProvider, private auth: AuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public msg: MessagesProvider, private auth: AuthProvider, private badge: Badge) {
   	this.loading = true;
     this.msg.getConversations(this.auth.currentUser.id, null, null, 0, this.limit)
   		.subscribe(
@@ -38,6 +39,7 @@ export class MessagesPage {
           error => console.log(<any>error)
       );
       item.unread = false;
+      this.badge.decrease(1);
       this.msg.unread_ids = this.msg.unread_ids.filter(convo_id => convo_id !== item.id);
     }
   	this.navCtrl.push(ShowMessagePage, {

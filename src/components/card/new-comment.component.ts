@@ -35,6 +35,7 @@ export class NewCommentComponent {
       user: this.auth.currentUser,
       response_to: this.response_to
     }
+    console.log(this.item);
   }
 
   postComment(e, item) {

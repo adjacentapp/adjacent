@@ -25,7 +25,7 @@
     <ion-slides>
 
       <ion-slide>
-        <ion-grid>
+        <ion-grid (click)="$event.stopPropagation()">
           <ion-row align-items-start>
             <ion-item>
               <ion-title>The Vision</ion-title>
@@ -38,7 +38,7 @@
             </ion-item>
 
             <ion-item>
-              <ion-label stacked>Pitch</ion-label>
+              <ion-label stacked>Pitch <span>{{item.pitch.length}}/120</span></ion-label>
               <ion-textarea name="pitch" [(ngModel)]="item.pitch" type="text" required maxlength="120" placeholder="In just a couple of sentences, describe the general idea."></ion-textarea>
             </ion-item>
             <ion-item>
@@ -48,7 +48,7 @@
               </ion-textarea>
             </ion-item>
           </ion-row>
-          <ion-row justify-content-between>
+          <ion-row justify-content-between (click)="$event.stopPropagation()">
             <ion-col col-xs-6></ion-col>
             <ion-col col-xs-6>
               <button ion-button block round (click)="nextSlide($event)" [disabled]="!item.industry || !item.pitch.length">Next</button>
@@ -58,7 +58,7 @@
       </ion-slide>
 
       <ion-slide>
-        <ion-grid>
+        <ion-grid (click)="$event.stopPropagation()">
           <ion-row>
             <ion-item>
               <ion-title>The Founder</ion-title>
@@ -68,7 +68,7 @@
               <ion-textarea class="long" name="who" [(ngModel)]="item.who" type="text" required placeholder="Why are you the right person for this idea?"></ion-textarea>
             </ion-item>
           </ion-row>
-          <ion-row justify-content-between>
+          <ion-row justify-content-between (click)="$event.stopPropagation()">
             <ion-col col-xs-6>
               <button ion-button block round (click)="prevSlide($event)" outline>Back</button>
             </ion-col>
@@ -80,7 +80,7 @@
       </ion-slide>
 
       <ion-slide>
-        <ion-grid>
+        <ion-grid (click)="$event.stopPropagation()">
           <ion-row>
             <ion-item>
               <ion-title>The Ask</ion-title>
@@ -99,7 +99,7 @@
               <ion-textarea class="long" name="challenge_details" [(ngModel)]="item.challenge_details" type="text" placeholder="Additional details about the difficulty or uncertainy you're facing."></ion-textarea>
             </ion-item>
           </ion-row>
-          <ion-row justify-content-between>
+          <ion-row justify-content-between (click)="$event.stopPropagation()">
             <ion-col col-xs-6>
               <button ion-button block round (click)="prevSlide($event)" outline>Back</button>
             </ion-col>

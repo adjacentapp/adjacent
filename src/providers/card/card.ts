@@ -35,7 +35,7 @@ export class Card {
     this.challenge_ids = item.challenge_ids || [];
     this.challenge_names = item.challenge_ids ? globs.SKILLS
                         .filter(item => this.challenge_ids.indexOf(item.id) >= 0)
-                        .map(item => item.name) : [];
+                        .map(item => item.name) : ['General Advice'];
     this.challenge_details = item.challenge_details || '';
     this.stage = item.stage;
     this.distance = item.distance || (Math.round(Math.random()*50));

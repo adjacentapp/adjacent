@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { Badge } from '@ionic-native/badge';
  
 export class User {
   id: number;
@@ -15,12 +16,12 @@ export class User {
   token?: string;
  
   constructor(id: number, fir_name: string, las_name: string, email: string, photo_url: string, token?: string) {
-  	this.id = id;
+  	this.id = id || null;
     this.fir_name = !fir_name || fir_name == 'null' || fir_name == 'NULL' ? 'Entrepreneur' : fir_name;
     this.las_name = !las_name || las_name == 'null' || las_name == 'NULL' ? '' : las_name;
-    this.email = email;
-    this.photo_url = photo_url;
-    if(token) this.token = token;
+    this.email = email || null;
+    this.photo_url = photo_url || null;
+    this.token = token || null;
   }
 }
  
@@ -30,7 +31,7 @@ export class AuthProvider {
   currentUser: User;
   pushToken: string;
 
-  constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController) {}
+  constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController, private badge: Badge) {}
 
   loginFromLocalStorage(){
     this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url,  localStorage.token);
@@ -51,6 +52,7 @@ export class AuthProvider {
                 localStorage.las_name = data.las_name;
                 localStorage.email = data.email;
                 localStorage.photo_url = data.photo_url;
+                this.badge.set(data.badge_count);
                 
                 this.registerPushToken();
               }
@@ -80,6 +82,7 @@ export class AuthProvider {
                 localStorage.las_name = data.las_name;
                 localStorage.email = data.email;
                 localStorage.photo_url = data.photo_url;
+                this.badge.set(data.badge_count);
                 
                 this.registerPushToken();
                }
@@ -141,6 +144,17 @@ export class AuthProvider {
     return this.currentUser;
   }
 
+  public resetPassword(email): Observable<any[]> {
+    let url = globs.BASE_API_URL + 'reset_password_request.php';
+    let data = {
+      email: email,
+      reset_code: this.sha256( Math.random().toString(36).substring(7) )
+    };
+    return this.http.post(url, data)
+          .map(this.extractData)
+          .catch(this.handleError);
+  }
+
   public logout(): Observable<any[]> {
     let data = {
       user_id: this.currentUser.id,
@@ -153,6 +167,7 @@ export class AuthProvider {
             .map(this.extractData)
             .map((data) => {
               this.valid = false;
+              this.badge.clear();
               localStorage.clear();
               this.currentUser = null;
               this.pushToken = null;
@@ -219,6 +234,7 @@ export class AuthProvider {
       //if user using app and push notification comes
       if (data.additionalData.foreground) {
         // if application open, show popup
+        this.badge.set(data.count);
         let confirmAlert = this.alertCtrl.create({
           title: 'New Notification',
           message: data.message,
@@ -230,7 +246,7 @@ export class AuthProvider {
             handler: () => {
               //TODO: Your logic here
               // this.nav.push(DetailsPage, { message: data.message });
-              alert('gotothepage? ---- ' + data.message);
+              // alert('gotothepage? ---- ' + data.message);
               console.log(data);
             }
           }]
@@ -240,7 +256,7 @@ export class AuthProvider {
         //if user NOT using app and push notification comes
         //TODO: Your logic on click of push notification directly
         // this.nav.push(DetailsPage, { message: data.message });
-        alert('Can this work as deeplinking? --- ' + data.message);
+        // alert('Can this work as deeplinking? --- ' + data.message);
         console.log(data);
         console.log('Push notification clicked');
       }

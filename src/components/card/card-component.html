@@ -22,13 +22,13 @@
       <ion-item>
         <h2><ion-icon name="warning"></ion-icon> Looking For</h2>
         <p *ngIf="item.challenge_names.length">{{item.challenge_names.join(", ")}}</p>
-        <p *ngIf="!item.challenge_names.length">N/A</p>
+        <!-- <p *ngIf="!item.challenge_names.length">General Advice</p> -->
       </ion-item>
     </ion-card>
 
     <ion-card *ngIf="showDetails && item.who">
       <ion-item>
-        <h2>The Founger</h2>
+        <h2>The Founder</h2>
         <p>{{item.who}}</p>
       </ion-item>
     </ion-card>
@@ -73,7 +73,7 @@
   
   <ion-row *ngIf="showTopComment">
     <comment-component *ngIf="item.topComment" [item]="item.topComment" [showVotes]="showTopCommentVotes" [showReply]="showReply" [founder_id]="item.founder_id"></comment-component>
-    <new-comment-component *ngIf="!item.topComment" (click)="$event.stopPropagation()" [card_id]="item.card_id" (newComment)="newTopComment($event)" [founder_id]="item.founder_id"></new-comment-component>
+    <new-comment-component *ngIf="!item.topComment" (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="newTopComment($event)" [founder_id]="item.founder_id"></new-comment-component>
   </ion-row>
 
 </ion-card>

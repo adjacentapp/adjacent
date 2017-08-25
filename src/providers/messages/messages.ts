@@ -15,7 +15,7 @@ export class Message {
   
   constructor (id: number, user: any, card: any, text: string, timestamp: any) {
     this.id = id;
-    this.user = user ? new User(user.id, user.fir_name, user.las_name, user.email, user.photo_url) : null;
+    this.user = user ? new User(user.id, user.fir_name, user.las_name, user.email, user.photo_url) : new User(null, null, null, null, null);
     this.card = card ? new Card(card) : null;
     this.text = text;
     this.timestamp = timestamp;

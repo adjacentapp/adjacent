@@ -1,15 +1,16 @@
-import { BrowserModule } 						    from '@angular/platform-browser';
+import { BrowserModule } 						                from '@angular/platform-browser';
 import { HttpModule, JsonpModule }	                from '@angular/http';
 import { NgModule, ErrorHandler } 	                from '@angular/core';
-import { MyApp } 								    from './app.component';
+import { MyApp } 								                    from './app.component';
 import { IonicApp, IonicModule, IonicErrorHandler }	from 'ionic-angular';
-import { Push, PushObject, PushOptions }			from '@ionic-native/push';
+import { Push }			                                from '@ionic-native/push';
 import { InAppBrowser }                             from '@ionic-native/in-app-browser';
-import { Camera } 									from '@ionic-native/camera';
+import { Camera } 									                from '@ionic-native/camera';
 import { Deeplinks }                                from '@ionic-native/deeplinks';
 import { File }                                     from '@ionic-native/file';
 import { FileTransfer }                             from '@ionic-native/file-transfer';
 import { FilePath }                                 from '@ionic-native/file-path';
+import { Badge }                                    from '@ionic-native/badge';
 
 import { StatusBar } 			from '@ionic-native/status-bar';
 import { SplashScreen } 		from '@ionic-native/splash-screen';
@@ -27,7 +28,8 @@ import { MessagesPage } 		from '../pages/messages/index';
 import { ShowMessagePage }	    from '../pages/messages/show';
 import { FoundedPage }          from '../pages/founded/founded';
 import { FollowersPage }        from '../pages/followers/followers';
-import { MissionPage } 		    from '../pages/mission/mission';
+import { MissionPage }         from '../pages/mission/mission';
+// import { ForgotPage } 		    from '../pages/forgot/forgot';
 
 import { CardComponent } 				from '../components/card/card.component';
 import { CommentComponent } 			from '../components/card/comment.component';
@@ -63,6 +65,7 @@ import { ContributionsComponent } from '../components/contributions/contribution
     FoundedPage,
     FollowersPage,
     MissionPage,
+    // ForgotPage,
     CardComponent,
     CommentComponent,
     NewCommentComponent,
@@ -115,7 +118,8 @@ import { ContributionsComponent } from '../components/contributions/contribution
     Deeplinks,
     File,
     FileTransfer,
-    FilePath
+    FilePath,
+    Badge
   ]
 })
 export class AppModule {}

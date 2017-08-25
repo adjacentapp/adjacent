@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="6202" id="com.medy.adjacentapp" version="2.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="6204" id="com.medy.adjacentapp" version="2.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Adjacent</name>
     <description>An anonymous idea-sharing network.</description>
     <author email="aliana@umich.edu" href="http://adjacent.us/">Medy</author>
@@ -81,6 +81,7 @@
     <allow-navigation href="http://192.168.2.12:8100" />
     <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="^4.4.0" />
+    <plugin name="cordova-plugin-badge" spec="^0.8.1" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1">
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Adjacent would like to access the camera." />
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
@@ -90,6 +91,7 @@
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
     <plugin name="cordova-plugin-filepath" spec="^1.0.2" />
+    <plugin name="cordova-plugin-google-analytics" spec="^1.8.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.2.2" />

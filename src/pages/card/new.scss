@@ -25,4 +25,8 @@ new-card-page {
 		height: 100%;
 		// position: relative;
 	}
+
+  ion-label span {
+    float: right;
+  }
 }

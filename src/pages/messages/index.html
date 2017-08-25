@@ -27,7 +27,7 @@
       <ion-avatar *ngIf="item.card" item-left (click)="goToCard($event, item.card)" class="card">
         <div class='img-bg {{item.card.industry ? item.card.industry.replace(" ","_") : ""}}'></div>
       </ion-avatar>
-      <h3 *ngIf="item.card">{{item.card.founder_id != auth.currentUser.id ? 'Founder of: ' : ''}}{{item.card.pitch}}</h3>
+      <h3 *ngIf="item.card">{{item.card.founder_id != auth.currentUser.id ? 'Founder of' : item.other.fir_name + ' ' + item.other.las_name}}: {{item.card.pitch}}</h3>
 
       <p>
         {{item.messages[item.messages.length-1].user.id==auth.currentUser.id ? 'You: ' : ''}}

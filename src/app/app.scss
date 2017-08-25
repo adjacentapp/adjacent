@@ -167,7 +167,7 @@ ion-avatar {
 	background-size: cover;
 	background-color: #666;
 	&.tut {
-		// background-image: url('../assets/img/industries/Bulb.jpg');
+		background-image: url('../assets/img/industries/Bulb.jpg');
 		// background-position: 50% 50%;
 		&:before {
       // background: rgba(68,57,153,0.9);
@@ -179,14 +179,14 @@ ion-avatar {
     }
 	}
 	&.Agriculture {
-		background-image: url('../assets/img/industries/Agriculture.jpg');
+		// background-image: url('../assets/img/industries/Agriculture.jpg');
 		&:before {
       background: color($industryColors, Agriculture);
       opacity: 0.8;
     }
 	}
 	&.Art {
-		background-image: url('../assets/img/industries/Art.jpg');
+		// background-image: url('../assets/img/industries/Art.jpg');
 		&:before {
       background: color($industryColors, Art);
       opacity: 0.7;
@@ -194,7 +194,7 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Architecture {
-		background-image: url('../assets/img/industries/Architecture.jpg');
+		// background-image: url('../assets/img/industries/Architecture.jpg');
 		&:before {
       background: color($industryColors, Architecture);
       opacity: 0.8;
@@ -202,70 +202,70 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Business {
-		background-image: url('../assets/img/industries/Business.jpg');
+		// background-image: url('../assets/img/industries/Business.jpg');
 		&:before {
       background: color($industryColors, Business);
       opacity: 0.7;
     }
 	}
 	&.Computer_Science {
-		background-image: url('../assets/img/industries/Computer_Science.jpg');
+		// background-image: url('../assets/img/industries/Computer_Science.jpg');
 		&:before {
       background: color($industryColors, Computer_Science);
       opacity: 0.8;
     }
 	}
 	&.Design {
-		background-image: url('../assets/img/industries/Design.jpg');
+		// background-image: url('../assets/img/industries/Design.jpg');
 		&:before {
       background: color($industryColors, Design);
       opacity: 0.9;
     }
 	}
 	&.Education {
-		background-image: url('../assets/img/industries/Education.jpg');
+		// background-image: url('../assets/img/industries/Education.jpg');
 		&:before {
       background: rgba(150,150,0,0.85);
       opacity: 0.8;
     }
 	}
 	&.Engineering {
-		background-image: url('../assets/img/industries/Engineering.jpg');
+		// background-image: url('../assets/img/industries/Engineering.jpg');
 		&:before {
       background: rgba(120,20,20,0.85);
       opacity: 0.8;
     }
 	}
 	&.Environment {
-		background-image: url('../assets/img/industries/Environment.jpg');
+		// background-image: url('../assets/img/industries/Environment.jpg');
 		&:before {
       background: rgba(0,100,0,0.9);
       opacity: 0.8;
     }
 	}
 	&.Fashion {
-		background-image: url('../assets/img/industries/Fashion.jpg');
+		// background-image: url('../assets/img/industries/Fashion.jpg');
 		&:before {
       background: color($industryColors, Fashion);
       opacity: 0.8;
     }
 	}
 	&.Finance {
-		background-image: url('../assets/img/industries/Finance.jpg');
+		// background-image: url('../assets/img/industries/Finance.jpg');
 		&:before {
       background: color($industryColors, Finance);
       opacity: 0.7;
     }
 	}
 	&.Gaming {
-		background-image: url('../assets/img/industries/Gaming.jpg');
+		// background-image: url('../assets/img/industries/Gaming.jpg');
 		&:before {
       background: color($industryColors, Gaming);
       opacity: 0.9;
     }
 	}
 	&.Government {
-		background-image: url('../assets/img/industries/Government.jpg');
+		// background-image: url('../assets/img/industries/Government.jpg');
 		&:before {
       background: color($industryColors, Government);
       opacity: 0.9;
@@ -273,7 +273,7 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Healthcare {
-		background-image: url('../assets/img/industries/Healthcare.jpg');
+		// background-image: url('../assets/img/industries/Healthcare.jpg');
 		&:before {
       background: color($industryColors, Healthcare);
       opacity: 0.85;
@@ -281,7 +281,7 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Humanities {
-		background-image: url('../assets/img/industries/Humanities.jpg');
+		// background-image: url('../assets/img/industries/Humanities.jpg');
 		&:before {
       background: color($industryColors, Humanities);
       opacity: 0.9;
@@ -289,7 +289,7 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Journalism {
-		background-image: url('../assets/img/industries/Journalism.jpg');
+		// background-image: url('../assets/img/industries/Journalism.jpg');
 		&:before {
       background: color($industryColors, Journalism);
       opacity: 0.9;
@@ -297,7 +297,7 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Language {
-		background-image: url('../assets/img/industries/Language.jpg');
+		// background-image: url('../assets/img/industries/Language.jpg');
 		&:before {
       background: color($industryColors, Language);
       opacity: 0.9;
@@ -305,7 +305,7 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Law {
-		background-image: url('../assets/img/industries/Law.jpg');
+		// background-image: url('../assets/img/industries/Law.jpg');
 		&:before {
       background: color($industryColors, Law);
       opacity: 0.9;
@@ -313,7 +313,7 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Lifestyle {
-		background-image: url('../assets/img/industries/Lifestyle.jpg');
+		// background-image: url('../assets/img/industries/Lifestyle.jpg');
 		&:before {
       background: color($industryColors, Lifestyle);
       opacity: 0.85;
@@ -321,7 +321,7 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Marketing {
-		background-image: url('../assets/img/industries/Marketing.jpg');
+		// background-image: url('../assets/img/industries/Marketing.jpg');
 		&:before {
       background: color($industryColors, Marketing);
       opacity: 0.9;
@@ -329,28 +329,28 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Math {
-		background-image: url('../assets/img/industries/Math.jpg');
+		// background-image: url('../assets/img/industries/Math.jpg');
 		&:before {
       background: color($industryColors, Math);
       opacity: 0.85;
     }
 	}
 	&.Music {
-		background-image: url('../assets/img/industries/Music.jpg');
+		// background-image: url('../assets/img/industries/Music.jpg');
 		&:before {
       background: color($industryColors, Music);
       opacity: 0.9;
     }
 	}
 	&.Performing_Arts {
-		background-image: url('../assets/img/industries/Performing_Arts.jpg');
+		// background-image: url('../assets/img/industries/Performing_Arts.jpg');
 		&:before {
       background: color($industryColors, Performing_Arts);
       opacity: 0.8;
     }
 	}
 	&.Science {
-		background-image: url('../assets/img/industries/Science.jpg');
+		// background-image: url('../assets/img/industries/Science.jpg');
 		&:before {
       background: color($industryColors, Science);
       opacity: 0.8;
@@ -358,7 +358,7 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Social_Impact {
-		background-image: url('../assets/img/industries/Social_Impact.jpg');
+		// background-image: url('../assets/img/industries/Social_Impact.jpg');
 		&:before {
       background: color($industryColors, Social_Impact);
       opacity: 0.85;
@@ -366,7 +366,7 @@ ion-avatar {
 		background-position: 50% 50%;
 	}
 	&.Sports {
-		background-image: url('../assets/img/industries/Sports.jpg');
+		// background-image: url('../assets/img/industries/Sports.jpg');
 		&:before {
       background: color($industryColors, Sports);
       opacity: 0.85;
@@ -374,21 +374,21 @@ ion-avatar {
 		background-position: 100% 50%;
 	}
 	&.Transportation {
-		background-image: url('../assets/img/industries/Transportation.jpg');
+		// background-image: url('../assets/img/industries/Transportation.jpg');
 		&:before {
       background: color($industryColors, Transportation);
       opacity: 0.85;
     }
 	}
 	&.Urban_Planning {
-		background-image: url('../assets/img/industries/Urban_Planning.jpg');
+		// background-image: url('../assets/img/industries/Urban_Planning.jpg');
 		&:before {
       background: color($industryColors, Urban_Planning);
       opacity: 0.9;
     }
 	}
 	&.Writing {
-		background-image: url('../assets/img/industries/Writing.jpg');
+		// background-image: url('../assets/img/industries/Writing.jpg');
 		&:before {
       background: color($industryColors, Writing);
       opacity: 0.8;

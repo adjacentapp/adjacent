@@ -54,6 +54,7 @@ export class NewCardPage {
 
   nextSlide(e){
     e.preventDefault();
+    e.stopPropagation();
     this.slides.lockSwipes(false);
     this.slides.slideNext(400);
     this.slides.lockSwipes(true);
@@ -74,6 +75,7 @@ export class NewCardPage {
 
   prevSlide(e){
     e.preventDefault();
+    e.stopPropagation();
     this.slides.lockSwipes(false);
     this.slides.slidePrev(400);
     this.slides.lockSwipes(true);
