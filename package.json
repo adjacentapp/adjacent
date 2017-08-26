@@ -44,7 +44,6 @@
         "cordova-plugin-file": "^4.3.3",
         "cordova-plugin-file-transfer": "^1.6.3",
         "cordova-plugin-filepath": "^1.0.2",
-        "cordova-plugin-google-analytics": "^1.8.3",
         "cordova-plugin-inappbrowser": "^1.7.1",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "^2.2.2",
@@ -75,9 +74,6 @@
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
             "cordova-plugin-x-socialsharing": {},
-            "phonegap-plugin-push": {
-                "SENDER_ID": "432969043178"
-            },
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-inappbrowser": {},
             "ionic-plugin-deeplinks": {
@@ -105,8 +101,8 @@
                 "PHOTOLIBRARY_USAGE_DESCRIPTION": "Adjacent would like to access the camera.",
                 "CAMERA_USAGE_DESCRIPTION": " "
             },
-            "cordova-plugin-google-analytics": {},
-            "cordova-plugin-badge": {}
+            "cordova-plugin-badge": {},
+            "phonegap-plugin-push": {}
         },
         "platforms": [
             "android",

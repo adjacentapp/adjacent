@@ -33,7 +33,7 @@ export class Card {
     this.industry = item.industry || globs.INDUSTRIES[(Math.round(Math.random()*(globs.INDUSTRIES.length-1)))];
     this.who = item.who || 'Anonymous Entrepreneur';
     this.challenge_ids = item.challenge_ids || [];
-    this.challenge_names = item.challenge_ids ? globs.SKILLS
+    this.challenge_names = item.challenge_ids && item.challenge_ids.length ? globs.SKILLS
                         .filter(item => this.challenge_ids.indexOf(item.id) >= 0)
                         .map(item => item.name) : ['General Advice'];
     this.challenge_details = item.challenge_details || '';
