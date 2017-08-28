@@ -25,7 +25,7 @@
       <h3 *ngIf="!item.card">{{item.other.fir_name + ' ' + item.other.las_name}}</h3>
 
       <ion-avatar *ngIf="item.card" item-left (click)="goToCard($event, item.card)" class="card">
-        <div class='img-bg {{item.card.industry ? item.card.industry.replace(" ","_") : ""}}'></div>
+        <div class='img-bg {{item.card.industry ? item.card.industry.replace(" ","_") : ""}} {{auth.show_all_imgs ? "show_img" : ""}}'></div>
       </ion-avatar>
       <h3 *ngIf="item.card">{{item.card.founder_id != auth.currentUser.id ? 'Founder of' : item.other.fir_name + ' ' + item.other.las_name}}: {{item.card.pitch}}</h3>
 
@@ -34,6 +34,7 @@
         {{item.messages[item.messages.length-1].text}}
       </p>
     </ion-item>
+    <div class='empty margin' *ngIf="!loading && !items.length">Private conversations with other users and anonymous founders will show up here.</div>
 	</ion-list>
 
 	<ion-infinite-scroll *ngIf="!reachedEnd && !loading" enabled="!reachedEnd && !loading" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">

@@ -38,20 +38,22 @@
             </ion-item>
 
             <ion-item>
-              <ion-label stacked>Pitch <span>{{item.pitch.length}}/120</span></ion-label>
-              <ion-textarea name="pitch" [(ngModel)]="item.pitch" type="text" required maxlength="120" placeholder="In just a couple of sentences, describe the general idea."></ion-textarea>
+              <ion-label stacked>Pitch <span [ngClass]="item.pitch.length > 120 ? 'invalid' : ''">{{item.pitch.length}}/120</span></ion-label>
+              <ion-textarea name="pitch" [(ngModel)]="item.pitch" type="text" required maxlength="120" 
+                placeholder="In just a couple of sentences, describe the general idea." (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">
+              </ion-textarea>
             </ion-item>
             <ion-item>
               <ion-label stacked>Details</ion-label>
               <ion-textarea class="long" name="details" [(ngModel)]="item.details" type="text"
-                placeholder="What's the revenue model? Who's the competition? How will you execute? Or any other details you'd like people to know.">
+                placeholder="What's the revenue model? Who's the competition? How will you execute? Or any other details you'd like people to know." (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">
               </ion-textarea>
             </ion-item>
           </ion-row>
-          <ion-row justify-content-between (click)="$event.stopPropagation()">
+          <ion-row justify-content-between (click)="$event.stopPropagation()" [ngClass]="keyboard_visible?'keyboard_visible':''">
             <ion-col col-xs-6></ion-col>
             <ion-col col-xs-6>
-              <button ion-button block round (click)="nextSlide($event)" [disabled]="!item.industry || !item.pitch.length">Next</button>
+              <button ion-button block round (click)="nextSlide($event)" [disabled]="!item.industry || !item.pitch.length || item.pitch.length > 120">Next</button>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -65,10 +67,12 @@
             </ion-item>
             <ion-item>
               <ion-label stacked>My Background</ion-label>
-              <ion-textarea class="long" name="who" [(ngModel)]="item.who" type="text" required placeholder="Why are you the right person for this idea?"></ion-textarea>
+              <ion-textarea class="long" name="who" [(ngModel)]="item.who" type="text" required 
+                placeholder="Why are you the right person for this idea?" (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">
+              </ion-textarea>
             </ion-item>
           </ion-row>
-          <ion-row justify-content-between (click)="$event.stopPropagation()">
+          <ion-row justify-content-between (click)="$event.stopPropagation()" [ngClass]="keyboard_visible?'keyboard_visible':''">
             <ion-col col-xs-6>
               <button ion-button block round (click)="prevSlide($event)" outline>Back</button>
             </ion-col>
@@ -96,10 +100,12 @@
             </ion-item>
             <ion-item>
               <ion-label stacked>Challenge Details</ion-label>
-              <ion-textarea class="long" name="challenge_details" [(ngModel)]="item.challenge_details" type="text" placeholder="Additional details about the difficulty or uncertainy you're facing."></ion-textarea>
+              <ion-textarea class="long" name="challenge_details" [(ngModel)]="item.challenge_details" type="text"
+                placeholder="Additional details about the difficulty or uncertainy you're facing." (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">
+              </ion-textarea>
             </ion-item>
           </ion-row>
-          <ion-row justify-content-between (click)="$event.stopPropagation()">
+          <ion-row justify-content-between (click)="$event.stopPropagation()" [ngClass]="keyboard_visible?'keyboard_visible':''">
             <ion-col col-xs-6>
               <button ion-button block round (click)="prevSlide($event)" outline>Back</button>
             </ion-col>

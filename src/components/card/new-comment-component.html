@@ -8,8 +8,9 @@
   <h3 *ngIf="!founder">{{item.user.fir_name + ' ' + item.user.las_name}}</h3>
   <h3 *ngIf="founder">Founder</h3>
   
-  <ion-textarea *ngIf="!founder" [(ngModel)]="item.message" type="text" placeholder="Share your own constructive feedback" [disabled]="loading"></ion-textarea>
-  <ion-textarea *ngIf="founder" [(ngModel)]="item.message" type="text" placeholder="Share additional info about your idea" [disabled]="loading"></ion-textarea>
+  <ion-textarea *ngIf="!founder && !encourage" [(ngModel)]="item.message" type="text" placeholder="Share some constructive feedback" [disabled]="loading"></ion-textarea>
+  <ion-textarea *ngIf="!founder && encourage" [(ngModel)]="item.message" type="text" placeholder="Get the conversation started by sharing your thoughts" [disabled]="loading"></ion-textarea>
+  <ion-textarea *ngIf="founder" [(ngModel)]="item.message" type="text" placeholder="Share additional info as the idea's founder" [disabled]="loading"></ion-textarea>
   
   <div class="post-btn-wrapper" item-right text-center>
     <button *ngIf="!item.response" ion-button round [disabled]="!item.message.length || loading" (click)="postComment($event, item)">{{loading ? '' : "Post"}}</button>

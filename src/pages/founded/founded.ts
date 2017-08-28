@@ -21,8 +21,8 @@ export class FoundedPage {
 			.subscribe(
 				items => {
 					this.items = items;
-		  			this.reachedEnd = items.length < 10;
-		  		},
+		  		this.reachedEnd = items.length < 10;
+		  	},
 				error => console.log(<any>error),
 				() => this.loading = false
 			);

@@ -25,8 +25,6 @@ export class NotificationCenterComponent {
   }
 
   init(){
-    // this.items.push(new Notification('Title', 'and the message too.', null, null));
-    // this.items.push(new Notification('Title', 'and the message too.', null, true));
     if(this.auth.currentUser){
       this.notif.getNotifications(this.auth.currentUser.id, 0, this.limit)
         .subscribe(

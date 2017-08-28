@@ -21,6 +21,7 @@
 
 	<ion-list>
 		<card-component *ngFor="let item of items" (click)="showCard($event, item)" [item]="item" [showTopComment]="false"></card-component>
+    <div class='empty' *ngIf="!loading && !items.length">Follow interesting ideas to keep tabs on them here.</div>
 	</ion-list>
 
 	<ion-infinite-scroll *ngIf="!reachedEnd && !loading" enabled="!reachedEnd && !loading" (ionInfinite)="$event.waitFor(doInfinite())" position="bottom">

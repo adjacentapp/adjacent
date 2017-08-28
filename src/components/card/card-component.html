@@ -2,7 +2,7 @@
   
   <ion-card-content [ngClass]="showDetails ? 'open' : 'closed'">
 
-    <div class='img-bg {{item.industry ? item.industry.replace(" ","_") : ""}}'></div>
+    <div class='img-bg {{item.industry ? item.industry.replace(" ","_") : ""}} {{showDetails || auth.show_all_imgs ? "show_img" : ""}}'></div>
 
     <h1 class='title'><span>Pitch</span><i>{{item.industry}}</i></h1>
 
@@ -73,7 +73,7 @@
   
   <ion-row *ngIf="showTopComment">
     <comment-component *ngIf="item.topComment" [item]="item.topComment" [showVotes]="showTopCommentVotes" [showReply]="showReply" [founder_id]="item.founder_id"></comment-component>
-    <new-comment-component *ngIf="!item.topComment" (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="newTopComment($event)" [founder_id]="item.founder_id"></new-comment-component>
+    <new-comment-component *ngIf="!item.topComment" (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="newTopComment($event)" [founder_id]="item.founder_id" [encourage]="true"></new-comment-component>
   </ion-row>
 
 </ion-card>

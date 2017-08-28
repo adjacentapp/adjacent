@@ -159,7 +159,8 @@ export class MyApp {
           }
         },
         error => {
-            this.showError(error);
+            console.log(error);
+            // this.showError(error);
         });
     }
     else

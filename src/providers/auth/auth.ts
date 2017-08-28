@@ -30,6 +30,7 @@ export class AuthProvider {
   valid: boolean = false;
   currentUser: User;
   pushToken: string;
+  show_all_imgs: boolean = false;
 
   constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController, private badge: Badge) {}
 
@@ -219,14 +220,17 @@ export class AuthProvider {
     const pushObject: PushObject = this.push.init(options);
 
     pushObject.on('registration').subscribe((data: any) => {
-      // console.log('device token -> ' + data.registrationId);
-      this.postPushToken(data.registrationId).subscribe(
-        success => {
-          console.log('Device token successfully registered', data.registrationId);
-          this.pushToken = data.registrationId;
-         },
-        error => console.log(error)
-      );
+      console.log('device token -> ' + data.registrationId);
+      setTimeout(() => {
+        console.log(this.currentUser);
+        this.postPushToken(data.registrationId).subscribe(
+          success => {
+            console.log('Device token successfully registered', data.registrationId);
+            this.pushToken = data.registrationId;
+           },
+          error => console.log(error)
+        );
+      }, 1000);
     });
 
     pushObject.on('notification').subscribe((data: any) => {
@@ -235,23 +239,24 @@ export class AuthProvider {
       if (data.additionalData.foreground) {
         // if application open, show popup
         this.badge.set(data.count);
-        let confirmAlert = this.alertCtrl.create({
-          title: 'New Notification',
-          message: data.message,
-          buttons: [{
-            text: 'Ignore',
-            role: 'cancel'
-          }, {
-            text: 'View',
-            handler: () => {
-              //TODO: Your logic here
-              // this.nav.push(DetailsPage, { message: data.message });
-              // alert('gotothepage? ---- ' + data.message);
-              console.log(data);
-            }
-          }]
-        });
-        confirmAlert.present();
+        console.log(data);
+        // let confirmAlert = this.alertCtrl.create({
+        //   title: 'New Notification',
+        //   message: data.message,
+        //   buttons: [{
+        //     text: 'Ignore',
+        //     role: 'cancel'
+        //   }, {
+        //     text: 'View',
+        //     handler: () => {
+        //       //TODO: Your logic here
+        //       // this.nav.push(DetailsPage, { message: data.message });
+        //       // alert('gotothepage? ---- ' + data.message);
+        //       console.log(data);
+        //     }
+        //   }]
+        // });
+        // confirmAlert.present();
       } else {
         //if user NOT using app and push notification comes
         //TODO: Your logic on click of push notification directly

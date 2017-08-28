@@ -1,9 +1,15 @@
 new-card-page {
 	textarea {
-		height: 6em;
+		height: 5em;
+    @media only screen and (max-device-width : 320px) {
+      height: 4em;
+    }
 	}
 	.long textarea {
-		height: 10em;
+		height: 8em;
+    @media only screen and (max-device-width : 320px) {
+      height: 6em;
+    }
 	}
 
 	p {
@@ -21,6 +27,10 @@ new-card-page {
 	    justify-content: space-between;
 	}
 
+  .grid .row.keyboard_visible {
+    display: none !important;
+  }
+
 	ion-card-content, form, ion-slide, .slide-zoom, .grid {
 		height: 100%;
 		// position: relative;
@@ -28,5 +38,8 @@ new-card-page {
 
   ion-label span {
     float: right;
+    &.invalid {
+      color: red;
+    }
   }
 }

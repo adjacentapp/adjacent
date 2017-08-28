@@ -51,9 +51,9 @@ export class NotificationProvider {
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
-            this.unreadCount += data.length;
             let newNotifs = data.map((notif) => new Notification(notif.id, notif.title, notif.message, notif.card, notif.user, notif.new));
             this.items = newNotifs.concat(this.items);
+            this.unreadCount = this.items.filter(item => item.unread).length;
             return newNotifs;
           })
           .catch(this.handleError);

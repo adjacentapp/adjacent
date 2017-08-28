@@ -23,7 +23,7 @@ d<ion-header>
 
   <card-component [item]="item" [showTopComment]="false" [showDetails]="true"></card-component>
   <ion-row>
-    <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="wall.prependComment($event)" [founder_id]="item.founder_id"></new-comment-component>
+    <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="wall.prependComment($event)" [founder_id]="item.founder_id" [encourage]="item.comments.length==0"></new-comment-component>
     <wall-component #wall [card_id]="item.id" [founder_id]="item.founder_id"></wall-component>
   </ion-row>
 </ion-content>

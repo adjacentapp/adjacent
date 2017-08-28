@@ -22,6 +22,7 @@ export class BookmarksPage {
 				items => {
 					this.items = items;
 					this.reachedEnd = items.length < 10;
+          console.log(this.items);
 				},
 				error => console.log(<any>error),
 				() => this.loading = false

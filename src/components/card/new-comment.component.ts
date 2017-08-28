@@ -10,6 +10,7 @@ import { WallProvider } from '../../providers/wall/wall';
 export class NewCommentComponent {
   @Input() card_id: string;
   @Input() founder_id: number;
+  @Input() encourage: boolean = false;
   @Input() response_to: string = null;
   @Output() newComment: EventEmitter<any> = new EventEmitter();
   founder: boolean = false;

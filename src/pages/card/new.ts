@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, Loading, AlertController, Slides, ViewController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, Loading, AlertController, Slides, ViewController, ToastController, Platform} from 'ionic-angular';
 import * as globs from '../../app/globals'
 import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -12,6 +12,7 @@ import { FoundedPage } from '../../pages/founded/founded';
 export class NewCardPage {
   @ViewChild(Slides) slides: Slides;
   loading: Loading;
+  keyboard_visible: boolean = false;
   item: any;
   untouched_item: any;
   valid: boolean = false;
@@ -23,7 +24,7 @@ export class NewCardPage {
   // private stages = globs.STAGES;
   // private networks = globs.NETWORKS;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private viewCtrl: ViewController, private toast: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private viewCtrl: ViewController, private toast: ToastController, private platform: Platform) {
     this.deleteCallback = this.navParams.get('deleteCallback');
     this.updateCallback = this.navParams.get('updateCallback');
     this.item = navParams.get('item') ? {...navParams.get('item')} : {
@@ -38,6 +39,20 @@ export class NewCardPage {
       // networks: 0,
       founder_id: this.auth.currentUser.id,
     };
+  }
+
+  public handleKeyboardOpen(){
+    if(this.platform.is('android'))
+      setTimeout(() => {
+       this.keyboard_visible = true;
+      }, 100);
+  }
+
+  public handleKeyboardClose(){
+    if(this.platform.is('android'))
+      setTimeout(() => {
+        this.keyboard_visible = false;
+       }, 100);
   }
 
   public updateNamesByIds(){
