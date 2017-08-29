@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, MenuController, AlertController, LoadingController, Loading, IonicPage } from 'ionic-angular';
+import { NavController, MenuController, AlertController, LoadingController, Loading, IonicPage, Platform } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { DiscoverPage } from '../../pages/discover/discover';
  
@@ -10,10 +10,12 @@ import { DiscoverPage } from '../../pages/discover/discover';
 })
 export class LoginPage {
   loading: Loading;
-
+  cordova: boolean;
   registerCredentials = { email: '', password: '' };
  
-  constructor(private nav: NavController, public menu: MenuController, private auth: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {}
+  constructor(private nav: NavController, public menu: MenuController, private auth: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private platform: Platform) {
+      this.cordova = this.platform.is('cordova');
+  }
 
   ionViewWillEnter() {
     this.menu.swipeEnable( false );
@@ -29,12 +31,6 @@ export class LoginPage {
   public goToPage(name){
     this.nav.push(name);
   }
-   // public createAccount() {
-  //   this.nav.push('RegisterPage');
-  // }
-  // public forgotPassword() {
-  //   this.nav.push('ForgotPage');
-  // }
  
   public login() {
     this.showLoading();
@@ -52,6 +48,14 @@ export class LoginPage {
       error => {
         this.showError(error);
       });
+  }
+
+  public facebook() {
+    this.showLoading();
+    this.auth.facebook().then(
+      success => this.nav.setRoot(DiscoverPage),
+      err => this.showError(err)
+    );
   }
 
   showLoading() {

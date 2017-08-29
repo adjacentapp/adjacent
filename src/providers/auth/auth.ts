@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Badge } from '@ionic-native/badge';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
  
 export class User {
   id: number;
@@ -32,7 +33,7 @@ export class AuthProvider {
   pushToken: string;
   show_all_imgs: boolean = false;
 
-  constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController, private badge: Badge) {}
+  constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController, private badge: Badge, private fb: Facebook) {}
 
   loginFromLocalStorage(){
     this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url,  localStorage.token);
@@ -130,7 +131,7 @@ export class AuthProvider {
               .catch(this.handleError);
     }
   }
-  
+ 
   public getUserInfo() : User {
     return this.currentUser;
   }
@@ -268,6 +269,48 @@ export class AuthProvider {
     });
 
     pushObject.on('error').subscribe(error => console.error('Error with Push plugin' + error));
+  }
+
+  public facebook(): Promise<any> {
+    return new Promise((resolve, reject) => {
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+      .then((res: FacebookLoginResponse) => {
+        console.log('Logged into Facebook!', res);
+        resolve(res);
+        /*
+        let url = globs.BASE_API_URL + 'signup_facebook.php';
+        let data = {
+          email: credentials.email,
+          facebook_hash: this.sha256(globs.ENCRYPTION_KEY + credentials.password)
+        }
+        return this.http.post(url, data)
+          .map(this.extractData)
+          .map((data) => {
+            if(data.valid){
+              this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token);
+              this.valid = true;
+              localStorage.token = data.token;
+              localStorage.user_id = data.user_id;
+              localStorage.fir_name = data.fir_name;
+              localStorage.las_name = data.las_name;
+              localStorage.email = data.email;
+              localStorage.photo_url = data.photo_url;
+              this.badge.set(data.badge_count);
+              
+              this.registerPushToken();
+             }
+             else
+               this.valid = false;
+            return data;
+          })
+          .catch(this.handleError);
+        */
+      }, err => {
+        this.handleError(err);
+        reject(err);
+      })
+      // .catch(e => console.log('Error logging into Facebook', e));
+    });
   }
 
 

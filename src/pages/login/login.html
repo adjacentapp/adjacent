@@ -28,7 +28,7 @@
            <button ion-button block round outline type="button" (click)="goToPage('RegisterPage')">Sign Up</button>
            <button ion-button block round clear type="button" (click)="goToPage('ForgotPage')">Forgot Password</button>
            
-           <!-- <button ion-button block round type="button" (click)="facebookAuth" *ngIf='auth.mobile || true' style='background-color: #3b5998; color: white; font-weight: bold; bottom: 0;'>Facebook</button> -->
+           <button ion-button block round type="button" *ngIf="cordova" class="facebook" (click)="facebook()">Facebook</button>
 
          </ion-col>
        </ion-row>

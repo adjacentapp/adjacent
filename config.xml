@@ -116,4 +116,8 @@
     </plugin>
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="phonegap-plugin-push" spec="^2.0.0" />
+    <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
+        <variable name="APP_ID" value="1648227645496673" />
+        <variable name="APP_NAME" value="Adjacent" />
+    </plugin>
 </widget>

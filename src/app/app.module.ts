@@ -11,6 +11,7 @@ import { File }                                     from '@ionic-native/file';
 import { FileTransfer }                             from '@ionic-native/file-transfer';
 import { FilePath }                                 from '@ionic-native/file-path';
 import { Badge }                                    from '@ionic-native/badge';
+import { Facebook }                                 from '@ionic-native/facebook';
 
 import { StatusBar } 			from '@ionic-native/status-bar';
 import { SplashScreen } 		from '@ionic-native/splash-screen';
@@ -119,7 +120,8 @@ import { ContributionsComponent } from '../components/contributions/contribution
     File,
     FileTransfer,
     FilePath,
-    Badge
+    Badge,
+    Facebook
   ]
 })
 export class AppModule {}
