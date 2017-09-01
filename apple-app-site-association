@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "1157533534.com.medy.adjacentapp",
+                "paths": [ "/idea/*", "user/*", "message/idea/*", "messages/user/*" ]
+            }
+        ]
+    }
+}

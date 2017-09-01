@@ -1,7 +1,7 @@
 <ion-item *ngIf="item.user" text-wrap [ngClass]="founder ? 'founder' : ''">
   
   <ion-avatar item-left (click)="goToProfile($event, item.user.id)">
-    <div *ngIf="!founder" [ngStyle]="{'background-image': 'url(' + (item.user.photo_url || '') + ')'}"></div>
+    <div *ngIf="!founder && item.user.photo_url" [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
     <ion-icon *ngIf="founder" name="md-bulb" color="primary"></ion-icon>
   </ion-avatar>
 

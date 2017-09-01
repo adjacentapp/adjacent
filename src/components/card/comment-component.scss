@@ -105,6 +105,7 @@ new-comment-component {
 			width: 36px;
 			height: 36px;
 			line-height: 36px;
+      // margin-top: 0;
 		}
     ion-spinner {
       position: absolute;
@@ -139,8 +140,12 @@ new-comment-component {
 
 new-comment-component {
 	.item-inner {
-		padding-bottom: 20px;
+		// padding-bottom: 20px;
 		ion-textarea {
+      textarea {
+        line-height: 1.25em;
+        min-height: 3.75em;
+      }
 			.text-input::-webkit-input-placeholder {
 				color: $gray-placeholder;
 			}

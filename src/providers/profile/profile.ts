@@ -78,7 +78,6 @@ export class ProfileProvider {
             this.handleError(err);
             reject(err);
         });
-
       });
   }
 

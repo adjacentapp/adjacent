@@ -23,7 +23,7 @@
 
   <div *ngIf='profile'>
     <ion-avatar [ngClass]="'large'">
-      <div [ngStyle]="{'background-image': 'url(' + profile.user.photo_url + ')'}"></div>
+      <div *ngIf="profile.user.photo_url" [ngStyle]="{'background-image': 'url(' + profile.user.photo_url + ')'}"></div>
     </ion-avatar>
     <h3>{{profile.user.fir_name + ' ' + profile.user.las_name}}</h3>
     <p>{{profile.bio}}</p>

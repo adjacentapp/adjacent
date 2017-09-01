@@ -21,13 +21,22 @@ new-card-page {
 		min-height: 36px;
 	}
 
+  #challenge_select {
+    .select-text {
+      white-space: pre-line;
+    }
+    ion-select {
+      min-height: 3.5em;
+    }
+  }
+
 	.grid {
 		-webkit-justify-content: space-between;
 	    -ms-flex-pack: justify;
 	    justify-content: space-between;
 	}
 
-  .grid .row.keyboard_visible {
+  .row.keyboard_visible {
     display: none !important;
   }
 
@@ -35,6 +44,10 @@ new-card-page {
 		height: 100%;
 		// position: relative;
 	}
+
+  .button-row {
+    margin-top: 16px;
+  }
 
   ion-label span {
     float: right;

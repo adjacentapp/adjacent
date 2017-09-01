@@ -13,6 +13,7 @@ export class NewCardPage {
   @ViewChild(Slides) slides: Slides;
   loading: Loading;
   keyboard_visible: boolean = false;
+  is_android: boolean = false;
   item: any;
   untouched_item: any;
   valid: boolean = false;
@@ -39,20 +40,21 @@ export class NewCardPage {
       // networks: 0,
       founder_id: this.auth.currentUser.id,
     };
+
+    if(this.platform.is('android'))
+      this.is_android = true;
   }
 
   public handleKeyboardOpen(){
-    if(this.platform.is('android'))
-      setTimeout(() => {
-       this.keyboard_visible = true;
-      }, 100);
+    setTimeout(() => {
+     this.keyboard_visible = true;
+    }, 100);
   }
 
   public handleKeyboardClose(){
-    if(this.platform.is('android'))
-      setTimeout(() => {
-        this.keyboard_visible = false;
-       }, 100);
+    setTimeout(() => {
+      this.keyboard_visible = false;
+     }, 100);
   }
 
   public updateNamesByIds(){
@@ -185,5 +187,14 @@ export class NewCardPage {
       dismissOnPageChange: true
     });
     this.loading.present();
+  }
+
+  doNothing(e){
+    console.log('nothing');
+    // if(this.keyboard_visible){
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    // }
   }
 }

@@ -62,4 +62,15 @@ discover-page {
 			17% {-webkit-transform: translateX(10px);}
 		}
 	}
+
+  new-comment-component {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    .item-inner ion-textarea textarea,
+    .item ion-avatar,
+    .item .post-btn-wrapper {
+      margin-top: 0 !important;
+    }
+  }
+
 }

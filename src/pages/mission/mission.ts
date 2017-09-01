@@ -1,18 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+// import * as globs from '../../app/globals';
 
-/**
- * Generated class for the MissionPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-mission',
   templateUrl: 'mission.html',
 })
 export class MissionPage {
+  // industries = globs.INDUSTRIES;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

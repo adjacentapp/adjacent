@@ -21,12 +21,13 @@
   <ion-card-content no-bounce>
 
     <form (ngSubmit)="submitCard()" #cardForm="ngForm">
+    <!-- <form #cardForm="ngForm"> -->
 
     <ion-slides>
 
       <ion-slide>
-        <ion-grid (click)="$event.stopPropagation()">
-          <ion-row align-items-start>
+        <!-- <div class="grid"> -->
+          <div class="roww" align-items-start>
             <ion-item>
               <ion-title>The Vision</ion-title>
             </ion-item>
@@ -49,19 +50,19 @@
                 placeholder="What's the revenue model? Who's the competition? How will you execute? Or any other details you'd like people to know." (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">
               </ion-textarea>
             </ion-item>
-          </ion-row>
-          <ion-row justify-content-between (click)="$event.stopPropagation()" [ngClass]="keyboard_visible?'keyboard_visible':''">
-            <ion-col col-xs-6></ion-col>
-            <ion-col col-xs-6>
+          </div>
+          <div class="row button-row" justify-content-between [ngClass]="keyboard_visible && is_android ? 'keyboard_visible':''">
+            <div class="col"></div>
+            <div class="col">
               <button ion-button block round (click)="nextSlide($event)" [disabled]="!item.industry || !item.pitch.length || item.pitch.length > 120">Next</button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+            </div>
+          </div>
+        <!-- </div> -->
       </ion-slide>
 
       <ion-slide>
-        <ion-grid (click)="$event.stopPropagation()">
-          <ion-row>
+        <!-- <div class="grid" (click)="doNothing($event)"> -->
+          <div class="roww">
             <ion-item>
               <ion-title>The Founder</ion-title>
             </ion-item>
@@ -71,30 +72,30 @@
                 placeholder="Why are you the right person for this idea?" (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">
               </ion-textarea>
             </ion-item>
-          </ion-row>
-          <ion-row justify-content-between (click)="$event.stopPropagation()" [ngClass]="keyboard_visible?'keyboard_visible':''">
-            <ion-col col-xs-6>
+          </div>
+          <div class="row button-row" justify-content-between [ngClass]="keyboard_visible && is_android ? 'keyboard_visible':''">
+            <div class="col">
               <button ion-button block round (click)="prevSlide($event)" outline>Back</button>
-            </ion-col>
-            <ion-col col-xs-6>
+            </div>
+            <div class="col">
               <button ion-button block round (click)="nextSlide($event)" [disabled]="!item.who.length">Next</button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+            </div>
+          </div>
+        <!-- </div> -->
       </ion-slide>
 
       <ion-slide>
-        <ion-grid (click)="$event.stopPropagation()">
-          <ion-row>
+        <!-- <div class="grid" (click)="doNothing($event)"> -->
+          <div class="roww">
             <ion-item>
               <ion-title>The Ask</ion-title>
             </ion-item>
             <ion-item>
               <p>Everyone needs help on their entrepreneurial journey. Don't be shy to ask about what you don't yet know.</p>
             </ion-item>
-            <ion-item>
-              <ion-label>I need advice in</ion-label>
-              <ion-select name="challenge_ids" [(ngModel)]="item.challenge_ids" multiple="true" (ngModelChange)="updateNamesByIds()">
+            <ion-item id="challenge_select">
+              <ion-label stacked>I need advice in</ion-label>
+              <ion-select name="challenge_ids" [(ngModel)]="item.challenge_ids" multiple="true" placeholder="Select areas of expertise" (ngModelChange)="updateNamesByIds()">
                 <ion-option *ngFor="let challenge of challenges" value="{{challenge.id}}">{{challenge.name}}</ion-option>
               </ion-select>
             </ion-item>
@@ -104,21 +105,20 @@
                 placeholder="Additional details about the difficulty or uncertainy you're facing." (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">
               </ion-textarea>
             </ion-item>
-          </ion-row>
-          <ion-row justify-content-between (click)="$event.stopPropagation()" [ngClass]="keyboard_visible?'keyboard_visible':''">
-            <ion-col col-xs-6>
+          </div>
+          <div class="row button-row" justify-content-between [ngClass]="keyboard_visible && is_android ? 'keyboard_visible':''">
+            <div class="col">
               <button ion-button block round (click)="prevSlide($event)" outline>Back</button>
-            </ion-col>
-            <ion-col col-xs-6>
+            </div>
+            <div class="col">
               <button ion-button block round type="submit" [disabled]="!cardForm.form.valid">{{item.id ? "Update" : "Share"}}</button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+              <!-- <button ion-button block round (click)="submitCard()" [disabled]="!cardForm.form.valid">{{item.id ? "Update" : "Share"}}</button> -->
+            </div>
+          </div>
+        <!-- </div> -->
       </ion-slide>
 
     </ion-slides>
-
-    <!-- <button *ngIf="item.id" ion-button block round color="danger" (click)="deleteCard($event)">Delete Card</button> -->
 
     </form>
 

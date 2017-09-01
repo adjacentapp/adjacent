@@ -1,7 +1,7 @@
 <ion-item text-wrap [ngClass]="founder ? 'founder' : ''">
 {{card_id}}
   <ion-avatar item-left>
-    <div *ngIf="!founder" [ngStyle]="{'background-image': 'url(' + (item.user.photo_url || '') + ')'}"></div>
+    <div *ngIf="!founder && item.user.photo_url" [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
     <ion-icon *ngIf="founder" name="md-bulb" color="primary"></ion-icon>
   </ion-avatar>
   

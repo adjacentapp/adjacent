@@ -58,6 +58,7 @@ export class MyApp {
 
         this.initGA();
         this.checkDeepLink();
+        this.checkDeepNotifications();
         this.listenForMessages();
     });
   }
@@ -98,17 +99,42 @@ export class MyApp {
   checkDeepLink() {
     console.log('deep linking');
     this.deeplinks.routeWithNavController(this.nav, {
-      '/idea': ShowCardPage,
+      '/idea/:card_id': ShowCardPage,
+      '/user/:user_id': ProfilePage,
       '/message/:conversationId': MessagesPage
     }).subscribe((match) => {
         // match.$route - the route we matched, which is the matched entry from the arguments to route()
         // match.$args - the args passed in the link
         // match.$link - the full link data
         console.log('Successfully matched route', match);
+        let split = match.$link.path.split('/');
+        let id = split[ split.length-1 ];
+        let object = split[ split.length-2 ];
+        if(object == 'idea')
+          this.nav.push(ShowCardPage, {
+            card_id: id
+          });
       }, (nomatch) => {
         // nomatch.$link - the full link data
         console.log('Got a deeplink that didn\'t match', nomatch);
       });
+  }
+
+  checkDeepNotifications() {
+    // We subscribe to the dismiss observable of the service
+    this.auth.checkDeepNotifications.subscribe((value) => {
+      if (!value)
+        return;
+      else if (value == 'nc')
+        this.menu.open('right');
+      else {
+        this.nav.popToRoot();
+        if (value == 'message')
+          this.nav.push(MessagesPage);
+        else
+          this.nav.push(ShowCardPage, {card_id: value});
+      }
+    });
   }
 
   openPage(page) {

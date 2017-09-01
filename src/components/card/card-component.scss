@@ -8,6 +8,7 @@ card-component,
 
     comment-component ion-item .item-inner p {
       -webkit-line-clamp: 3;
+      min-height: 3.25em;
     }
 
     ion-card-content {

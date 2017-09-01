@@ -30,7 +30,7 @@ export class Card {
     this.founder_id = item.founder_id;
     this.pitch = item.pitch;
     this.details = item.details || '';
-    this.industry = item.industry || globs.INDUSTRIES[(Math.round(Math.random()*(globs.INDUSTRIES.length-1)))];
+    this.industry = item.industry || '';
     this.who = item.who || 'Anonymous Entrepreneur';
     this.challenge_ids = item.challenge_ids || [];
     this.challenge_names = item.challenge_ids && item.challenge_ids.length ? globs.SKILLS
@@ -60,9 +60,21 @@ export class CardProvider {
           .map(this.extractData)
           .map((data) => {
             let manip = data.map((item, i) => {
+              // item.industry = globs.INDUSTRIES[i];
               return new Card(item);
              });
             return manip;
+          })
+          .catch(this.handleError);
+  }
+
+  getCardById(card_id, user_id): Observable<any[]> {
+    let query = '?card_id=' + card_id + '&user_id=' + user_id;
+    let url = this.base_url + 'get_cards.php' + query;
+    return this.http.get(url)
+          .map(this.extractData)
+          .map((data) => {
+            return new Card(data[0]);
           })
           .catch(this.handleError);
   }

@@ -17,8 +17,7 @@
   <div *ngIf='profile'>    
 
     <ion-avatar [ngClass]="'large'" (click)="tappedPhoto($event)">
-    <!-- <ion-avatar [ngClass]="'large'" (click)="uploadImage()"> -->
-      <div [ngStyle]="{'background-image': 'url(' + profile.user.photo_url + ')'}"></div>
+      <div *ngIf="profile.user.photo_url" [ngStyle]="{'background-image': 'url(' + profile.user.photo_url + ')'}"></div>
       <ion-icon name="camera" *ngIf="!photoUpload.loading"></ion-icon>
       <ion-spinner *ngIf="photoUpload.loading"></ion-spinner>
     </ion-avatar>

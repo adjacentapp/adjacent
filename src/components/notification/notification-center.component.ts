@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http'
 import 'rxjs/add/operator/map';
 import { WallProvider } from '../../providers/wall/wall';
-import { NotificationProvider, Notification } from '../../providers/notification/notification';
+import { NotificationProvider } from '../../providers/notification/notification';
 import { AuthProvider } from '../../providers/auth/auth';
 import { Badge } from '@ionic-native/badge';
 
@@ -14,7 +14,6 @@ export class NotificationCenterComponent {
   @Input() inheritedContent: any;
   @Output() goToCard: EventEmitter<any> = new EventEmitter();
   @Output() goToProfile: EventEmitter<any> = new EventEmitter();
-  // items: Notification[] = [];
   loading: boolean;
   reachedEnd: boolean = false;
   limit: number = 10;

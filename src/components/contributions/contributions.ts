@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ShowCardPage } from '../../pages/card/show';
 import { Card } from '../../providers/card/card';
-import { Comment } from '../../providers/wall/wall';
 import { BookmarksProvider } from '../../providers/bookmarks/bookmarks';
 
 @Component({

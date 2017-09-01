@@ -64,6 +64,11 @@ export let setSkills = (skills) => {
 	SKILLS = skills;
 };
 
+export let SHARE_URL: string = 'adjacentapp.com';
+export let setShareURL = (url) => {
+  SHARE_URL = url;
+};
+
 export const NETWORKS: string[] = [
 	'Public',
 	'New York University',

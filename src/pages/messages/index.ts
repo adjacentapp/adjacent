@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MessagesProvider, Message, Conversation } from '../../providers/messages/messages';
+import { NavController, NavParams } from 'ionic-angular';
+import { MessagesProvider } from '../../providers/messages/messages';
 import { AuthProvider } from '../../providers/auth/auth';
 import { ShowMessagePage } from './show';
 import { ProfilePage } from '../../pages/profile/profile';
@@ -57,7 +57,7 @@ export class MessagesPage {
   goToCard(event, item) {
     event.stopPropagation();
     this.navCtrl.push(ShowCardPage, {
-      item: item
+      card_id: item.id
     });
   }
 

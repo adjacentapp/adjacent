@@ -1,6 +1,6 @@
 page-login {
 
-  button.facebook {
+  .facebook-col button.facebook {
     background-color: #3b5998;
     color: white;
     font-weight: bold;
@@ -10,6 +10,7 @@ page-login {
   .footer {
     position: absolute;
     bottom: 0;
+    margin-right: 16px;
     button {
       color: #777;
     }

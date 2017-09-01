@@ -9,7 +9,7 @@
 
       <ion-item (click)="openPage(profPage)">
         <ion-avatar [ngClass]="'large'">
-          <div *ngIf='auth.valid' [ngStyle]="{'background-image': 'url(' + auth.currentUser.photo_url + ')'}"></div>
+          <div *ngIf="auth.valid && auth.currentUser.photo_url" [ngStyle]="{'background-image': 'url(' + auth.currentUser.photo_url + ')'}"></div>
         </ion-avatar>
         <br/>
         My Profile
@@ -27,10 +27,15 @@
         <ion-icon item-right name="md-log-out"></ion-icon>
       </button>
 
-      <ion-item>
+      <!-- <ion-item>
         <ion-label>Show Images</ion-label>
         <ion-toggle item-right [(ngModel)]="auth.show_all_imgs"></ion-toggle>
-      </ion-item>
+      </ion-item> -->
+
+      <!-- <ion-item>
+        <ion-label>Show Title</ion-label>
+        <ion-toggle item-right [(ngModel)]="auth.show_title"></ion-toggle>
+      </ion-item> -->
 
     </ion-list>
 

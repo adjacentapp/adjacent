@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.meddy.adjacentapp",
+    "sha256_cert_fingerprints":
+    ["9A:DA:60:A9:EB:B5:AC:60:86:42:A0:8D:C8:0E:83:AC:0B:BE:E1:A1:86:AB:AA:51:5E:C2:3A:70:29:5C:50:18"]
+  }
+}]

@@ -4,6 +4,7 @@ import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
 import { NewCardPage } from '../../pages/card/new';
 import { ShowMessagePage } from '../../pages/messages/show';
+import { Conversation } from '../../providers/messages/messages';
 
 @Component({
   selector: 'show-card-page',
@@ -14,12 +15,31 @@ export class ShowCardPage {
   founder: boolean = false;
   deleteCallback: any;
   updateCallback: any;
+  loading: boolean = false;
+  noEdit: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider) {
     this.deleteCallback = this.navParams.get('deleteCallback');
     this.updateCallback = this.navParams.get('updateCallback');
-    this.item = navParams.get('item');
-    if(this.item.founder_id == this.auth.currentUser.id) this.founder = true;
+    if(navParams.get('item')){
+      this.item = navParams.get('item');
+      this.founder = this.item.founder_id == this.auth.currentUser.id;
+    }
+    else if (navParams.get('card_id')){
+      this.noEdit = true;
+      this.loading = true;
+      this.item = this.card.getCardById(navParams.get('card_id'), this.auth.currentUser.id).subscribe(
+        item => {
+          this.item = item;
+          this.founder = this.item.founder_id == this.auth.currentUser.id;
+        },
+        error => {
+          console.log('trying to get_card_by_id again', error);
+          // this.getDeck();
+        },
+        () => this.loading = false
+      );
+    }
   }
 
   editTapped = () => {
@@ -50,15 +70,15 @@ export class ShowCardPage {
 
   goToMessage(){
     this.navCtrl.push(ShowMessagePage, {
-      item: {
-        id: null,
-        card_id: this.item.id,
-        messages: [],
-        other: {
-          id: this.item.founder_id
-        }
-      }
-    }); 
+      item: new Conversation(
+        null, // id
+        {id: this.item.founder_id}, // other
+        {...this.item}, // card
+        [], // messages
+        null, // timstamp
+        null // unread
+      )
+    });
   }
 
 }

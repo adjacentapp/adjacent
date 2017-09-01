@@ -67,12 +67,14 @@ export class CardComponent {
   }
 
   shareTapped(e, item){
+    console.log("http://" + globs.SHARE_URL + "/?idea=" + item.id);
     e.stopPropagation();
     this.socialSharing.share(
       "Check out this idea I found in Adjacent -- " + item.pitch, // message
       "Shared from Adjacent",   // subject
       "www/assets/img/industries/" + item.industry.replace(" ","_") + ".jpg", // file
-      "adjacentapp://idea/" + item.id  //url
+      // "adjacentapp://app/idea/" + item.id  //url
+      "http://" + globs.SHARE_URL + "/?idea=" + item.id  //url
      ); 
   }
 

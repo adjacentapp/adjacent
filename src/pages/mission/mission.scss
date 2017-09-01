@@ -1,3 +1,28 @@
 page-mission {
   font-size: 1.1em;
+
+  h1 {
+    color: white;
+    position: absolute;
+  }
+
+  .test {
+    position: relative;
+    height: 4em;
+    margin-bottom: 1em;
+  }
+
+  .img-bg{
+    height: 4em;
+  }
+
+  .img-bg:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
 }

@@ -33,7 +33,7 @@ export class LoginPage {
   }
  
   public login() {
-    this.showLoading();
+    this.showLoading('Please wait...');
     this.auth.login(this.registerCredentials).subscribe(
       user => {
         if (this.auth.valid) {     
@@ -51,19 +51,37 @@ export class LoginPage {
   }
 
   public facebook() {
-    this.showLoading();
+    this.showLoading('Connecting to Facebook...');
     this.auth.facebook().then(
-      success => this.nav.setRoot(DiscoverPage),
+      success => this.successPopup(),
       err => this.showError(err)
     );
   }
 
-  showLoading() {
+  showLoading(text) {
     this.loading = this.loadingCtrl.create({
-      content: 'Please wait...',
+      content: text,
       dismissOnPageChange: true
     });
     this.loading.present();
+  }
+
+  successPopup() {
+    this.loading.dismiss();
+    let alert = this.alertCtrl.create({
+      title: "Success",
+      subTitle: "Facebook Connected",
+      buttons: [
+        {
+          text: "Let's Go!",
+          handler: data => {
+            this.nav.setRoot(DiscoverPage);
+            this.nav.popToRoot();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
  
   showError(text) {

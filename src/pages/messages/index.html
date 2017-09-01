@@ -20,7 +20,7 @@
 		<ion-item *ngFor="let item of items" (click)="itemTapped($event, item)" [ngClass]="item.unread ? 'unread' : ''">
       
       <ion-avatar *ngIf="!item.card" item-left (click)="goToProfile($event, item.other.id)">
-        <div *ngIf='item.other.photo_url' [ngStyle]="{'background-image': 'url(' + item.other.photo_url + ')'}"></div>
+        <div *ngIf="item.other.photo_url" [ngStyle]="{'background-image': 'url(' + item.other.photo_url + ')'}"></div>
       </ion-avatar>
       <h3 *ngIf="!item.card">{{item.other.fir_name + ' ' + item.other.las_name}}</h3>
 

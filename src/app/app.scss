@@ -107,7 +107,7 @@ ion-avatar.large {
 ion-avatar {
 	border-radius: 50%;
 	overflow: hidden;
-	background-image: url('../../assets/img/anon_photo.png');
+  background-image: url('../assets/img/anon_photo.png');
 	background-size: cover;
 	height: 36px;
 	width: 36px;
@@ -200,7 +200,7 @@ ion-avatar {
     }
 		&:before {
       @include industry-gradient( color($industryColors, Art) );
-      opacity: 0.7;
+      opacity: 0.8;
     }
 		background-position: 50% 50%;
 	}
@@ -210,7 +210,7 @@ ion-avatar {
     }
 		&:before {
       @include industry-gradient( color($industryColors, Architecture) );
-      opacity: 0.8;
+      opacity: 0.85;
     }
 		background-position: 50% 50%;
 	}
@@ -247,7 +247,7 @@ ion-avatar {
     }
 		&:before {
       @include industry-gradient( color($industryColors, Education) );
-      opacity: 0.85;
+      opacity: 0.9;
     }
 	}
 	&.Engineering {
@@ -283,7 +283,7 @@ ion-avatar {
     }
 		&:before {
       @include industry-gradient( color($industryColors, Finance) );
-      opacity: 0.7;
+      opacity: 0.8;
     }
 	}
 	&.Gaming {
@@ -341,7 +341,7 @@ ion-avatar {
     }
 		&:before {
       @include industry-gradient( color($industryColors, Language) );
-      opacity: 0.9;
+      opacity: 0.8;
     }
 		background-position: 50% 50%;
 	}
@@ -361,7 +361,7 @@ ion-avatar {
     }
 		&:before {
       @include industry-gradient( color($industryColors, Lifestyle) );
-      opacity: 0.85;
+      opacity: 0.9;
     }
 		background-position: 50% 50%;
 	}
@@ -371,7 +371,7 @@ ion-avatar {
     }
 		&:before {
       @include industry-gradient( color($industryColors, Marketing) );
-      opacity: 0.9;
+      opacity: 0.85;
     }
 		background-position: 50% 50%;
 	}
@@ -381,7 +381,7 @@ ion-avatar {
     }
 		&:before {
       @include industry-gradient( color($industryColors, Math) );
-      opacity: 0.85;
+      opacity: 0.9;
     }
 	}
 	&.Music {
@@ -399,7 +399,7 @@ ion-avatar {
     }
 		&:before {
       @include industry-gradient( color($industryColors, Performing_Arts) );
-      opacity: 0.8;
+      opacity: 0.85;
     }
 	}
 	&.Science {
@@ -456,7 +456,7 @@ ion-avatar {
     }
 		&:before {
       @include industry-gradient( color($industryColors, Writing) );
-      opacity: 0.8;
+      opacity: 0.85;
     }
 		background-position: 50% 50%;
 	}

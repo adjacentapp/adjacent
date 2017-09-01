@@ -14,7 +14,7 @@
 	<ion-list>
 		<ion-item *ngFor="let item of items" (click)="goToProfile($event, item)">
 	      <ion-avatar item-left>
-	        <div [ngStyle]="{'background-image': 'url(' + (item.photo_url || '') + ')'}"></div>
+	        <div *ngIf="item.photo_url" [ngStyle]="{'background-image': 'url(' + item.photo_url + ')'}"></div>
 	      </ion-avatar>
 	      <h3>{{item.fir_name + ' ' + item.las_name}}</h3>
 	    </ion-item>

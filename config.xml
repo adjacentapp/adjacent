@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="6204" id="com.medy.adjacentapp" version="2.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="6206" id="com.medy.adjacentapp" version="2.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Adjacent</name>
     <description>An anonymous idea-sharing network.</description>
     <author email="aliana@umich.edu" href="http://adjacent.us/">Medy</author>
@@ -79,6 +79,8 @@
     </platform>
     <allow-navigation href="http://192.168.2.16:8100" />
     <allow-navigation href="http://192.168.2.12:8100" />
+    <allow-navigation href="http://10.32.45.108:8100" />
+    <allow-navigation href="http://192.168.2.18:8100" />
     <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-badge" spec="^0.8.1" />
@@ -88,6 +90,10 @@
     </plugin>
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
+    <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
+        <variable name="APP_ID" value="1648227645496673" />
+        <variable name="APP_NAME" value="Adjacent" />
+    </plugin>
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
     <plugin name="cordova-plugin-filepath" spec="^1.0.2" />
@@ -99,7 +105,7 @@
     <plugin name="ionic-plugin-deeplinks" spec="^1.0.15">
         <variable name="URL_SCHEME" value="adjacentapp" />
         <variable name="DEEPLINK_SCHEME" value="https" />
-        <variable name="DEEPLINK_HOST" value="adjacent.us" />
+        <variable name="DEEPLINK_HOST" value="adjacentapp.com" />
         <variable name="ANDROID_PATH_PREFIX" value="/" />
         <variable name="ANDROID_2_PATH_PREFIX" value="/" />
         <variable name="ANDROID_3_PATH_PREFIX" value="/" />
@@ -116,8 +122,4 @@
     </plugin>
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="phonegap-plugin-push" spec="^2.0.0" />
-    <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
-        <variable name="APP_ID" value="1648227645496673" />
-        <variable name="APP_NAME" value="Adjacent" />
-    </plugin>
 </widget>

@@ -19,7 +19,6 @@ export class Message {
     this.card = card ? new Card(card) : null;
     this.text = text;
     this.timestamp = timestamp;
-    // this.user = user;
   }
 }
 
@@ -33,11 +32,13 @@ export class Conversation {
   
   constructor (id: number, other: any, card: any, messages: any[], timestamp: any, unread: any) {
     this.id = id;
-    this.other = other ? new User(other.id, other.fir_name, other.las_name, other.email, other.photo_url) : null;
-    this.card = card ? new Card(card) : null;
+    if (other) this.other = new User(other.id, other.fir_name, other.las_name, other.email, other.photo_url);
+    if (card) this.card = new Card(card);
     this.timestamp = timestamp;
     this.messages = messages.map((msg) => new Message(msg.id, msg.user, msg.card, msg.text, msg.timestamp));
     this.unread = unread || false;
+
+    console.log(this);
   }
 }
 
@@ -57,6 +58,7 @@ export class MessagesProvider {
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
+            console.log(data);
             return data.map((convo) => {
               return new Conversation(convo.conversation_id, convo.other, convo.card, convo.messages, convo.timestamp, convo.unread);
             });
@@ -77,8 +79,8 @@ export class MessagesProvider {
           .catch(this.handleError);
   }
 
-  getNewMessages(convo_id, other_id, last_id?): Observable<any> {
-    let query = '?convo_id=' + convo_id + '&other_id=' + other_id + (last_id ? '&last_id=' + last_id : '');
+  getNewMessages(convo_id, user_id, last_id?): Observable<any> {
+    let query = '?convo_id=' + convo_id + '&user_id=' + user_id + (last_id ? '&last_id=' + last_id : '');
     let url = globs.BASE_API_URL + 'get_new_messages.php' + query;
     return this.http.get(url)
           .map(this.extractData)

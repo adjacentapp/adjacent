@@ -12,11 +12,12 @@ export class GlobalsProvider {
 
   getGlobs(): Observable<any> {
   // getGlobs() {
-  	let url = globs.BASE_API_URL + 'get_skill_list.php';
+  	let url = globs.BASE_API_URL + 'get_globals.php';
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
-          	globs.setSkills(data);
+          	globs.setSkills(data.skill_list);
+            globs.setShareURL(data.share_url);
             return data;
           })
           .catch(this.handleError);

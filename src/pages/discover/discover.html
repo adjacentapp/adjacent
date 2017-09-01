@@ -4,7 +4,7 @@
       <ion-icon name="menu" color="{{msg.unread_ids.length && false ? 'danger' : 'primary'}}"></ion-icon>
        <ion-badge *ngIf="msg.unread_ids.length" color="danger">{{msg.unread_ids.length}}</ion-badge>
     </button>
-    <ion-title><img id='title-img' src="./assets/img/title.svg"/></ion-title>
+    <ion-title *ngIf="auth.show_title"><img id='title-img' src="./assets/img/title.svg"/></ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="openRightMenu()">
         <ion-badge *ngIf="notif.unreadCount" color="danger">{{notif.unreadCount}}</ion-badge>

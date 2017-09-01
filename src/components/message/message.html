@@ -1,14 +1,14 @@
 <ion-item text-wrap [ngClass]="founder ? 'founder' : ''">
 
 	<ion-avatar *ngIf="other" item-left (click)="avatarTapped($event, item)">
-    <div *ngIf="!founder" [ngStyle]="{'background-image': 'url(' + (item.user.photo_url || '') + ')'}"></div>
+    <div *ngIf="!founder && item.user.photo_url" [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
     <ion-icon *ngIf="founder" name="md-bulb" color="primary"></ion-icon>
   </ion-avatar>
 
   <p class="{{other ? 'other' : ''}}">{{item.text}}</p>
 
   <ion-avatar *ngIf="!other" item-right>
-    <div *ngIf='!founder' [ngStyle]="{'background-image': 'url(' + item.user.photo_url || '' + ')'}"></div>
+    <div *ngIf="!founder && item.user.photo_url" [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
     <ion-icon *ngIf="founder" name="md-bulb" color="primary"></ion-icon>
   </ion-avatar>
 
