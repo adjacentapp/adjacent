@@ -1,6 +1,8 @@
 import { BrowserModule } 						                from '@angular/platform-browser';
 import { HttpModule, JsonpModule }	                from '@angular/http';
-import { NgModule, ErrorHandler } 	                from '@angular/core';
+import { NgModule, ErrorHandler, 
+        // CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA
+                                                 }  from '@angular/core';
 import { MyApp } 								                    from './app.component';
 import { IonicApp, IonicModule, IonicErrorHandler }	from 'ionic-angular';
 import { Push }			                                from '@ionic-native/push';
@@ -81,7 +83,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     BrowserModule,
     HttpModule,
     JsonpModule,
-    IonicModule.forRoot(MyApp, {}),
+    IonicModule.forRoot(MyApp, {})
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -122,6 +124,10 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     FilePath,
     Badge,
     Facebook
+  ],
+  schemas: [
+    // NO_ERRORS_SCHEMA
+    // CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class AppModule {}
