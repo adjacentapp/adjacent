@@ -7,8 +7,8 @@ import { AuthProvider } from '../../providers/auth/auth';
 import * as globs from '../../app/globals'
 
 @Component({
-  selector: 'card-component',
-  templateUrl: 'card-component.html'
+  selector: 'card',
+  templateUrl: 'card.html'
 })
 export class CardComponent {
   @Input() item: Card;

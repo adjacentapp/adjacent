@@ -1,13 +1,13 @@
 discover-page {
 
-  card-component > ion-card.card,
+  card > ion-card.card,
   #tut-card ion-card.card, {
     box-shadow: none;
     border: solid 1px #bbb;
     border-bottom-width: 3px;
   }
 
-	card-component ion-card.card,
+	card ion-card.card,
 	#tut-card ion-card.card, {
 
     // box-shadow: 0px 4px 12px #999;

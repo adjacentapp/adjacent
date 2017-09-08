@@ -32,13 +32,15 @@ import { ShowMessagePage }	    from '../pages/messages/show';
 // import { MissionPage }         from '../pages/mission/mission';
 // import { ForgotPage } 		    from '../pages/forgot/forgot';
 
-import { CardComponent } 				from '../components/card/card.component';
+import { CardComponent } 				from '../components/card/card';
 import { CommentComponent } 			from '../components/card/comment.component';
 import { NewCommentComponent } 			from '../components/card/new-comment.component';
 import { WallComponent } 				from '../components/card/wall.component';
 import { NotificationCenterComponent }	from '../components/notification/notification-center.component';
 import { NotificationComponent }		from '../components/notification/notification.component';
 import { MessageComponent } 			from '../components/message/message';
+import { BookmarksComponent }  from '../components/bookmarks/bookmarks';
+import { ContributionsComponent } from '../components/contributions/contributions';
 
 import { CardProvider } 		from '../providers/card/card';
 import { ProfileProvider } 		from '../providers/profile/profile';
@@ -48,9 +50,6 @@ import { AuthProvider } 		from '../providers/auth/auth';
 import { GlobalsProvider } 		from '../providers/globals/globals';
 import { NotificationProvider }	from '../providers/notification/notification';
 import { MessagesProvider } 	from '../providers/messages/messages';
-import { BookmarksComponent }	from '../components/bookmarks/bookmarks';
-import { ContributionsComponent } from '../components/contributions/contributions';
-import { CardComponent } from '../components/card/card';
 
 @NgModule({
   declarations: [
@@ -77,7 +76,6 @@ import { CardComponent } from '../components/card/card';
     MessageComponent,
     BookmarksComponent,
     ContributionsComponent,
-    CardComponent
   ],
   imports: [
     BrowserModule,
