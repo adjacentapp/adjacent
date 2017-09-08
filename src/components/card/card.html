@@ -1,0 +1,79 @@
+<ion-card [ngClass]='item.industry ? item.industry.replace(" ","_") : ""'>
+  
+  <ion-card-content [ngClass]="showDetails ? 'open' : 'closed'">
+
+    <div class='img-bg {{item.industry ? item.industry.replace(" ","_") : ""}} {{showDetails || auth.show_all_imgs ? "show_img" : ""}}'></div>
+
+    <h1 class='title'><span>Pitch</span><i>{{item.industry}}</i></h1>
+
+    <ion-card>
+      <ion-item>
+        <h2 *ngIf="showDetails">The Vision</h2>
+        <p>{{item.pitch}}</p>
+      </ion-item>
+
+      <ion-item *ngIf="showDetails && item.details">
+        <h3>Details</h3>
+        <p>{{item.details}}</p>
+      </ion-item>
+    </ion-card>
+
+    <ion-card class="footer" *ngIf="!showDetails">
+      <ion-item>
+        <h2><ion-icon name="warning"></ion-icon> Looking For</h2>
+        <p *ngIf="item.challenge_names.length">{{item.challenge_names.join(", ")}}</p>
+        <!-- <p *ngIf="!item.challenge_names.length">General Advice</p> -->
+      </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="showDetails && item.who">
+      <ion-item>
+        <h2>The Founder</h2>
+        <p>{{item.who}}</p>
+      </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="showDetails && (item.challenge_names.length || item.challenge_details)">
+      <ion-item>
+        <h2>The Ask</h2>
+        <p *ngIf="item.challenge_names.length"><b>Looking for:</b> {{item.challenge_names.join(", ")}}</p>
+      </ion-item>
+      <ion-item *ngIf="item.challenge_details">
+        <h3>Details</h3>
+        <p *ngIf="item.challenge_details">{{item.challenge_details}}</p>
+      </ion-item>
+    </ion-card>
+
+  </ion-card-content>
+
+  <ion-row *ngIf="!hideButtons" class="button-row">
+    <ion-col col-4>
+      <button ion-button icon-left clear small color='secondary'>
+        <ion-icon name="md-chatboxes"></ion-icon>
+        <div>{{item.comments.length || ''}} Comment{{item.comments.length>1?'s':''}}</div>
+      </button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button icon-left clear small color='secondary' (click)="shareTapped($event, item)">
+        <ion-icon name="md-share-alt"></ion-icon>
+        <div>Share</div>
+      </button>
+    </ion-col>
+    <ion-col col-4>
+      <button *ngIf="!founder" ion-button icon-left clear small color="{{item.following ? 'primary' : 'secondary'}}" (click)="followTapped($event, item)">
+        <ion-icon name="md-bookmark"></ion-icon>
+        <div>{{item.following ? item.followers.length + ' Follower'+(item.followers.length!==1 ? 's' : '') : 'Follow'}}</div>
+      </button>
+      <button *ngIf="founder" ion-button icon-left clear small color="primary" (click)="goToFollowers($event, item)">
+        <ion-icon name="md-bulb"></ion-icon>
+        {{item.followers.length}} Follower{{item.followers.length!==1 ? 's' : ''}}
+      </button>
+    </ion-col>
+  </ion-row>
+  
+  <ion-row *ngIf="showTopComment">
+    <comment-component *ngIf="item.topComment" [item]="item.topComment" [showVotes]="showTopCommentVotes" [showReply]="showReply" [founder_id]="item.founder_id"></comment-component>
+    <new-comment-component *ngIf="!item.topComment" (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="newTopComment($event)" [founder_id]="item.founder_id" [encourage]="true"></new-comment-component>
+  </ion-row>
+
+</ion-card>

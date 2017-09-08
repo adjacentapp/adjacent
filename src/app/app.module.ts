@@ -24,12 +24,12 @@ import { NewCardPage } 			from '../pages/card/new';
 import { DiscoverPage } 		from '../pages/discover/discover';
 import { ProfilePage } 			from '../pages/profile/profile';
 import { EditProfilePage } 	    from '../pages/profile/edit';
-import { BookmarksPage } 		from '../pages/bookmarks/bookmarks';
+// import { BookmarksPage } 		from '../pages/bookmarks/bookmarks';
 import { MessagesPage } 		from '../pages/messages/index';
 import { ShowMessagePage }	    from '../pages/messages/show';
-import { FoundedPage }          from '../pages/founded/founded';
-import { FollowersPage }        from '../pages/followers/followers';
-import { MissionPage }         from '../pages/mission/mission';
+// import { FoundedPage }          from '../pages/founded/founded';
+// import { FollowersPage }        from '../pages/followers/followers';
+// import { MissionPage }         from '../pages/mission/mission';
 // import { ForgotPage } 		    from '../pages/forgot/forgot';
 
 import { CardComponent } 				from '../components/card/card.component';
@@ -50,6 +50,7 @@ import { NotificationProvider }	from '../providers/notification/notification';
 import { MessagesProvider } 	from '../providers/messages/messages';
 import { BookmarksComponent }	from '../components/bookmarks/bookmarks';
 import { ContributionsComponent } from '../components/contributions/contributions';
+import { CardComponent } from '../components/card/card';
 
 @NgModule({
   declarations: [
@@ -58,14 +59,14 @@ import { ContributionsComponent } from '../components/contributions/contribution
     DiscoverPage,
     ProfilePage,
     EditProfilePage,
-    BookmarksPage,
+    // BookmarksPage,
     ShowCardPage,
     NewCardPage,
     MessagesPage,
     ShowMessagePage,
-    FoundedPage,
-    FollowersPage,
-    MissionPage,
+    // FoundedPage,
+    // FollowersPage,
+    // MissionPage,
     // ForgotPage,
     CardComponent,
     CommentComponent,
@@ -75,7 +76,8 @@ import { ContributionsComponent } from '../components/contributions/contribution
     NotificationComponent,
     MessageComponent,
     BookmarksComponent,
-    ContributionsComponent
+    ContributionsComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -90,14 +92,14 @@ import { ContributionsComponent } from '../components/contributions/contribution
     DiscoverPage,
     ProfilePage,
     EditProfilePage,
-    BookmarksPage,
+    // BookmarksPage,
     ShowCardPage,
     NewCardPage,
     MessagesPage,
     ShowMessagePage,
-    FoundedPage,
-    FollowersPage,
-    MissionPage
+    // FoundedPage,
+    // FollowersPage,
+    // MissionPage
   ],
   providers: [
     StatusBar,

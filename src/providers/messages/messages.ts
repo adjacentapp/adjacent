@@ -37,8 +37,6 @@ export class Conversation {
     this.timestamp = timestamp;
     this.messages = messages.map((msg) => new Message(msg.id, msg.user, msg.card, msg.text, msg.timestamp));
     this.unread = unread || false;
-
-    console.log(this);
   }
 }
 

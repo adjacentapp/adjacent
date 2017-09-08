@@ -4,11 +4,11 @@ import { Platform, MenuController, Nav, AlertController } from 'ionic-angular';
 import { DiscoverPage } from '../pages/discover/discover';
 import { ProfilePage } from '../pages/profile/profile';
 import { NewCardPage } from '../pages/card/new';
-import { BookmarksPage } from '../pages/bookmarks/bookmarks';
+// import { BookmarksPage } from '../pages/bookmarks/bookmarks';
 import { ShowCardPage } from '../pages/card/show';
 import { MessagesPage } from '../pages/messages/index';
-import { FoundedPage } from '../pages/founded/founded';
-import { MissionPage } from '../pages/mission/mission';
+// import { FoundedPage } from '../pages/founded/founded';
+// import { MissionPage } from '../pages/mission/mission';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -30,8 +30,8 @@ export class MyApp {
   profPage:{title: string, component: any, icon: string} = { title: 'Profile', component: ProfilePage, icon: 'md-person' };
   pages: Array<{title: string, component: any, icon: string, badge?: number}> = [
     { title: 'Pitch an Idea', component: NewCardPage, icon: 'md-create' },
-    { title: 'My Ideas', component: FoundedPage, icon: 'md-bulb' },
-    { title: "Following", component: BookmarksPage, icon: 'md-bookmark' },
+    { title: 'My Ideas', component: 'FoundedPage', icon: 'md-bulb' },
+    { title: "Following", component: 'BookmarksPage', icon: 'md-bookmark' },
     { title: "Messages", component: MessagesPage, icon: 'md-chatbubbles', badge: 0 },
   ];
   username = '';
@@ -167,7 +167,7 @@ export class MyApp {
 
   goToMission() {
     this.menu.close();
-    this.nav.push(MissionPage);
+    this.nav.push('MissionPage');
   }
 
   checkCookies() {

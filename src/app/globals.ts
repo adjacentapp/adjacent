@@ -1,7 +1,6 @@
 'use strict';
 
-let DEV = true;
-DEV = false;
+let DEV = false;
 
 let localURL = "http://localhost/~salsaia/adjacent/api/v3/";
 let remoteURL = "http://adjacent-env.btwkki4rra.us-west-2.elasticbeanstalk.com/api/v3/"

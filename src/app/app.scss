@@ -148,10 +148,10 @@ ion-avatar {
 // Industry BG's
 @mixin industry-gradient($color) {
   background: $color;
-  background: -webkit-linear-gradient(left,   $color, lighten($color, 15%));
-  background: -o-linear-gradient(     right,  $color, lighten($color, 15%));
-  background: -moz-linear-gradient(   right,  $color, lighten($color, 15%));
-  background: linear-gradient(to      right,  $color, lighten($color, 15%));
+  // background: -webkit-linear-gradient(left,   $color, lighten($color, 15%));
+  // background: -o-linear-gradient(     right,  $color, lighten($color, 15%));
+  // background: -moz-linear-gradient(   right,  $color, lighten($color, 15%));
+  // background: linear-gradient(to      right,  $color, lighten($color, 15%));
 }
 ion-avatar {
 	position: relative;
@@ -170,19 +170,26 @@ ion-avatar {
 		bottom: 0;
 	}
 }
+ion-card.card ion-card-content,
+ion-avatar {
+  .img-bg {
+    &:not(.show_img){
+      &:before {
+        opacity: 1 !important;
+      }
+    }
+  }
+}
 .img-bg {
 	background-size: cover;
 	background-color: #666;
 	&.tut {
-		// x-background-image: url('../assets/img/industries/Bulb.jpg');
-		// background-position: 50% 50%;
 		&:before {
-      background: color($colors, primary); /* For browsers that do not support gradients */
+      background: color($colors, primary);
       background: -webkit-linear-gradient(left, color($colors, primary) , color($colors, purp));
       background: -o-linear-gradient(right, color($colors, primary), color($colors, purp));
       background: -moz-linear-gradient(right, color($colors, primary), color($colors, purp));
       background: linear-gradient(to right, color($colors, primary), color($colors, purp));
-      // @include industry-gradient( color($colors, primary) );
     }
 	}
 	&.Agriculture {

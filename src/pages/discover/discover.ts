@@ -91,14 +91,19 @@ export class DiscoverPage {
 	}
 
 	doRefresh (e) {
+    this.dealing = true;
 	  this.card.getDeck(this.auth.currentUser.id, 0)
 	  	.subscribe(
 	  		items => {
 	  			this.items = items;
 	  			this.slides.slideTo(1, 400);
+          this.reachedEnd = false;
 	  		},
 	  		error => this.errorMessage = <any>error,
-	  		() => e.complete()
+	  		() => {
+          e.complete();
+          this.dealing = false;
+        }
 	  	);
 	}
 }
