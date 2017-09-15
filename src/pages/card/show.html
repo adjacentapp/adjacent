@@ -23,7 +23,7 @@ d<ion-header>
 
   <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 
-  <card *ngIf="!loading" [item]="item" [showTopComment]="false" [showDetails]="true"></card>
+  <idea-card *ngIf="!loading" [item]="item" [showTopComment]="false" [showDetails]="true"></idea-card>
   <ion-row *ngIf="!loading">
     <new-comment-component (click)="$event.stopPropagation()" [card_id]="item.id" (newComment)="wall.prependComment($event)" [founder_id]="item.founder_id" [encourage]="item.comments.length==0"></new-comment-component>
     <wall-component #wall [card_id]="item.id" [founder_id]="item.founder_id"></wall-component>

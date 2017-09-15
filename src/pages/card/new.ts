@@ -4,6 +4,7 @@ import * as globs from '../../app/globals'
 import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
 // import { FoundedPage } from '../../pages/founded/founded';
+import { ShowCardPage } from '../../pages/card/show';
 
 @Component({
   selector: 'new-card-page',
@@ -134,7 +135,9 @@ export class NewCardPage {
           });
         }
         else {            // create
-          this.navCtrl.push('FoundedPage').then(() => {
+          console.log(success);
+          this.navCtrl.push(ShowCardPage, {card_id: success.id}).then(() => {
+          // this.navCtrl.push(FoundedPage).then(() => {
             let index = this.navCtrl.getActive().index;
              if(index == 3) // through Founded
                this.navCtrl.remove(index - 2, 2);

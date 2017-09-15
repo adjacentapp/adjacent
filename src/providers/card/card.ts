@@ -101,6 +101,14 @@ export class CardProvider {
             .catch(this.handleError);
   }
 
+  share(data): Observable<any> {
+    console.log('logging share', data);
+    let url = globs.BASE_API_URL + 'post_share.php';
+    return this.http.post(url, data)
+            .map(this.extractData)
+            .catch(this.handleError);
+  }
+
   post(data): Observable<any> {
     let url = globs.BASE_API_URL + 'post_card.php';
     return this.http.post(url, data)

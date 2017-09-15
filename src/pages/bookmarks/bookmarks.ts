@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+// import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ShowCardPage } from '../card/show';
+import { Card } from '../../providers/card/card';
 import { BookmarksProvider } from '../../providers/bookmarks/bookmarks';
 import { AuthProvider } from '../../providers/auth/auth';
 
-@IonicPage()
+// @IonicPage()
 @Component({
   selector: 'page-bookmarks',
   templateUrl: 'bookmarks.html',
 })
 export class BookmarksPage {
 	loading: boolean;
-	items: any[];
+	items: Card[];
 	filters: any = [];
 	reachedEnd: boolean = false;
 

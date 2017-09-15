@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+// import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ShowCardPage } from '../card/show';
 import { NewCardPage } from '../card/new';
 import { CardProvider, Card } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
 
-@IonicPage()
+// @IonicPage()
 @Component({
   selector: 'page-founded',
   templateUrl: 'founded.html',

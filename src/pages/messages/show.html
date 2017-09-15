@@ -23,7 +23,7 @@
   <ion-toolbar>
   	<ion-buttons left>
   	</ion-buttons>
-    <ion-input [(ngModel)]="draft.text" type="text" placeholder="Type a message"></ion-input>
+    <ion-input autocorrect="on" [(ngModel)]="draft.text" type="text" placeholder="Type a message"></ion-input>
     <ion-buttons right>
     	<button ion-button round [disabled]="!draft.text.length" (click)="sendMessage($event)">Send</button>
   	</ion-buttons>

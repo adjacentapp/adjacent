@@ -7,7 +7,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import * as globs from '../../app/globals'
 
 @Component({
-  selector: 'card',
+  selector: 'idea-card',
   templateUrl: 'card.html'
 })
 export class CardComponent {
@@ -69,6 +69,14 @@ export class CardComponent {
   shareTapped(e, item){
     console.log("http://" + globs.SHARE_URL + "/?idea=" + item.id);
     e.stopPropagation();
+    let data = {
+      user_id: this.auth.currentUser.id,
+      card_id: item.id
+    };
+    this.card.share(data).subscribe(
+      success => console.log(success),
+      error => console.log(error)
+    );
     this.socialSharing.share(
       "Check out this idea I found in Adjacent -- " + item.pitch, // message
       "Shared from Adjacent",   // subject

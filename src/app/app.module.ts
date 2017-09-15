@@ -26,10 +26,10 @@ import { NewCardPage } 			from '../pages/card/new';
 import { DiscoverPage } 		from '../pages/discover/discover';
 import { ProfilePage } 			from '../pages/profile/profile';
 import { EditProfilePage } 	    from '../pages/profile/edit';
-// import { BookmarksPage } 		from '../pages/bookmarks/bookmarks';
+import { BookmarksPage } 		from '../pages/bookmarks/bookmarks';
 import { MessagesPage } 		from '../pages/messages/index';
 import { ShowMessagePage }	    from '../pages/messages/show';
-// import { FoundedPage }          from '../pages/founded/founded';
+import { FoundedPage }          from '../pages/founded/founded';
 // import { FollowersPage }        from '../pages/followers/followers';
 // import { MissionPage }         from '../pages/mission/mission';
 // import { ForgotPage } 		    from '../pages/forgot/forgot';
@@ -60,12 +60,12 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     DiscoverPage,
     ProfilePage,
     EditProfilePage,
-    // BookmarksPage,
+    BookmarksPage,
     ShowCardPage,
     NewCardPage,
     MessagesPage,
     ShowMessagePage,
-    // FoundedPage,
+    FoundedPage,
     // FollowersPage,
     // MissionPage,
     // ForgotPage,
@@ -92,12 +92,12 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     DiscoverPage,
     ProfilePage,
     EditProfilePage,
-    // BookmarksPage,
+    BookmarksPage,
     ShowCardPage,
     NewCardPage,
     MessagesPage,
     ShowMessagePage,
-    // FoundedPage,
+    FoundedPage,
     // FollowersPage,
     // MissionPage
   ],

@@ -35,7 +35,7 @@
     </ion-slide>
 
     <ion-slide *ngFor="let item of items">
-      <card (click)="showCard($event, item)" [item]="item" [showTopCommentVotes]="false"></card>
+      <idea-card (click)="showCard($event, item)" [item]="item" [showTopCommentVotes]="false"></idea-card>
     </ion-slide>
 
   </ion-slides>
