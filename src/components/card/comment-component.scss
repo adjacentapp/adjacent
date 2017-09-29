@@ -12,6 +12,7 @@ comment-component {
 
 		.item-inner {
 			overflow: visible;
+      max-width: calc(100% - 52px);
 
 			p {
 				/* autoprefixer: off */
