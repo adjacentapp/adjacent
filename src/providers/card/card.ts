@@ -43,6 +43,10 @@ export class Card {
     this.following = item.following || null;
     this.comments = item.comments;
     this.topComment = item.topComment && item.topComment.id ? new Comment(item.topComment) : null;
+    if(this.industry == 'Announcement'){
+      this.who = null;
+      this.challenge_names = [];
+    }
   }
 }
 

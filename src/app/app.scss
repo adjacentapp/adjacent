@@ -192,6 +192,11 @@ ion-avatar {
       background: linear-gradient(to right, color($colors, primary), color($colors, purp));
     }
 	}
+  &.Announcement {
+    &:before {
+      background: color($colors, primary);
+    }
+  }
 	&.Agriculture {
 		&.show_img {
       background-image: url('../assets/img/industries/Agriculture.jpg');

@@ -4,7 +4,8 @@
 
     <div class='img-bg {{item.industry ? item.industry.replace(" ","_") : ""}} {{showDetails || auth.show_all_imgs ? "show_img" : ""}}'></div>
 
-    <h1 class='title'><span>Pitch</span><i>{{item.industry}}</i></h1>
+    <h1 class='title' *ngIf="item.industry != 'Announcement'"><span>Pitch</span><i>{{item.industry}}</i></h1>
+    <h1 class='title' *ngIf="item.industry == 'Announcement'"><span>Announcement</span></h1>
 
     <ion-card>
       <ion-item>

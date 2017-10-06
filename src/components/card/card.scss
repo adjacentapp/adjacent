@@ -103,4 +103,13 @@ idea-card,
       .button { font-size: 1.2rem; }
     }
   }
+
+  .Announcement {
+    .title span {
+      border-right: none;
+    }
+    .footer {
+      visibility: hidden;
+    }
+  }
 }
