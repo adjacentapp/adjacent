@@ -17,11 +17,13 @@ export class Profile {
   skill_ids: number[];
   skill_names: string[];
   bio: string;
+  networks: any[];
 
-  constructor(user: User, skill_ids: any[], bio: string) {
+  constructor(user: User, skill_ids: any[], bio: string, networks: any[]) {
     this.user = user;
     this.bio = bio;
     this.skill_ids = skill_ids;
+    this.networks = networks;
     this.skill_names = globs.SKILLS
                         .filter(item => skill_ids.indexOf(item.id) >= 0)
                         .map(item => item.name);
@@ -40,8 +42,8 @@ export class ProfileProvider {
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
-            let user = new User(data.id, data.fir_name, data.las_name, data.email, data.photo_url);
-            return new Profile(user, data.skill_ids, data.bio);
+            let user = new User(data.id, data.fir_name, data.las_name, data.email, data.photo_url, null, data.networks);
+            return new Profile(user, data.skill_ids, data.bio, data.networks);
           })
           .catch(this.handleError);
   }
@@ -52,7 +54,7 @@ export class ProfileProvider {
             .map(this.extractData)
             .map((data) => {
               let user = this.auth.updateCurrentUser(data);
-              return new Profile(user, data.skill_ids, data.bio);
+              return new Profile(user, data.skill_ids, data.bio, data.networks);
             })
             .catch(this.handleError);
   }
@@ -80,6 +82,17 @@ export class ProfileProvider {
         });
       });
   }
+
+  // addNetwork (data): Observable<any> {
+    // let url = globs.BASE_API_URL + 'post_profile.php';
+    // return this.http.post(url, data)
+    //         .map(this.extractData)
+    //         .map((data) => {
+    //           let user = this.auth.updateCurrentUser(data);
+    //           return new Profile(user, data.skill_ids, data.bio, data.networks);
+    //         })
+    //         .catch(this.handleError);
+  // }
 
   private extractData(res: Response) {
     let body = res.json();

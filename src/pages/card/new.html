@@ -95,7 +95,7 @@
             </ion-item>
             <ion-item id="challenge_select">
               <ion-label stacked>I need advice in</ion-label>
-              <ion-select name="challenge_ids" [(ngModel)]="item.challenge_ids" multiple="true" placeholder="Select areas of expertise" (ngModelChange)="updateNamesByIds()">
+              <ion-select name="challenge_ids" [(ngModel)]="item.challenge_ids" multiple="true" placeholder="Select areas of expertise" (ngModelChange)="updateChallengeNamesByIds()">
                 <ion-option *ngFor="let challenge of challenges" value="{{challenge.id}}">{{challenge.name}}</ion-option>
               </ion-select>
             </ion-item>
@@ -104,6 +104,12 @@
               <ion-textarea autocorrect="on" class="long" name="challenge_details" [(ngModel)]="item.challenge_details" type="text"
                 placeholder="Additional details about the difficulty or uncertainy you're facing." (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">
               </ion-textarea>
+            </ion-item>
+            <ion-item id="network_select">
+              <ion-label stacked>Networks</ion-label>
+              <ion-select name="network_ids" [(ngModel)]="item.network_ids" multiple="false" placeholder="Select networks to share with" (ngModelChange)="updateNetworkNamesByIds()">
+                <ion-option *ngFor="let network of networks" value="{{network.id}}">{{network.name}}</ion-option>
+              </ion-select>
             </ion-item>
           </div>
           <div class="row button-row" justify-content-between [ngClass]="keyboard_visible && is_android ? 'keyboard_visible':''">

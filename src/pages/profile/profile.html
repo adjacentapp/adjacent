@@ -35,7 +35,7 @@
       </p>
     </div>
 
-    <!-- <h5>Member of: {{networkCount}} Network{{networkCount === 1 ? '' : 's'}}</h5> -->
+    <!-- <h5 *ngIf='profile.networks.length'>Member of: {{profile.networks.length}} Network{{profile.networks.length === 1 ? '' : 's'}}</h5> -->
 
     <!-- <bookmarks [user_id]=(profile.user.id)></bookmarks> -->
     <contributions [user_id]=(profile.user.id) [myself]="myself"></contributions>

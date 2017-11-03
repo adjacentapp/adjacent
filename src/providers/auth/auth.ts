@@ -15,8 +15,9 @@ export class User {
   email: string;
   photo_url: string;
   token?: string;
+  networks?: any;
  
-  constructor(id: number, fir_name: string, las_name: string, email: string, photo_url: string, token?: string) {
+  constructor(id: number, fir_name: string, las_name: string, email: string, photo_url: string, token?: string, networks?: any) {
   	this.id = id || null;
     this.fir_name = !fir_name || fir_name == 'null' || fir_name == 'NULL' ? 'Entrepreneur' : fir_name;
     this.las_name = !las_name || las_name == 'null' || las_name == 'NULL' ? '' : las_name;
@@ -30,6 +31,10 @@ export class User {
       localStorage.las_name = this.las_name;
       localStorage.email = this.email;
       localStorage.photo_url = this.photo_url;
+    }
+    this.networks = networks || [];
+    if(this.networks.length){
+      globs.setNetworks(this.networks);
     }
   }
 }
@@ -55,7 +60,7 @@ export class AuthProvider {
   }
 
   loginFromLocalStorage(){
-    this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url,  localStorage.token);
+    this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token);
     this.valid = true;
   }
 
@@ -65,7 +70,8 @@ export class AuthProvider {
             .map(this.extractData)
             .map((data) => {
               if(data.valid){
-                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token);
+                console.log(data);
+                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, data.networks);
                 this.valid = true;
                 this.badge.set(data.badge_count);
                 this.registerPushToken();
@@ -88,7 +94,7 @@ export class AuthProvider {
             .map(this.extractData)
             .map((data) => {
               if(data.valid){
-                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token);
+                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, data.networks);
                 this.valid = true;
                 this.badge.set(data.badge_count);                
                 this.registerPushToken();

@@ -23,8 +23,8 @@ export class NewCardPage {
 
   public industries = globs.INDUSTRIES;
   public challenges = globs.SKILLS;
-  // private stages = globs.STAGES;
-  // private networks = globs.NETWORKS;
+  // public stages = globs.STAGES;
+  public networks = globs.NETWORKS;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private viewCtrl: ViewController, private toast: ToastController, private platform: Platform) {
     this.deleteCallback = this.navParams.get('deleteCallback');
@@ -38,7 +38,8 @@ export class NewCardPage {
       challenge_names: [],
       challenge_details: '',
     	// stage: 0,
-      // networks: 0,
+      network_ids: [],
+      network_names: [],
       founder_id: this.auth.currentUser.id,
     };
 
@@ -58,12 +59,29 @@ export class NewCardPage {
      }, 100);
   }
 
-  public updateNamesByIds(){
+  public updateChallengeNamesByIds(){
     this.item.challenge_names = globs.SKILLS
               .filter(item => this.item.challenge_ids.indexOf(item.id) >= 0)
               .map(item => item.name);
       console.log(this.item.challenge_names);
   }
+
+  public updateNetworkNamesByIds(){
+    this.item.network_names = globs.NETWORKS
+              .filter(item => this.item.network_ids.indexOf(item.id) >= 0)
+              .map(item => item.name);
+      console.log(this.item.network_names);
+  }
+
+  // public updateNamesByIds(name_array, id_array, global_array){
+  //   let new_name_array = global_array
+  //             .filter(item => id_array.indexOf(item.id) >= 0)
+  //             .map(item => item.name);
+  // //   name_array.forEach(item => item);
+  //       for(var i=0; i<name_array.length; i++)
+  //         name_array[i] = new_name_array[i];
+  //   console.log(this.item.challenge_names);
+  // }
 
   ionViewDidLoad() {
     this.viewCtrl.showBackButton(false);
