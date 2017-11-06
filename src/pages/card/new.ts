@@ -38,7 +38,7 @@ export class NewCardPage {
       challenge_names: [],
       challenge_details: '',
     	// stage: 0,
-      network_ids: [],
+      network_ids: [0],
       network_names: [],
       founder_id: this.auth.currentUser.id,
     };

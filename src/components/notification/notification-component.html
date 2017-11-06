@@ -1,7 +1,8 @@
-<ion-item text-wrap [ngClass]="item.unread ? 'unread' : ''">
+<ion-item text-wrap [ngClass]="{'unread': item.unread, 'founder': founder}">
   
   <ion-avatar *ngIf="item.user" item-left (click)="userTapped($event, item.user.id)">
-    <div *ngIf="item.user.photo_url" [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
+    <div *ngIf="item.user.photo_url && !founder" [ngStyle]="{'background-image': 'url(' + item.user.photo_url + ')'}"></div>
+    <ion-icon *ngIf="founder" name="md-bulb" color="primary"></ion-icon>
   </ion-avatar>
   
   <ion-avatar *ngIf="!item.user" item-left class="card">

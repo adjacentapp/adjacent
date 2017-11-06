@@ -105,7 +105,7 @@
                 placeholder="Additional details about the difficulty or uncertainy you're facing." (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">
               </ion-textarea>
             </ion-item>
-            <ion-item id="network_select">
+            <ion-item id="network_select" *ngIf="networks.length > 1">
               <ion-label stacked>Networks</ion-label>
               <ion-select name="network_ids" [(ngModel)]="item.network_ids" multiple="false" placeholder="Select networks to share with" (ngModelChange)="updateNetworkNamesByIds()">
                 <ion-option *ngFor="let network of networks" value="{{network.id}}">{{network.name}}</ion-option>
