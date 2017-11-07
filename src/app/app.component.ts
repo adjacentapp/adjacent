@@ -151,9 +151,22 @@ export class MyApp {
 
   jumpToCard(item){
     this.menu.close();
+    let handleDelete = (_params) => {
+      return new Promise((resolve, reject) => {
+        resolve();
+      });
+    }
+    let handleUpdate = (updated) => {
+      return new Promise((resolve, reject) => {
+        resolve();
+      });
+    }
     this.nav.push(
-      ShowCardPage,
-      { item: item },
+      ShowCardPage, {
+        item: item,
+        deleteCallback: handleDelete,
+        updateCallback: handleUpdate
+      },
       { animate: false }
     );
   }
