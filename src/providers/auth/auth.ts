@@ -264,7 +264,7 @@ export class AuthProvider {
           this.dismissCheckDN.next('nc');
         else if(object == 'message')
           this.dismissCheckDN.next('message');
-        else if(object == 'follower')
+        else
           this.dismissCheckDN.next(id);
       }
     });
