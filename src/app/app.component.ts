@@ -32,7 +32,7 @@ export class MyApp {
     { title: 'Pitch an Idea', component: NewCardPage, icon: 'md-create' },
     { title: 'My Ideas', component: FoundedPage, icon: 'md-bulb' },
     { title: "Following", component: BookmarksPage, icon: 'md-bookmark' },
-    { title: "Messages", component: MessagesPage, icon: 'md-chatbubbles', badge: 0 },
+    { title: "Messages", component: MessagesPage, icon: 'md-paper-plane', badge: 0 },
   ];
   username = '';
   email = '';

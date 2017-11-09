@@ -3,8 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
 import { NewCardPage } from '../../pages/card/new';
-import { ShowMessagePage } from '../../pages/messages/show';
-import { Conversation } from '../../providers/messages/messages';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import * as globs from '../../app/globals'
 
 @Component({
   selector: 'show-card-page',
@@ -18,7 +18,13 @@ export class ShowCardPage {
   loading: boolean = false;
   noEdit: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private card: CardProvider, 
+    private auth: AuthProvider, 
+    private socialSharing: SocialSharing
+  ){
     this.deleteCallback = this.navParams.get('deleteCallback');
     this.updateCallback = this.navParams.get('updateCallback');
     if(navParams.get('item')){
@@ -68,17 +74,24 @@ export class ShowCardPage {
     });
   }
 
-  goToMessage(){
-    this.navCtrl.push(ShowMessagePage, {
-      item: new Conversation(
-        null, // id
-        {id: this.item.founder_id}, // other
-        {...this.item}, // card
-        [], // messages
-        null, // timstamp
-        null // unread
-      )
-    });
+  shareTapped(e, item){
+    console.log("http://" + globs.SHARE_URL + "/?idea=" + item.id);
+    e.stopPropagation();
+    let data = {
+      user_id: this.auth.currentUser.id,
+      card_id: item.id
+    };
+    this.card.share(data).subscribe(
+      success => console.log(success),
+      error => console.log(error)
+    );
+    this.socialSharing.share(
+      "Check out this idea I found in Adjacent -- " + item.pitch, // message
+      "Shared from Adjacent",   // subject
+      "www/assets/img/industries/" + item.industry.replace(" ","_") + ".jpg", // file
+      // "adjacentapp://app/idea/" + item.id  //url
+      "http://" + globs.SHARE_URL + "/?idea=" + item.id  //url
+     ); 
   }
 
 }

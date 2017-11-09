@@ -59,8 +59,13 @@ export class CardProvider {
 
   constructor (private http: Http) {}
 
-  getDeck(user_id, offset): Observable<any[]> {
+  getDeck(user_id, offset, filters): Observable<any[]> {
     let query = '?user_id=' + user_id + '&offset=' + offset;
+    if(filters){
+      query += filters.industry ? '&industry=' + filters.industry.replace(' ','_') : '';
+      query += filters.network_ids ? '&network_ids=' + filters.network_ids.join(',') : '';
+    }
+    console.log(query);
     let url = this.base_url + 'get_cards.php' + query;
     return this.http.get(url)
           .map(this.extractData)

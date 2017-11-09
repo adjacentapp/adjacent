@@ -5,6 +5,8 @@ import { CardProvider, Card } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
 import { MessagesProvider } from '../../providers/messages/messages';
 import { NotificationProvider } from '../../providers/notification/notification';
+import { PopoverController } from 'ionic-angular';
+import { FilterPage } from '../../pages/filter/filter';
 
 @Component({
 	selector: 'discover-page',
@@ -16,19 +18,20 @@ export class DiscoverPage {
 	loading: boolean;
 	reachedEnd: boolean = false;
 	dealing: boolean = false;
+  filters: any = {};
 
 	errorMessage: string;
 
 	username = '';
     email = '';
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider, private msg: MessagesProvider, private notif: NotificationProvider) {
-		this.loading = true;
+	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider, private msg: MessagesProvider, private notif: NotificationProvider, public popoverCtrl: PopoverController) {
 		this.getDeck();
 	}
 
 	getDeck() {
-		this.card.getDeck(this.auth.currentUser.id, 0)
+    this.loading = true;
+		this.card.getDeck(this.auth.currentUser.id, 0, this.filters)
 			.subscribe(
 				items => this.items = items,
 				error => {
@@ -75,7 +78,7 @@ export class DiscoverPage {
 	dealCards() {
 		this.dealing = true;
 		let offset = this.items.length;
-		this.card.getDeck(this.auth.currentUser.id, offset)
+		this.card.getDeck(this.auth.currentUser.id, offset, this.filters)
 			.subscribe(
 				items => {
 					this.items = this.items.concat(items)
@@ -92,7 +95,7 @@ export class DiscoverPage {
 
 	doRefresh (e) {
     this.dealing = true;
-	  this.card.getDeck(this.auth.currentUser.id, 0)
+	  this.card.getDeck(this.auth.currentUser.id, 0, this.filters)
 	  	.subscribe(
 	  		items => {
 	  			this.items = items;
@@ -106,4 +109,18 @@ export class DiscoverPage {
         }
 	  	);
 	}
+
+  showFilter(e) {
+    let popover = this.popoverCtrl.create(FilterPage, this.filters);
+    popover.present({
+      ev: e
+    });
+    popover.onDidDismiss(data => {
+      if(data && data.changed){
+        this.filters = data;
+        this.getDeck();
+      }
+    });
+  }
+
 }

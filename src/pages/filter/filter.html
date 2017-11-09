@@ -1,0 +1,25 @@
+<div align-items-start>
+  <ion-item>
+    <ion-title>Filter</ion-title>
+  </ion-item>
+  <ion-item>
+    <ion-label>Industry</ion-label>
+    <ion-select name="industry" [(ngModel)]="selected_industry" multiple="false" (ionChange)="onChange($event)">
+      <ion-option *ngFor="let i of industries" value="{{i}}">{{i}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Networks</ion-label>
+    <ion-select name="networks" [(ngModel)]="selected_network_ids" multiple="true" (ionChange)="onChange($event)">
+      <ion-option *ngFor="let n of networks" value="{{n.id}}">{{n.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <div class="row button-row" justify-content-between>
+    <!-- <div class="col">
+      <button ion-button block round (click)="cancel($event)" outline>Cancel</button>
+    </div> -->
+    <div class="col">
+      <button ion-button block round (click)="apply($event)">Apply</button>
+    </div>
+  </div>
+</div>

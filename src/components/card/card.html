@@ -21,7 +21,7 @@
 
     <ion-card class="footer" *ngIf="!showDetails">
       <ion-item>
-        <h2><ion-icon name="warning"></ion-icon> Looking For</h2>
+        <h2><ion-icon name="search"></ion-icon> Looking For</h2>
         <p *ngIf="item.challenge_names.length">{{item.challenge_names.join(", ")}}</p>
         <!-- <p *ngIf="!item.challenge_names.length">General Advice</p> -->
       </ion-item>
@@ -55,9 +55,14 @@
       </button>
     </ion-col>
     <ion-col col-4>
-      <button ion-button icon-left clear small color='secondary' (click)="shareTapped($event, item)">
+      <!-- <button ion-button icon-left clear small color='secondary' (click)="shareTapped($event, item)">
         <ion-icon name="md-share-alt"></ion-icon>
         <div>Share</div>
+      </button> -->
+      <button ion-button icon-left clear small color='secondary' (click)="goToMessage($event)">
+        <!-- <ion-icon name="md-chatbubbles"></ion-icon> -->
+        <ion-icon name="md-paper-plane"></ion-icon>
+        <div>Message</div>
       </button>
     </ion-col>
     <ion-col col-4>

@@ -6,6 +6,12 @@
     </button>
     <ion-title *ngIf="auth.show_title"><img id='title-img' src="./assets/img/title.svg"/></ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="showFilter($event)">
+        <ion-badge *ngIf="notif.unreadCount" color="danger">{{notif.unreadCount}}</ion-badge>
+        <ion-icon name="search-outline" color="{{notif.unreadCount && false ? 'danger' : 'primary'}}"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
       <button ion-button icon-only (click)="openRightMenu()">
         <ion-badge *ngIf="notif.unreadCount" color="danger">{{notif.unreadCount}}</ion-badge>
         <ion-icon name="notifications-outline" color="{{notif.unreadCount && false ? 'danger' : 'primary'}}"></ion-icon>
