@@ -8,13 +8,11 @@
     <ion-buttons end>
       <button ion-button icon-only (click)="showFilter($event)">
         <ion-badge *ngIf="notif.unreadCount" color="danger">{{notif.unreadCount}}</ion-badge>
-        <ion-icon name="search-outline" color="{{notif.unreadCount && false ? 'danger' : 'primary'}}"></ion-icon>
+        <ion-icon name="ios-search-outline" color="{{notif.unreadCount && false ? 'danger' : 'primary'}}"></ion-icon>
       </button>
-    </ion-buttons>
-    <ion-buttons end>
       <button ion-button icon-only (click)="openRightMenu()">
         <ion-badge *ngIf="notif.unreadCount" color="danger">{{notif.unreadCount}}</ion-badge>
-        <ion-icon name="notifications-outline" color="{{notif.unreadCount && false ? 'danger' : 'primary'}}"></ion-icon>
+        <ion-icon name="ios-notifications-outline" color="{{notif.unreadCount && false ? 'danger' : 'primary'}}"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -30,7 +28,7 @@
 
   <ion-slides *ngIf="!loading" (ionSlideDidChange)="slideChanged()">
 
-    <ion-slide id="tut-card">
+    <ion-slide id="tut-card" *ngIf="items.length">
       <ion-card>
         <ion-card-content>
           <div class='img-bg tut'></div>
@@ -42,6 +40,16 @@
 
     <ion-slide *ngFor="let item of items">
       <idea-card (click)="showCard($event, item)" [item]="item" [showTopCommentVotes]="false"></idea-card>
+    </ion-slide>
+
+    <ion-slide id="end-card" *ngIf="!items.length">
+      <ion-card>
+        <ion-card-content>
+          <div class='img-bg end'></div>
+          <h1>There's nothing here!</h1>
+          <h1>Try broadening your Filter parameters.</h1>
+        </ion-card-content>
+      </ion-card>
     </ion-slide>
 
   </ion-slides>

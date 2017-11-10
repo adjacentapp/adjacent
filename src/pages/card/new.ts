@@ -38,7 +38,7 @@ export class NewCardPage {
       challenge_names: [],
       challenge_details: '',
     	// stage: 0,
-      network_ids: [0],
+      network_id: 0,
       network_names: [],
       founder_id: this.auth.currentUser.id,
     };
@@ -67,10 +67,10 @@ export class NewCardPage {
   }
 
   public updateNetworkNamesByIds(){
-    this.item.network_names = globs.NETWORKS
-              .filter(item => this.item.network_ids.indexOf(item.id) >= 0)
-              .map(item => item.name);
-      console.log(this.item.network_names);
+    // this.item.network_names = globs.NETWORKS
+    //           .filter(item => this.item.network_ids.indexOf(item.id) >= 0)
+    //           .map(item => item.name);
+    //   console.log(this.item.network_names);
   }
 
   // public updateNamesByIds(name_array, id_array, global_array){
@@ -95,12 +95,12 @@ export class NewCardPage {
     this.slides.slideNext(400);
     this.slides.lockSwipes(true);
     
-    console.log(this.slides.getActiveIndex());
+    // console.log(this.slides.getActiveIndex());
     if(this.slides.getActiveIndex() === 2)
       if(this.item.id){
         let toast = this.toast.create({
           message: "Followers of this idea will be notified whenever you update, up to once every 24 hours.",
-          // duration: 6000,
+          duration: 7000,
           position: 'bottom',
           showCloseButton: true,
           closeButtonText: "OK"

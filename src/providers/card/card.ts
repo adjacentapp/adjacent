@@ -24,7 +24,7 @@ export class Card {
   following: boolean;
   comments: any[];
   topComment?: Comment;
-  network: any;
+  network_id: any;
 
   constructor (item) {
     this.id = item.id;
@@ -48,7 +48,7 @@ export class Card {
       this.who = null;
       this.challenge_names = [];
     }
-    this.network = item.network || null;
+    this.network_id = item.network_id || 0;
   }
 }
 

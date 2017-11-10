@@ -192,6 +192,11 @@ ion-avatar {
       background: linear-gradient(to right, color($colors, primary), color($colors, purp));
     }
 	}
+  &.end {
+    &:before {
+      background: #ddd;
+    }
+  }
   &.Announcement {
     &:before {
       background: color($colors, primary);

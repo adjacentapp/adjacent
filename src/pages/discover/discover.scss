@@ -1,14 +1,16 @@
 discover-page {
 
   idea-card > ion-card.card,
-  #tut-card ion-card.card, {
+  #tut-card ion-card.card,
+  #end-card ion-card.card {
     box-shadow: none;
     border: solid 1px #bbb;
     border-bottom-width: 3px;
   }
 
 	idea-card ion-card.card,
-	#tut-card ion-card.card, {
+	#tut-card ion-card.card,
+  #end-card ion-card.card {
 
     // box-shadow: 0px 4px 12px #999;
 
@@ -69,6 +71,27 @@ discover-page {
 			17% {-webkit-transform: translateX(10px);}
 		}
 	}
+
+  #end-card {
+    ion-card.card {
+      .img-bg {
+        bottom: 0;
+      }
+      .card-content {
+        height: 82vh;
+        height: calc(60vh + 145px);
+        text-align: center;
+      }
+    }
+
+    h1 {
+      color: color($colors, secondary);
+      position: relative;
+      font-size: 1.5em;
+      line-height: 1.2em;
+      margin-top: 2em;
+    }
+  }
 
   new-comment-component {
     margin-top: -10px;

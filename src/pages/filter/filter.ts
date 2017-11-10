@@ -9,9 +9,9 @@ import * as globs from '../../app/globals'
 export class FilterPage {
   public changed = false;
   public networks = globs.NETWORKS;
-  public industries = globs.INDUSTRIES;
-  public selected_industry;
-  public selected_network_ids = [0];
+  public industries = ['Any', ...globs.INDUSTRIES];
+  public selected_industry = "Any";
+  public selected_network_ids = this.networks.map(item => item.id);
 
   constructor(public viewController: ViewController, public navParams: NavParams) {
    console.log(this.navParams.data);
