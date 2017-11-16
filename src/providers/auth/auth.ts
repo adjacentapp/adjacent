@@ -31,6 +31,7 @@ export class User {
       localStorage.las_name = this.las_name;
       localStorage.email = this.email;
       localStorage.photo_url = this.photo_url;
+      localStorage.network_ids = networks && networks.length ? networks.map(item => item.id.toString()).join(',') : '';
     }
     this.networks = networks || [];
     if(this.networks.length){
@@ -60,12 +61,12 @@ export class AuthProvider {
   }
 
   loginFromLocalStorage(){
-    this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token);
+    this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token, localStorage.network_ids.split(',').map(function(item){ return {id: item}}) );
     this.valid = true;
   }
 
-  checkToken(token): Observable<any> {
-    let url = globs.BASE_API_URL + 'get_session.php?token=' + token;
+  checkToken(token, user_id): Observable<any> {
+    let url = globs.BASE_API_URL + 'get_session.php?token=' + token + '&user_id=' + user_id;
     return this.http.get(url)
             .map(this.extractData)
             .map((data) => {
@@ -173,6 +174,17 @@ export class AuthProvider {
           .catch(this.handleError);
   }
 
+  public requestNetwork(email, code): Observable<any[]> {
+    let url = globs.BASE_API_URL + 'request_network.php';
+    return this.http.post(url, {user_id: this.currentUser.id, email: email, code: code})
+          .map(this.extractData)
+          .map((data) => {
+            console.log(data);
+            return data;
+          })
+          .catch(this.handleError);
+  }
+
   public logout(): Observable<any[]> {
     let data = {
       user_id: this.currentUser.id,
@@ -190,6 +202,7 @@ export class AuthProvider {
               this.currentUser = null;
               this.pushToken = null;
               console.log(data);
+              return data;
             })
             .catch(this.handleError);
   }

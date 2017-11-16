@@ -7,6 +7,7 @@ import { MessagesProvider } from '../../providers/messages/messages';
 import { NotificationProvider } from '../../providers/notification/notification';
 import { PopoverController } from 'ionic-angular';
 import { FilterPage } from '../../pages/filter/filter';
+import * as globs from '../../app/globals'
 
 @Component({
 	selector: 'discover-page',
@@ -18,7 +19,10 @@ export class DiscoverPage {
 	loading: boolean;
 	reachedEnd: boolean = false;
 	dealing: boolean = false;
-  filters: any = {};
+  filters: any = {
+    industry: "Any",
+    network_ids: localStorage.network_ids ? localStorage.network_ids.split(',') : [0]
+  };
 
 	errorMessage: string;
 

@@ -189,7 +189,7 @@ export class MyApp {
       this.auth.loginFromLocalStorage();
       this.nav.setRoot(DiscoverPage);
       // if token authentication issue, redirect back to login
-      this.auth.checkToken(localStorage.token).subscribe(
+      this.auth.checkToken(localStorage.token, localStorage.user_id).subscribe(
         user => {
           if(!this.auth.valid) {
             localStorage.clear();

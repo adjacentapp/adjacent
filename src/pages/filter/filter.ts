@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ViewController, NavParams } from 'ionic-angular';
+import { NavController, ViewController, NavParams } from 'ionic-angular';
+import { JoinNetworkPage } from '../network/join';
 import * as globs from '../../app/globals'
 
 @Component({
@@ -13,7 +14,7 @@ export class FilterPage {
   public selected_industry = "Any";
   public selected_network_ids = this.networks.map(item => item.id);
 
-  constructor(public viewController: ViewController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public viewController: ViewController, public navParams: NavParams) {
    console.log(this.navParams.data);
    this.selected_industry = this.navParams.data.industry || this.selected_industry;
    this.selected_network_ids = this.navParams.data.network_ids || this.selected_network_ids
@@ -29,6 +30,10 @@ export class FilterPage {
       industry: this.selected_industry,
       network_ids: this.selected_network_ids
     });
+  }
+
+  joinNetwork(e){
+    this.navCtrl.push(JoinNetworkPage);
   }
 
 }

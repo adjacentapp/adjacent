@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Join Community</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-content no-bounce>
+
+    <form (ngSubmit)="sendEmail()" #joinForm="ngForm">
+      <ion-item>
+        <ion-title>By Email</ion-title>
+      </ion-item>
+      <ion-item>
+        <ion-label>Email</ion-label>
+        <ion-input type="email" placeholder="Email" name="email" pattern=".{4,}" [(ngModel)]="email" email required></ion-input>
+      </ion-item>
+      <ion-item>
+        <p>Join a private community for your university or corporate network by verifying your associated email address.</p>
+      </ion-item>
+      <div class="row button-row" justify-content-between>
+        <div class="col">
+          <button ion-button block round type="submit" [disabled]="!joinForm.form.valid">Send</button>
+        </div>
+      </div>
+    </form>
+
+  </ion-card-content>
+</ion-content>

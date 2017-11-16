@@ -34,6 +34,7 @@ import { FoundedPage }          from '../pages/founded/founded';
 // import { MissionPage }         from '../pages/mission/mission';
 // import { ForgotPage } 		    from '../pages/forgot/forgot';
 import { FilterPage }          from '../pages/filter/filter';
+import { JoinNetworkPage }          from '../pages/network/join';
 
 import { CardComponent } 				from '../components/card/card';
 import { CommentComponent } 			from '../components/card/comment.component';
@@ -68,6 +69,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     ShowMessagePage,
     FoundedPage,
     FilterPage,
+    JoinNetworkPage,
     // FollowersPage,
     // MissionPage,
     // ForgotPage,
@@ -103,6 +105,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     // FollowersPage,
     // MissionPage,
     FilterPage,
+    JoinNetworkPage,
   ],
   providers: [
     StatusBar,
