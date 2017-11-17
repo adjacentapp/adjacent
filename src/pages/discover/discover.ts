@@ -7,7 +7,6 @@ import { MessagesProvider } from '../../providers/messages/messages';
 import { NotificationProvider } from '../../providers/notification/notification';
 import { PopoverController } from 'ionic-angular';
 import { FilterPage } from '../../pages/filter/filter';
-import * as globs from '../../app/globals'
 
 @Component({
 	selector: 'discover-page',
