@@ -32,6 +32,7 @@ export class Conversation {
   
   constructor (id: number, other: any, card: any, messages: any[], timestamp: any, unread: any) {
     this.id = id;
+    console.log(other);
     if (other) this.other = new User(other.id, other.fir_name, other.las_name, other.email, other.photo_url);
     if (card) this.card = new Card(card);
     this.timestamp = timestamp;
