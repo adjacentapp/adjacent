@@ -61,7 +61,10 @@ export class AuthProvider {
   }
 
   loginFromLocalStorage(){
-    this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token, localStorage.network_ids.split(',').map(function(item){ return {id: item}}) );
+    if(localStorage.network_ids)
+      this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token, localStorage.network_ids.split(',').map(function(item){ return {id: item}}) );
+    else
+      this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token );
     this.valid = true;
   }
 
