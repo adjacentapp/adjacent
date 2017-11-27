@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, MenuController, Slides } from 'ionic-angular';
 import { ShowCardPage } from '../../pages/card/show';
+import { JoinNetworkPage } from '../../pages/network/join';
 import { CardProvider, Card } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
 import { MessagesProvider } from '../../providers/messages/messages';
@@ -113,6 +114,10 @@ export class DiscoverPage {
 	  	);
 	}
 
+  joinNetwork(){
+    this.navCtrl.push(JoinNetworkPage);
+  }
+
   showFilter(e) {
     let popover = this.popoverCtrl.create(FilterPage, this.filters);
     popover.present({
@@ -122,6 +127,9 @@ export class DiscoverPage {
       if(data && data.changed){
         this.filters = data;
         this.getDeck();
+      }
+      else if(data && data.go_to_join){
+        this.navCtrl.push(JoinNetworkPage);
       }
     });
   }

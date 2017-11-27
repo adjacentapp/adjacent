@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ViewController, NavParams } from 'ionic-angular';
-import { JoinNetworkPage } from '../network/join';
+// import { JoinNetworkPage } from '../network/join';
 import * as globs from '../../app/globals'
 
 @Component({
@@ -33,7 +33,11 @@ export class FilterPage {
   }
 
   joinNetwork(e){
-    this.navCtrl.push(JoinNetworkPage);
+  //   this.navCtrl.push(JoinNetworkPage);
+    this.viewController.dismiss({
+      changed: false,
+      go_to_join: true
+    }); 
   }
 
 }
