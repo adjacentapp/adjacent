@@ -9,6 +9,11 @@ export const ENCRYPTION_KEY = "aether12292015";
 
 export const BASE_API_URL = DEV ? localURL : remoteURL;
 
+export let firstSignIn = false;
+export let setFirstSignInTrue = () => {
+  firstSignIn = true;
+};
+
 export const INDUSTRIES: string[] = [
 	'Agriculture',
 	'Art',
@@ -91,4 +96,9 @@ export let setNetworks = (networks) => {
 export let firstFollow = true;
 export let setFirstFollowFalse = () => {
 	firstFollow = false;
+};
+
+export let introQuote = null;
+export let setIntroQuote = (quote) => {
+  introQuote = quote;
 };

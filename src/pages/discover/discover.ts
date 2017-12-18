@@ -8,6 +8,7 @@ import { MessagesProvider } from '../../providers/messages/messages';
 import { NotificationProvider } from '../../providers/notification/notification';
 import { PopoverController } from 'ionic-angular';
 import { FilterPage } from '../../pages/filter/filter';
+import * as globs from '../../app/globals'
 
 @Component({
 	selector: 'discover-page',
@@ -23,6 +24,7 @@ export class DiscoverPage {
     industry: "Any",
     network_ids: localStorage.network_ids ? localStorage.network_ids.split(',') : [0]
   };
+  introQuote = null;
 
 	errorMessage: string;
 
@@ -37,7 +39,10 @@ export class DiscoverPage {
     this.loading = true;
 		this.card.getDeck(this.auth.currentUser.id, 0, this.filters)
 			.subscribe(
-				items => this.items = items,
+				success => {
+          this.items = success;
+          this.introQuote = globs.introQuote;
+        },
 				error => {
 					console.log('trying to get_cards again');
 					this.getDeck();

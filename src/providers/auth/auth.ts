@@ -144,7 +144,8 @@ export class AuthProvider {
                 if(data.valid){
                   this.currentUser = new User(data.user_id, '', '', data.email, '', data.token);
                   this.valid = true;
-                  this.registerPushToken();                  
+                  this.registerPushToken();
+                  globs.setFirstSignInTrue();                
                   return this.currentUser;
                  }
                  else{

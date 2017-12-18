@@ -197,7 +197,10 @@ ion-avatar {
       background: #ddd;
     }
   }
-  &.Announcement {
+  &.Announcement,
+  &.Article,
+  &.Tip,
+  &.Discussion {
     &:before {
       background: color($colors, primary);
     }

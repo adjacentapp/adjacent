@@ -32,8 +32,9 @@
       <ion-card>
         <ion-card-content>
           <div class='img-bg tut'></div>
-          <h1>Swipe to<br/>explore the<br/>opportunity<br/>around<br/>you.</h1>
-          <h1><ion-icon name="arrow-round-back"></ion-icon></h1>
+          <h1 *ngIf="!introQuote">Swipe to<br/>explore the<br/>opportunity<br/>around<br/>you.</h1>
+          <h1 class='quote' *ngIf="introQuote"><i>"{{introQuote.quote}}"</i><p>-{{introQuote.source}}</p></h1>
+          <h1 class='arrow'><ion-icon name="arrow-round-back"></ion-icon></h1>
         </ion-card-content>
       </ion-card>
     </ion-slide>

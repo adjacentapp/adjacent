@@ -31,7 +31,7 @@
             <ion-item>
               <ion-title>The Vision</ion-title>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="!item.is_announcement">
               <ion-label stacked>Industry</ion-label>
               <ion-select name="industry" [(ngModel)]="item.industry" multiple="false" required>
                 <ion-option *ngFor="let industry of industries" value="{{industry}}">{{industry}}</ion-option>
@@ -66,11 +66,14 @@
             <ion-item>
               <ion-title>The Founder</ion-title>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="!item.is_announcement">
               <ion-label stacked>My Background</ion-label>
               <ion-textarea autocorrect="on" class="long" name="who" [(ngModel)]="item.who" type="text" required 
                 placeholder="Why are you the right person for this idea?" (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">
               </ion-textarea>
+            </ion-item>
+            <ion-item *ngIf="item.is_announcement">
+              <ion-label>NA for Announcement Cards</ion-label>
             </ion-item>
           </div>
           <div class="row button-row" justify-content-between [ngClass]="keyboard_visible && is_android ? 'keyboard_visible':''">
@@ -87,19 +90,19 @@
       <ion-slide>
         <!-- <div class="grid" (click)="doNothing($event)"> -->
           <div class="roww">
-            <ion-item>
+            <ion-item *ngIf="!item.is_announcement">
               <ion-title>The Ask</ion-title>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="!item.is_announcement">
               <p>Everyone needs help on their entrepreneurial journey. Don't be shy to ask about what you don't yet know.</p>
             </ion-item>
-            <ion-item id="challenge_select">
+            <ion-item id="challenge_select" *ngIf="!item.is_announcement">
               <ion-label stacked>I need advice in</ion-label>
               <ion-select name="challenge_ids" [(ngModel)]="item.challenge_ids" multiple="true" placeholder="Select areas of expertise" (ngModelChange)="updateChallengeNamesByIds()">
                 <ion-option *ngFor="let challenge of challenges" value="{{challenge.id}}">{{challenge.name}}</ion-option>
               </ion-select>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="!item.is_announcement">
               <ion-label stacked>Challenge Details</ion-label>
               <ion-textarea autocorrect="on" class="long" name="challenge_details" [(ngModel)]="item.challenge_details" type="text"
                 placeholder="Additional details about the difficulty or uncertainy you're facing." (click)="handleKeyboardOpen()" (blur)="handleKeyboardClose()">

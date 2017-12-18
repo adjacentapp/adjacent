@@ -26,6 +26,7 @@ export class Card {
   topComment?: Comment;
   network_id: any;
   network_name: string;
+  is_announcement: boolean;
 
   constructor (item) {
     this.id = item.id;
@@ -51,6 +52,7 @@ export class Card {
     }
     this.network_id = item.network_id || "0";
     this.network_name = item.network_name || null;
+    this.is_announcement = item.active == "2";
   }
 }
 
@@ -62,7 +64,7 @@ export class CardProvider {
   constructor (private http: Http) {}
 
   getDeck(user_id, offset, filters): Observable<any[]> {
-    let query = '?user_id=' + user_id + '&offset=' + offset;
+    let query = '?user_id=' + user_id + '&offset=' + offset + '&get_quote=true';
     if(filters){
       query += filters.industry ? '&industry=' + filters.industry.replace(' ','_') : '';
       query += filters.network_ids ? '&network_ids=' + filters.network_ids.join(',') : '';
@@ -72,10 +74,19 @@ export class CardProvider {
     return this.http.get(url)
           .map(this.extractData)
           .map((data) => {
-            let manip = data.map((item, i) => {
+            let removeQuote = data.filter((item) => {
+              if(item.quote){
+                if(!globs.firstSignIn)
+                  globs.setIntroQuote(item)  
+                return false;
+              }
+              return true;
+            });
+            let manip = removeQuote.map((item, i) => {
               // item.industry = globs.INDUSTRIES[i];
               return new Card(item);
              });
+            // console.log(manip);
             return manip;
           })
           .catch(this.handleError);

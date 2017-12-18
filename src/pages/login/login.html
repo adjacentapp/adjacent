@@ -30,19 +30,21 @@
          </ion-col>
        </ion-row>
 
-       <ion-row class='footer'>
-        <ion-col col-12 class="facebook-col">
-          <button ion-button block round type="button" *ngIf="cordova" class="facebook" (click)="facebook()">Facebook</button>
-        </ion-col>
-        <ion-col col-6>
-          <button ion-button clear type="button" (click)="goToPage('TosPage')">Terms of Service</button>
-        </ion-col>
-        <ion-col col-6>
-          <button ion-button clear type="button" (click)="goToPage('PpPage')">Privacy Policy</button>
-        </ion-col>
-       </ion-row>
+       <!-- old footer here -->
 
      </form>
   </div>
+
+  <ion-row class='footer'>
+   <ion-col col-12 class="facebook-col">
+     <button ion-button block round type="button" *ngIf="cordova" class="facebook" (click)="facebook()">Facebook</button>
+   </ion-col>
+   <ion-col col-6>
+     <button ion-button clear type="button" (click)="goToPage('TosPage')">Terms of Service</button>
+   </ion-col>
+   <ion-col col-6>
+     <button ion-button clear type="button" (click)="goToPage('PpPage')">Privacy Policy</button>
+   </ion-col>
+  </ion-row>
 
 </ion-content>

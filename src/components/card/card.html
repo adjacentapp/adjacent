@@ -8,11 +8,11 @@
     <h1 class='title' *ngIf="item.industry == 'Announcement'"><span>Announcement</span></h1> -->
 
     <h1 class='title'>
-      <div *ngIf="item.industry != 'Announcement'">
+      <div *ngIf="!item.is_announcement">
         <span>Pitch</span><i>{{item.industry}}</i>
       </div>
-      <div *ngIf="item.industry == 'Announcement'">
-        <span>Announcement</span>
+      <div *ngIf="item.is_announcement">
+        <span class="no-border">{{item.industry}}</span>
       </div>
       <div class='network-name' *ngIf="item.network_id != '0'"><ion-icon name="md-globe"></ion-icon> {{item.network_name}} Community</div>
     </h1>
@@ -30,21 +30,21 @@
     </ion-card>
 
     <ion-card class="footer" *ngIf="!showDetails">
-      <ion-item>
+      <ion-item *ngIf="!item.is_announcement">
         <h2><ion-icon name="search"></ion-icon> Looking For</h2>
         <p *ngIf="item.challenge_names.length">{{item.challenge_names.join(", ")}}</p>
         <!-- <p *ngIf="!item.challenge_names.length">General Advice</p> -->
       </ion-item>
     </ion-card>
 
-    <ion-card *ngIf="showDetails && item.who">
+    <ion-card *ngIf="showDetails && item.who && !item.is_announcement">
       <ion-item>
         <h2>The Founder</h2>
         <p>{{item.who}}</p>
       </ion-item>
     </ion-card>
 
-    <ion-card *ngIf="showDetails && (item.challenge_names.length || item.challenge_details)">
+    <ion-card *ngIf="showDetails && (item.challenge_names.length || item.challenge_details)  && !item.is_announcement">
       <ion-item>
         <h2>The Ask</h2>
         <p *ngIf="item.challenge_names.length"><b>Looking for:</b> {{item.challenge_names.join(", ")}}</p>

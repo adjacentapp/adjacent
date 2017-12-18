@@ -1,5 +1,12 @@
 page-login {
 
+  .login-content .scroll-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-bottom: 0;
+  }
+
   .facebook-col button.facebook {
     background-color: #3b5998;
     color: white;
@@ -8,9 +15,9 @@ page-login {
   }
   
   .footer {
-    position: absolute;
-    bottom: 0;
-    margin-right: 16px;
+    // position: absolute;
+    // bottom: 0;
+    // margin-right: 16px;
     button {
       color: #777;
     }
