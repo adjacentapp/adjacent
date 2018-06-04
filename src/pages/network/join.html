@@ -20,7 +20,25 @@
       </ion-item>
       <div class="row button-row" justify-content-between>
         <div class="col">
-          <button ion-button block round type="submit" [disabled]="!joinForm.form.valid">Send</button>
+          <button ion-button block round type="submit" [disabled]="!joinForm.form.valid">Request</button>
+        </div>
+      </div>
+    </form>
+
+    <form (ngSubmit)="confirmCode()" #codeForm="ngForm">
+      <ion-item>
+        <ion-title>By Code</ion-title>
+      </ion-item>
+      <ion-item>
+        <ion-label>Code</ion-label>
+        <ion-input type="text" placeholder="#@%&!" name="code" [(ngModel)]="code" code required></ion-input>
+      </ion-item>
+      <ion-item>
+        <p>Ask your community administrator for the access code.</p>
+      </ion-item>
+      <div class="row button-row" justify-content-between>
+        <div class="col">
+          <button ion-button block round type="submit" [disabled]="!codeForm.form.valid">Confirm</button>
         </div>
       </div>
     </form>

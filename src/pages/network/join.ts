@@ -61,6 +61,54 @@ export class JoinNetworkPage {
     );
   }
 
+  confirmCode(){
+    this.showLoading();
+    this.auth.requestNetwork(this.auth.currentUser.email, this.code).subscribe(
+      success => {
+        console.log(success);
+        this.loading.dismiss().then(() => {
+          if(!success['network_exists']){
+            let alert = this.alertCtrl.create({
+              title: "Sorry",
+              // subTitle: "This community does not yet exist, but a request has been logged for review.",
+              subTitle: success['msg'],
+              buttons: [{text: "Ok"}]
+            });
+            alert.present();
+          }
+          else if(success['verified']){
+            let alert = this.alertCtrl.create({
+              title: "Already a Member",
+              subTitle: "You are already a verified member of this community.",
+              buttons: [{text: "Ok"}]
+            });
+            alert.present();
+          }
+          else if(success['access_granted']){
+            let alert = this.alertCtrl.create({
+              title: "Success",
+              // subTitle: "Welcome! You've been granted access to the " + success['network_name'] + "!",
+              subTitle: success['msg'],
+              buttons: [{
+                text: "Ok",
+                handler: () => {
+                  alert.dismiss().then(() => {
+                    this.networks.push(success['network']);
+                    globs.setNetworks(this.networks);
+                    this.navCtrl.pop();
+                  });
+                  return false; // for loading.dismiss() bug
+                }
+              }]
+            });
+            alert.present();
+          }
+         });
+      },
+      error => console.log(error)
+    );
+   }
+
   showLoading() {
     this.loading = this.loadingCtrl.create({
       content: 'Please wait...',
