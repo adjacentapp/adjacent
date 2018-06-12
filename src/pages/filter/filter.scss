@@ -2,4 +2,14 @@ page-filter {
   ion-icon.ion-md-add-circle {
     color: color($colors, primary);
   }
+
+  
+  ion-item.cushion-bottom .item-inner {
+    padding-bottom: 1em;
+  }
+
+  ion-item.cushion .item-inner {
+    padding-bottom: 0.75em;
+    padding-top: 0.75em;
+  }
 }

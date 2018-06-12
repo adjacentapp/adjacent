@@ -24,7 +24,7 @@ profile-page, page-bookmarks, page-founded {
       .card {
         margin: 0;
         &:not(.footer) p {
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 2;
         }
       }
 		}

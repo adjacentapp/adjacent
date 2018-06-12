@@ -3,19 +3,19 @@
     <ion-item>
       <ion-title>Filter</ion-title>
     </ion-item>
-    <ion-item>
+    <ion-item ngClass="cushion-bottom">
       <ion-label stacked>Industry</ion-label>
       <ion-select name="industry" [(ngModel)]="selected_industry" multiple="false" (ionChange)="onChange($event)">
         <ion-option *ngFor="let i of industries" value="{{i}}">{{i}}</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item>
+    <ion-item ngClass="cushion-bottom">
       <ion-label stacked>Communities</ion-label>
       <ion-select name="networks" [(ngModel)]="selected_network_ids" multiple="true" required (ionChange)="onChange($event)">
         <ion-option *ngFor="let n of networks" value="{{n.id}}">{{n.name}}</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item (click)="joinNetwork($event)">
+    <ion-item (click)="joinNetwork($event)" ngClass="cushion">
       Join Community
       <ion-icon item-right name="md-add-circle"></ion-icon>
     </ion-item>
