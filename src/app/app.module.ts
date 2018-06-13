@@ -23,7 +23,8 @@ import { SocialSharing }		from '@ionic-native/social-sharing';
 // import { LoginPage } 		from '../pages/login/login';
 import { ShowCardPage } 		from '../pages/card/show';
 import { NewCardPage } 			from '../pages/card/new';
-import { DiscoverPage } 		from '../pages/discover/discover';
+import { DiscoverPage }     from '../pages/discover/discover';
+import { FtuePage } 		    from '../pages/ftue/ftue';
 import { ProfilePage } 			from '../pages/profile/profile';
 import { EditProfilePage } 	    from '../pages/profile/edit';
 import { BookmarksPage } 		from '../pages/bookmarks/bookmarks';
@@ -60,6 +61,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     MyApp,
     // LoginPage,
     DiscoverPage,
+    FtuePage,
     ProfilePage,
     EditProfilePage,
     BookmarksPage,
@@ -94,6 +96,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     MyApp,
     // LoginPage,
     DiscoverPage,
+    FtuePage,
     ProfilePage,
     EditProfilePage,
     BookmarksPage,

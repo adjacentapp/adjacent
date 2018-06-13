@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar>
+    <!-- <button ion-button menuToggle>
+      <ion-icon name="menu" color="{{msg.unread_ids.length && false ? 'danger' : 'primary'}}"></ion-icon>
+       <ion-badge *ngIf="msg.unread_ids.length" color="danger">{{msg.unread_ids.length}}</ion-badge>
+    </button> -->
+    <ion-title *ngIf="auth.show_title"><img id='title-img' src="./assets/img/title.svg"/></ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button icon-only (click)="showFilter($event)">
+        <ion-icon name="ios-search-outline" color="{{notif.unreadCount && false ? 'danger' : 'primary'}}"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="openRightMenu()">
+        <ion-badge *ngIf="notif.unreadCount" color="danger">{{notif.unreadCount}}</ion-badge>
+        <ion-icon name="ios-notifications-outline" color="{{notif.unreadCount && false ? 'danger' : 'primary'}}"></ion-icon>
+      </button>
+    </ion-buttons> -->
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce>
+  
+  <ion-slides (ionSlideDidChange)="slideChanged()">
+
+    <ion-slide [ngClass]="bounce ? 'bounce' : ''">
+      <ion-card>
+        <ion-card-content>
+          <h2>Welcome to Adjacent!</h2>
+          <p>We help innovative people connect to interesting ideas and scale them into successful companies.</p>
+          <p class='footer' (click)="triggerBounce()">Swipe me to begin</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+    <ion-slide id='slide_1'>
+      <ion-card>
+        <ion-card-content>
+          <h2>Are you signing up...</h2>
+          <div class='buttons'>
+            <button ion-button block round (click)="setTrack('university')">with a univeristy</button>
+            <button ion-button block round (click)="setTrack('group')">with an event or group</button>
+            <button ion-button block round (click)="setTrack('individual')">as an individual</button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+    <ion-slide *ngIf="track=='university'">
+      <ion-card>
+        <ion-card-content>
+          <h2>If you didn't use your university email address to sign up, enter it now and we'll send you a verification email.</h2>
+          <div class='buttons'>
+            <button ion-button block round (click)="null">Submit</button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+    <ion-slide *ngIf="track=='group'">
+      <ion-card>
+        <ion-card-content>
+          <h2>Group stuff</h2>
+          <div class='buttons'>
+            <button ion-button block round (click)="null">Submit</button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>

@@ -1,0 +1,76 @@
+ftue-page {
+
+  .slides {
+    background: color($colors, light);
+  }
+
+  ion-card.card {
+    box-shadow: none;
+    border: solid 1px #bbb;
+    border-bottom-width: 3px;
+
+    position: relative;
+    border-radius: 20px;
+    opacity: 0.9999;
+
+    // box-shadow: 0px 4px 12px #999;
+
+		ion-card-content {
+			font-size: 1.9rem;
+			height: 85vh;
+      text-align: center;
+      padding: 1em;
+
+      h2 {
+        font-size: 1.4em;
+        color: inherit;
+        margin: 1.5em auto;
+        color: color($colors, primary);
+        font-weight: bold;
+      }
+
+      p {
+        font-size: 1.15em;
+      }
+
+      .footer {
+        position: absolute;
+        bottom: 1em;
+        left: 1em; right: 1em;
+        color: color($colors, primary);
+        font-weight: bold;
+      }
+
+      .buttons {
+        .button {
+          font-size: 1.9rem;
+          margin: 2rem auto;
+        }
+      }
+
+		}
+
+		/* tablets/desktops */
+		@media (min-width: 500px) {
+			max-width: 500px;
+			margin: 0 auto;
+		}
+	}
+
+  .bounce {
+    animation: slideLeft 600ms 1;
+    -webkit-animation: slideLeft 600ms 1;
+
+    @-webkit-keyframes slideLeft {
+      0%, 100% {-webkit-transform: translateX(0);}
+      30% {-webkit-transform: translateX(-40px);}
+      70% {-webkit-transform: translateX(10px);}
+    }
+
+    @keyframes slideLeft {
+      0%, 100% {-webkit-transform: translateX(0);}
+      30% {-webkit-transform: translateX(-40px);}
+      70% {-webkit-transform: translateX(10px);}
+    }
+  }
+}

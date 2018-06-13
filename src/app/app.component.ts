@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav, AlertController } from 'ionic-angular';
 
 import { DiscoverPage } from '../pages/discover/discover';
+import { FtuePage } from '../pages/ftue/ftue';
 import { ProfilePage } from '../pages/profile/profile';
 import { NewCardPage } from '../pages/card/new';
 import { BookmarksPage } from '../pages/bookmarks/bookmarks';
@@ -187,7 +188,8 @@ export class MyApp {
     // immediately go to discover if cookies found
     if(localStorage.token && localStorage.user_id) {
       this.auth.loginFromLocalStorage();
-      this.nav.setRoot(DiscoverPage);
+      // this.nav.setRoot(DiscoverPage);
+      this.nav.setRoot(FtuePage);
       // if token authentication issue, redirect back to login
       this.auth.checkToken(localStorage.token, localStorage.user_id).subscribe(
         user => {

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, IonicPage, Loading, LoadingController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { DiscoverPage } from '../../pages/discover/discover';
+// import { DiscoverPage } from '../../pages/discover/discover';
+import { FtuePage } from '../../pages/ftue/ftue';
  
 @IonicPage()
 @Component({
@@ -56,7 +57,7 @@ export class RegisterPage {
           text: 'OK',
           handler: data => {
             if (this.createSuccess)
-              this.nav.setRoot(DiscoverPage);
+              this.nav.setRoot(FtuePage);
             this.nav.popToRoot();
           }
         }
