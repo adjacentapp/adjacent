@@ -1,13 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, MenuController, Slides } from 'ionic-angular';
-import { ShowCardPage } from '../../pages/card/show';
-import { JoinNetworkPage } from '../../pages/network/join';
-import { CardProvider, Card } from '../../providers/card/card';
+import { NavController, NavParams, Slides, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { MessagesProvider } from '../../providers/messages/messages';
-import { NotificationProvider } from '../../providers/notification/notification';
-import { PopoverController } from 'ionic-angular';
-import { FilterPage } from '../../pages/filter/filter';
+import { EditProfilePage } from '../profile/edit';
+import { ProfileProvider, Profile } from '../../providers/profile/profile';
+import { DiscoverPage } from '../../pages/discover/discover';
+import { NewCardPage } from '../../pages/card/new';
 import * as globs from '../../app/globals'
 
 @Component({
@@ -16,61 +13,116 @@ import * as globs from '../../app/globals'
 })
 export class FtuePage {
 	@ViewChild(Slides) slides: Slides;
-	items: Card[];
-	loading: boolean;
-	reachedEnd: boolean = false;
-	dealing: boolean = false;
-  
+  loading: Loading;
+	profile: Profile;  
   track: string;
+  role: string;
+  network: string;
+  verified: boolean = false;
   bounce: boolean = false;
+  currentUser: any;
+  code: string;
+  email: string;
+  public networks = globs.NETWORKS;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider, private msg: MessagesProvider, private notif: NotificationProvider, public popoverCtrl: PopoverController) {
-		// this.getDeck();
+  welcomeTexts = {
+    university: "",
+    group: "",
+    individual: "Welcome to your entreprenurial community.",
+  };
+
+	constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider, private profileProvider: ProfileProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+    this.currentUser = this.auth.currentUser;
+    this.getProfile()
 	}
 
-	getDeck() {
-  //   this.loading = true;
-		// this.card.getDeck(this.auth.currentUser.id, 0, this.filters)
-		// 	.subscribe(
-		// 		success => {
-  //         this.items = success;
-  //         this.introQuote = globs.introQuote;
-  //       },
-		// 		error => {
-		// 			console.log('trying to get_cards again');
-		// 			this.getDeck();
-		// 			this.errorMessage = <any>error;
-		// 		},
-		// 		() => this.loading = false
-		// 	);
-	}
-
-	showCard(event, item) {
-		let handleDelete = (_params) => {
-		  return new Promise((resolve, reject) => {
-	    	this.items = this.items.filter(item => item.id !== _params.remove_id);
-		    resolve();
-		  });
-		}
-		let handleUpdate = (updated) => {
-		  return new Promise((resolve, reject) => {
-		  	for (let i=0; i<this.items.length; i++)
-		  		if(this.items[i].id == updated.id)
-		  			this.items[i] = {...updated};
-		  	resolve();
-		  });
-		}
-		this.navCtrl.push(ShowCardPage, {
-			item: item,
-			deleteCallback: handleDelete,
-			updateCallback: handleUpdate
-		});
-	}
+  getProfile(){
+    this.profileProvider.getProfile(this.auth.currentUser.id, this.auth.currentUser.id)
+      .subscribe(
+        profile => this.profile = profile,
+        error => console.log(<any>error)
+      );
+  }
 
   setTrack(track) {
     this.track = track;
+    if (track == 'individual'){
+      this.verified = true
+    }
+
+    this.goToNextSlide();
+  }
+
+  setRole(role) {
+    this.role = role;
+    if(role == 'founder'){
+      let handleSkip = () => {
+        return new Promise((resolve, reject) => {
+          this.auth.completeFtue().subscribe(res => {
+            globs.setFtueFilters();
+            this.navCtrl.setRoot(DiscoverPage);
+            resolve();
+          });
+        });
+      }
+      let handleSubmit = () => {
+        return new Promise((resolve, reject) => {
+          let alert = this.alertCtrl.create({
+            title: 'Congratulations!',
+            message: 'Your idea is now published. You can share it with mentors to get feedback and find others to join your team.',
+            buttons: [
+              {
+                text: 'Close',
+                role: 'cancel',
+                handler: () => { 
+                  globs.setFtueFilters();
+                  this.navCtrl.setRoot(DiscoverPage);
+                  resolve();
+                }
+              },
+            ]
+          });
+          this.auth.completeFtue().subscribe(res => {
+            alert.present();
+          });
+        });
+      }
+      this.navCtrl.push(NewCardPage, {
+        allowSkip: true,
+        skipCallback: handleSkip,
+        ftueSubmitCallback: handleSubmit,
+      });
+    }
+    else {
+      let placeholder = ''
+      if(role == 'collaborator') {
+        placeholder = "Fill out a profile with your skills to connect to start-ups that need your assistance."
+      }
+      else if(role == 'mentor'){
+        placeholder = "Fill out a profile with your skills to connect to start-ups that need your assistance."
+      }
+      let handleUpdate = (_params) => {
+        return new Promise((resolve, reject) => {
+          this.auth.completeFtue().subscribe(res => {
+            globs.setFtueFilters();
+            this.navCtrl.setRoot(DiscoverPage);
+            resolve();
+          });
+        });
+      }
+      this.navCtrl.push(EditProfilePage, {
+        placeholder: placeholder,
+        profile: this.profile,
+        updateCallback: handleUpdate,
+        preventCallbackNav: true,
+      });
+    }
+  }
+
+  goToNextSlide() {
+    let nextIndex = this.slides.getActiveIndex() + 1;
     setTimeout(() => {
-      this.slides.slideTo(3, 400);
+      this.slides.slideTo(nextIndex, 400);
     }, 300);
   }
 
@@ -82,12 +134,138 @@ export class FtuePage {
     }, 600)
   }
 
-	slideChanged() {
-		let currentIndex = this.slides.getActiveIndex();
-		// if(!this.reachedEnd && !this.dealing && currentIndex >= this.items.length - 3){ // deal more cards when 3 away from end
-			// this.dealCards();
-    // }
-	}
+  showLoading() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      dismissOnPageChange: false
+    });
+    this.loading.present();
+  }
+
+  sendEmail(){
+    this.showLoading();
+    this.auth.requestNetwork(this.email, null).subscribe(
+      success => {
+        console.log(success);
+        this.loading.dismiss().then(() => {
+          if(!success['network_exists']){
+            let alert = this.alertCtrl.create({
+              title: "Early Adopter!",
+              subTitle: "This university does not yet have a private community on Adjacent, but a request has been logged for review.",
+              buttons: [{
+                text: "Continue",
+                handler: () => {
+                  alert.dismiss().then(() => {
+                    this.verified = true;
+                    this.goToNextSlide();
+                  });
+                  return false; // for loading.dismiss() bug
+                }
+              }]
+            });
+            alert.present();
+          }
+          else if(success['verified']){
+            let alert = this.alertCtrl.create({
+              title: "Already a Member",
+              subTitle: "You are already a verified member.",
+              buttons: [{
+                text: "Ok",
+                handler: () => {
+                  alert.dismiss().then(() => {
+                    this.verified = true;
+                    this.goToNextSlide();
+                  });
+                  return false; // for loading.dismiss() bug
+                }
+              }]
+            });
+            alert.present();
+          }
+          else if(success['request_sent']){
+            let alert = this.alertCtrl.create({
+              title: "Success",
+              subTitle: "A verification email has been sent to your address.",
+              buttons: [{
+                text: "Ok",
+                handler: () => {
+                  alert.dismiss().then(() => {
+                    this.verified = true;
+                    this.goToNextSlide();
+                  });
+                  return false; // for loading.dismiss() bug
+                }
+              }]
+            });
+            alert.present();
+          }
+         });
+      },
+      error => console.log(error)
+    );
+  }
+
+  confirmCode(){
+    this.showLoading();
+    this.auth.requestNetwork(this.auth.currentUser.email, this.code).subscribe(
+     success => {
+       console.log(success);
+       this.loading.dismiss().then(() => {
+         if(!success['network_exists']){
+           let alert = this.alertCtrl.create({
+             title: "No Match Found",
+             subTitle: "That code does not match any we have on record. Please confirm you've entered it correctly.",
+             buttons: [{text: "Ok"}]
+           });
+           alert.present();
+         }
+         else if(success['verified']){
+           let newNetwork = success['network'];
+           console.log(newNetwork)
+           let alert = this.alertCtrl.create({
+             title: "Already a Member",
+             subTitle: "You are already a verified member.",
+             buttons: [{
+               text: "Ok",
+               handler: () => {
+                 alert.dismiss().then(() => {
+                   this.welcomeTexts.group = "Great! You're now a part of the " + newNetwork.name + " private group. You can share ideas with others in the group for feedback, and build your entrepreneurial community.";
+                   this.verified = true;
+                   this.goToNextSlide();
+                 });
+                 return false; // for loading.dismiss() bug
+               }
+             }]
+           });
+           alert.present();
+         }
+         else if(success['access_granted']){
+           let newNetwork = success['network'];
+           let alert = this.alertCtrl.create({
+             title: "Success",
+             // subTitle: "Welcome! You've been granted access to the " + success['network_name'] + "!",
+             subTitle: success['msg'],
+             buttons: [{
+               text: "Ok",
+               handler: () => {
+                 alert.dismiss().then(() => {
+                   this.networks.push(newNetwork);
+                   globs.setNetworks(this.networks);
+                   this.welcomeTexts.group = "Great! You're now a part of the " + newNetwork.name + " private group. You can share ideas with others in the group for feedback, and build your entrepreneurial community.";
+                   this.verified = true;
+                   this.goToNextSlide();
+                 });
+                 return false; // for loading.dismiss() bug
+               }
+             }]
+           });
+           alert.present();
+         }
+        });
+     },
+     error => console.log(error)
+   );
+  }
 
 
 }

@@ -3,6 +3,7 @@ import { NavController, AlertController, IonicPage, Loading, LoadingController }
 import { AuthProvider } from '../../providers/auth/auth';
 // import { DiscoverPage } from '../../pages/discover/discover';
 import { FtuePage } from '../../pages/ftue/ftue';
+import * as globs from '../../app/globals'
  
 @IonicPage()
 @Component({
@@ -56,8 +57,10 @@ export class RegisterPage {
         {
           text: 'OK',
           handler: data => {
-            if (this.createSuccess)
+            if (this.createSuccess){
+              globs.setFtueFilters();
               this.nav.setRoot(FtuePage);
+            }
             this.nav.popToRoot();
           }
         }

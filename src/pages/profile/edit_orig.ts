@@ -17,18 +17,18 @@ declare var cordova: any;
 })
 export class EditProfilePage {
 	loading: Loading;
-  placeholder: String = "Fill out a profile with your skills to connect to start-ups that need your assistance."
-  // profile: Profile;
-	profile: any;
+	profile: Profile;
 	skills = globs.SKILLS;
-  updateCallback: any;
-	preventCallbackNav: boolean ;
+	updateCallback: any;
 	photoUpload = {
 		valid: true,
 		msg: '',
 		loading: false
 	};
 	lastImage: string = null;
+
+  @Input() inputProfile: Profile;
+  @Input() inputUser;
 
 	constructor(
 		public platform: Platform,
@@ -46,12 +46,30 @@ export class EditProfilePage {
 		private filePath: FilePath,
 		private viewCtrl: ViewController
 	) {
-    this.profile = {...navParams.get('profile')};
-    this.profile.user = {...navParams.get('profile').user}
-    this.updateCallback = navParams.get('updateCallback');
-    this.preventCallbackNav = navParams.get('preventCallbackNav');
-    this.placeholder = navParams.get('placeholder') || 'Receptionist by day, political activist by night. My dream for the future consists of a technologically-enabled, thoroughly democratic societal system.';
+    console.log(navParams)
+    // if(this.inputProfile)
+    //   this.profile = this.inputProfile
+    // else
+    //   this.profile = {...navParams.get('profile')};
+    
+    // if(this.inputUser)
+    //   this.profile.user = this.inputUser
+    // else
+    //   this.profile.user = {...navParams.get('profile').user}
+
+    // this.updateCallback = navParams.get('updateCallback');
 	}
+
+  ngOnInit() {
+    console.log(this.inputProfile)
+    console.log(this.inputUser)
+    
+   if(this.inputProfile)
+     this.profile = this.inputProfile
+   
+   if(this.inputUser)
+     this.profile.user = this.inputUser
+  }
 
 	ionViewDidLoad() {
 	  this.viewCtrl.showBackButton(false);
@@ -66,11 +84,9 @@ export class EditProfilePage {
 		this.showLoading();
 		this.profileProvider.updateProfile(this.profile).subscribe(
 			profile => {
-        this.updateCallback(profile).then(()=>{
-          if(!this.preventCallbackNav){
+				this.updateCallback(profile).then(()=>{
 				  	this.navCtrl.pop();
-          }
-  			});
+				});
 			},
 			error => {
 				this.showError(error);

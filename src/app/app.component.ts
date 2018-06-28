@@ -21,6 +21,8 @@ import { AuthProvider } from '../providers/auth/auth';
 import { GlobalsProvider } from '../providers/globals/globals';
 import { MessagesProvider } from '../providers/messages/messages';
 
+import * as globs from '../app/globals'
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -188,8 +190,13 @@ export class MyApp {
     // immediately go to discover if cookies found
     if(localStorage.token && localStorage.user_id) {
       this.auth.loginFromLocalStorage();
-      // this.nav.setRoot(DiscoverPage);
-      this.nav.setRoot(FtuePage);
+      if(!localStorage.ftue_complete){
+        globs.setFtueFilters();
+        this.nav.setRoot(FtuePage);
+      }
+      else {
+        this.nav.setRoot(DiscoverPage);
+      }
       // if token authentication issue, redirect back to login
       this.auth.checkToken(localStorage.token, localStorage.user_id).subscribe(
         user => {

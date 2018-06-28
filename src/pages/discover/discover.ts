@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, MenuController, Slides } from 'ionic-angular';
 import { ShowCardPage } from '../../pages/card/show';
 import { JoinNetworkPage } from '../../pages/network/join';
@@ -8,6 +8,7 @@ import { MessagesProvider } from '../../providers/messages/messages';
 import { NotificationProvider } from '../../providers/notification/notification';
 import { PopoverController } from 'ionic-angular';
 import { FilterPage } from '../../pages/filter/filter';
+import { FtueFilterPage } from '../../pages/filter/ftue-filter';
 import * as globs from '../../app/globals'
 
 @Component({
@@ -31,9 +32,18 @@ export class DiscoverPage {
 	username = '';
     email = '';
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider, private msg: MessagesProvider, private notif: NotificationProvider, public popoverCtrl: PopoverController) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider, private msg: MessagesProvider, private notif: NotificationProvider, public popoverCtrl: PopoverController, private eleRef: ElementRef) {
 		this.getDeck();
 	}
+
+  ngAfterViewInit (){
+    if(globs.ftueFilters){
+      setTimeout(() => {
+        this.showFtueFilter();
+        globs.clearFtueFilters();
+       }, 400);
+     }
+  }
 
 	getDeck() {
     this.loading = true;
@@ -136,6 +146,23 @@ export class DiscoverPage {
       else if(data && data.go_to_join){
         this.navCtrl.push(JoinNetworkPage);
       }
+    });
+  }
+
+  showFtueFilter() {
+    let mockEvent = {
+      target: {
+        getBoundingClientRect : () => {
+          return document.getElementById('filter_button').getBoundingClientRect()
+        }
+      }
+    }
+    let popover = this.popoverCtrl.create(FtueFilterPage);
+    popover.present({
+      ev: mockEvent
+    });
+    popover.onDidDismiss(data => {
+      // this.showFilter(e)
     });
   }
 

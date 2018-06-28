@@ -14,6 +14,11 @@
         <ion-icon name="trash"></ion-icon>
       </button>
     </ion-buttons>
+    <ion-buttons end *ngIf="skipCallback">
+      <button ion-button icon-only (click)="skip()">
+        Skip
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -120,7 +125,7 @@
               <button ion-button block round (click)="prevSlide($event)" outline>Back</button>
             </div>
             <div class="col">
-              <button ion-button block round type="submit" [disabled]="!cardForm.form.valid">{{item.id ? "Update" : "Share"}}</button>
+              <button ion-button block round type="submit" [disabled]="!cardForm.form.valid">{{item.id ? "Update" : "Submit"}}</button>
               <!-- <button ion-button block round (click)="submitCard()" [disabled]="!cardForm.form.valid">{{item.id ? "Update" : "Share"}}</button> -->
             </div>
           </div>

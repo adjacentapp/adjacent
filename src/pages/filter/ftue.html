@@ -1,0 +1,32 @@
+<div align-items-start>
+  <form #filterForm="ngForm">
+    <ion-item>
+      <ion-title>Filter</ion-title>
+    </ion-item>
+    <ion-item ngClass="cushion-bottom">
+      <ion-label stacked>Industry</ion-label>
+      <ion-select name="industry" [(ngModel)]="selected_industry" multiple="false" (ionChange)="onChange($event)">
+        <ion-option *ngFor="let i of industries" value="{{i}}">{{i}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item ngClass="cushion-bottom">
+      <ion-label stacked>Communities</ion-label>
+      <ion-select name="networks" [(ngModel)]="selected_network_ids" multiple="true" required (ionChange)="onChange($event)">
+        <ion-option *ngFor="let n of networks" value="{{n.id}}">{{n.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item (click)="joinNetwork($event)" ngClass="cushion">
+      Join Community
+      <ion-icon item-right name="md-add-circle"></ion-icon>
+    </ion-item>
+    <!-- <ion-item (click)="createNetwork($event)">
+      Create Community
+      <ion-icon item-right name="md-add-circle"></ion-icon>
+    </ion-item> -->
+    <div class="row button-row" justify-content-between>
+      <div class="col">
+        <button ion-button block round (click)="apply($event)" [disabled]="!filterForm.form.valid">Apply</button>
+      </div>
+    </div>
+  </form>
+</div>

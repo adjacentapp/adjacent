@@ -189,6 +189,18 @@ export class AuthProvider {
           .catch(this.handleError);
   }
 
+  public completeFtue(): Observable<any[]> {
+    localStorage.ftue_complete = true;
+    let url = globs.BASE_API_URL + 'complete_ftue.php';
+    return this.http.post(url, {user_id: this.currentUser.id})
+          .map(this.extractData)
+          .map((data) => {
+            console.log(data);
+            return data;
+          })
+          .catch(this.handleError);
+  }
+
   public logout(): Observable<any[]> {
     let data = {
       user_id: this.currentUser.id,

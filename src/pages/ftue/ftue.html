@@ -19,8 +19,9 @@
 
 <ion-content no-bounce>
   
-  <ion-slides (ionSlideDidChange)="slideChanged()">
+  <ion-slides (ionSlideDidChange)="null">
 
+    <!-- welcome -->
     <ion-slide [ngClass]="bounce ? 'bounce' : ''">
       <ion-card>
         <ion-card-content>
@@ -31,7 +32,8 @@
       </ion-card>
     </ion-slide>
 
-    <ion-slide id='slide_1'>
+    <!-- select track -->
+    <ion-slide>
       <ion-card>
         <ion-card-content>
           <h2>Are you signing up...</h2>
@@ -44,27 +46,59 @@
       </ion-card>
     </ion-slide>
 
-    <ion-slide *ngIf="track=='university'">
-      <ion-card>
-        <ion-card-content>
-          <h2>If you didn't use your university email address to sign up, enter it now and we'll send you a verification email.</h2>
-          <div class='buttons'>
-            <button ion-button block round (click)="null">Submit</button>
-          </div>
-        </ion-card-content>
-      </ion-card>
-    </ion-slide>
+    <!-- tracks -->
+      <!-- uni -->
+      <div *ngIf="track=='university'">
+        <ion-slide>
+          <ion-card>
+            <ion-card-content>
+              <p class='title'>Please enter your university email address and we'll send you a verification email.</p>
+              <form (ngSubmit)="sendEmail()" #emailForm="ngForm">
+                <ion-input type="email" placeholder="Email" name="email" pattern=".{4,}" [(ngModel)]="email" email required></ion-input>
+                <div class='buttons'>
+                  <button ion-button block round type="submit" [disabled]="!emailForm.form.valid">Submit</button>
+                </div>
+              </form>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </div>
 
-    <ion-slide *ngIf="track=='group'">
+      <!-- group -->
+      <ion-slide *ngIf="track=='group'">
+        <ion-card>
+          <ion-card-content>
+            <p class='title'>You should have a private code given to you by the event or group administrator. Type in your code below:</p>
+            <form (ngSubmit)="confirmCode()" #groupForm="ngForm">
+              <ion-input type="text" placeholder="Code" name="code" [(ngModel)]="code" required></ion-input>
+              <div class='buttons'>
+                <button ion-button block round type="submit" [disabled]="!groupForm.form.valid">Submit</button>
+              </div>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+
+      <!-- solos -->
+      <!-- skip to role -->
+
+    <!-- /tracks -->
+
+    <!-- select role -->
+    <div *ngIf="track && verified">
+    <ion-slide>
       <ion-card>
         <ion-card-content>
-          <h2>Group stuff</h2>
+          <p class="title">{{welcomeTexts[track]}}<br/>Are you looking to...</p>
           <div class='buttons'>
-            <button ion-button block round (click)="null">Submit</button>
+            <button ion-button block round (click)="setRole('founder')">Create a start-up</button>
+            <button ion-button block round (click)="setRole('collaborator')">Join a start-up</button>
+            <button ion-button block round (click)="setRole('mentor')">Mentor a start-up</button>
           </div>
         </ion-card-content>
       </ion-card>
     </ion-slide>
+    </div>
 
   </ion-slides>
 

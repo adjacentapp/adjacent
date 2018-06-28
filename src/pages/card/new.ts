@@ -5,6 +5,7 @@ import { CardProvider } from '../../providers/card/card';
 import { AuthProvider } from '../../providers/auth/auth';
 // import { FoundedPage } from '../../pages/founded/founded';
 import { ShowCardPage } from '../../pages/card/show';
+import { ProfileProvider, Profile } from '../../providers/profile/profile';
 
 @Component({
   selector: 'new-card-page',
@@ -20,15 +21,19 @@ export class NewCardPage {
   valid: boolean = false;
   deleteCallback: any;
   updateCallback: any;
+  skipCallback: any;
+  ftueSubmitCallback: any;
 
   public industries = globs.INDUSTRIES;
   public challenges = globs.SKILLS;
   // public stages = globs.STAGES;
   public networks = globs.NETWORKS;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private viewCtrl: ViewController, private toast: ToastController, private platform: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private card: CardProvider, private auth: AuthProvider, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private viewCtrl: ViewController, private toast: ToastController, private platform: Platform, private profileProvider: ProfileProvider) {
     this.deleteCallback = this.navParams.get('deleteCallback');
     this.updateCallback = this.navParams.get('updateCallback');
+    this.skipCallback = navParams.get('skipCallback');
+    this.ftueSubmitCallback = navParams.get('ftueSubmitCallback');
     this.item = navParams.get('item') ? {...navParams.get('item')} : {
     	industry: null,
       pitch: '',
@@ -45,6 +50,20 @@ export class NewCardPage {
 
     if(this.platform.is('android'))
       this.is_android = true;
+
+    this.getProfile()
+  }
+
+  getProfile(){
+    this.profileProvider.getProfile(this.auth.currentUser.id, this.auth.currentUser.id)
+      .subscribe(
+        (profile) => {
+          console.log(profile)
+          this.networks = profile.networks
+          globs.setNetworks(this.networks);
+        },
+        error => console.log(<any>error)
+      );
   }
 
   public handleKeyboardOpen(){
@@ -96,17 +115,30 @@ export class NewCardPage {
     this.slides.lockSwipes(true);
     
     // console.log(this.slides.getActiveIndex());
-    if(this.slides.getActiveIndex() === 2)
+    if(this.slides.getActiveIndex() === 2){
       if(this.item.id){
         let toast = this.toast.create({
           message: "Followers of this idea will be notified whenever you update, up to once every 24 hours.",
-          duration: 7000,
+          duration: 8000,
           position: 'bottom',
           showCloseButton: true,
           closeButtonText: "OK"
         });
         toast.present();
       }
+      else if(this.networks.length > 1){
+        setTimeout(() => {
+          let toast = this.toast.create({
+            message: "Select a Community to limit the audience of your idea.",
+            duration: 10000,
+            position: 'bottom',
+            showCloseButton: true,
+            closeButtonText: "OK"
+          });
+          toast.present();
+        }, 3000)
+      }
+    }
   }
 
   prevSlide(e){
@@ -143,11 +175,18 @@ export class NewCardPage {
       this.navCtrl.pop();
   }
 
+  skip(){
+    this.skipCallback()
+  }
+
   submitCard(){
     this.showLoading();
     this.card.post(this.item).subscribe(
       success => {
-        if(this.item.id){ // edit
+        if (this.ftueSubmitCallback){ // ftue create
+          this.ftueSubmitCallback();
+        }
+        else if(this.item.id){ // edit
           this.updateCallback(success).then(()=>{
             this.navCtrl.pop();
           });

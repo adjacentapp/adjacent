@@ -27,21 +27,22 @@ import { DiscoverPage }     from '../pages/discover/discover';
 import { FtuePage } 		    from '../pages/ftue/ftue';
 import { ProfilePage } 			from '../pages/profile/profile';
 import { EditProfilePage } 	    from '../pages/profile/edit';
-import { BookmarksPage } 		from '../pages/bookmarks/bookmarks';
-import { MessagesPage } 		from '../pages/messages/index';
-import { ShowMessagePage }	    from '../pages/messages/show';
+import { BookmarksPage }     from '../pages/bookmarks/bookmarks';
+import { MessagesPage }     from '../pages/messages/index';
+import { ShowMessagePage }      from '../pages/messages/show';
 import { FoundedPage }          from '../pages/founded/founded';
 // import { FollowersPage }        from '../pages/followers/followers';
 // import { MissionPage }         from '../pages/mission/mission';
-// import { ForgotPage } 		    from '../pages/forgot/forgot';
+// import { ForgotPage }         from '../pages/forgot/forgot';
 import { FilterPage }          from '../pages/filter/filter';
+import { FtueFilterPage }          from '../pages/filter/ftue-filter';
 import { JoinNetworkPage }          from '../pages/network/join';
 
-import { CardComponent } 				from '../components/card/card';
-import { CommentComponent } 			from '../components/card/comment.component';
-import { NewCommentComponent } 			from '../components/card/new-comment.component';
-import { WallComponent } 				from '../components/card/wall.component';
-import { NotificationCenterComponent }	from '../components/notification/notification-center.component';
+import { CardComponent }         from '../components/card/card';
+import { CommentComponent }       from '../components/card/comment.component';
+import { NewCommentComponent }       from '../components/card/new-comment.component';
+import { WallComponent }         from '../components/card/wall.component';
+import { NotificationCenterComponent }  from '../components/notification/notification-center.component';
 import { NotificationComponent }		from '../components/notification/notification.component';
 import { MessageComponent } 			from '../components/message/message';
 import { BookmarksComponent }  from '../components/bookmarks/bookmarks';
@@ -71,6 +72,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     ShowMessagePage,
     FoundedPage,
     FilterPage,
+    FtueFilterPage,
     JoinNetworkPage,
     // FollowersPage,
     // MissionPage,
@@ -108,6 +110,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     // FollowersPage,
     // MissionPage,
     FilterPage,
+    FtueFilterPage,
     JoinNetworkPage,
   ],
   providers: [

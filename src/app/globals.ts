@@ -1,8 +1,9 @@
 'use strict';
 
 let DEV = false;
+// DEV = true;
 
-let localURL = "http://localhost/~salsaia/adjacent/api/v3/";
+let localURL = "http://localhost/~slvtrs/adjacent/api/v3/";
 let remoteURL = "http://adjacent-env.btwkki4rra.us-west-2.elasticbeanstalk.com/api/v3/"
 
 export const ENCRYPTION_KEY = "aether12292015";
@@ -91,6 +92,14 @@ export let NETWORKS: any[] = [
 ];
 export let setNetworks = (networks) => {
   NETWORKS = networks;
+};
+
+export let ftueFilters = false;
+export let setFtueFilters = () => {
+  ftueFilters = true;
+};
+export let clearFtueFilters = () => {
+  ftueFilters = false;
 };
 
 export let firstFollow = true;

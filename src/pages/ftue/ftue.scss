@@ -31,6 +31,9 @@ ftue-page {
 
       p {
         font-size: 1.15em;
+        &.title {
+          color: color($colors, primary);
+        }
       }
 
       .footer {
@@ -39,6 +42,12 @@ ftue-page {
         left: 1em; right: 1em;
         color: color($colors, primary);
         font-weight: bold;
+      }
+
+      .buttons-row {
+        span {
+          font-size: 1.8rem;
+        }
       }
 
       .buttons {

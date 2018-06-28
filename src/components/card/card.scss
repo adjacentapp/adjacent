@@ -8,7 +8,7 @@ idea-card,
     opacity: 0.9999; // weird overflow bug fix for iOS
 
     comment-component ion-item .item-inner p {
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       min-height: 3.25em;
     }
 

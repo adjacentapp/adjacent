@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, MenuController, AlertController, LoadingController, Loading, IonicPage, Platform } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { DiscoverPage } from '../../pages/discover/discover';
+import { FtuePage } from '../../pages/ftue/ftue';
+import * as globs from '../../app/globals'
  
 @IonicPage()
 @Component({
@@ -36,8 +38,13 @@ export class LoginPage {
     this.showLoading('Please wait...');
     this.auth.login(this.registerCredentials).subscribe(
       user => {
-        if (this.auth.valid) {     
-          this.nav.setRoot(DiscoverPage);
+        if (this.auth.valid) {
+          if(user.ftue_complete)
+            this.nav.setRoot(DiscoverPage);
+          else {
+            globs.setFtueFilters();
+            this.nav.setRoot(FtuePage);
+          }
         } else if (user.message) {
           this.showError(user.message);
         } else {
