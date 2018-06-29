@@ -39,8 +39,10 @@ export class LoginPage {
     this.auth.login(this.registerCredentials).subscribe(
       user => {
         if (this.auth.valid) {
-          if(user.ftue_complete)
+          if(this.auth.ftue_complete){
+            localStorage.ftue_complete = true;
             this.nav.setRoot(DiscoverPage);
+          }
           else {
             globs.setFtueFilters();
             this.nav.setRoot(FtuePage);

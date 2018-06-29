@@ -47,6 +47,7 @@ export class AuthProvider {
   pushToken: string;
   show_all_imgs: boolean = true;
   show_title: boolean = true;
+  ftue_complete: boolean = false;
 
   // Observables for DeepNotification redirect listeners from app-component
   private dismissCheckDN: any;
@@ -66,6 +67,7 @@ export class AuthProvider {
     else
       this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token );
     this.valid = true;
+    this.ftue_complete = localStorage.ftue_complete;
   }
 
   checkToken(token, user_id): Observable<any> {
@@ -100,6 +102,7 @@ export class AuthProvider {
               if(data.valid){
                 this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, data.networks);
                 this.valid = true;
+                this.ftue_complete = data.ftue_complete;
                 this.badge.set(data.badge_count);                
                 this.registerPushToken();
                }
