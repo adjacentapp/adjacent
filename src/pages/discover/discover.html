@@ -1,8 +1,8 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon name="menu" color="{{msg.unread_ids.length && false ? 'danger' : 'primary'}}"></ion-icon>
-       <ion-badge *ngIf="msg.unread_ids.length" color="danger">{{msg.unread_ids.length}}</ion-badge>
+      <ion-icon name="menu" id='hamburger_button' color="{{msg.unread_ids.length && false ? 'danger' : 'primary'}}"></ion-icon>
+      <ion-badge *ngIf="msg.unread_ids.length" color="danger">{{msg.unread_ids.length}}</ion-badge>
     </button>
     <ion-title *ngIf="auth.show_title"><img id='title-img' src="./assets/img/title.svg"/></ion-title>
     <ion-buttons end>
@@ -32,7 +32,8 @@
         <ion-card-content>
           <div class='img-bg tut'></div>
           <h1 *ngIf="!introQuote">Swipe to<br/>explore the<br/>opportunity<br/>around<br/>you.</h1>
-          <h1 class='quote' *ngIf="introQuote"><i>"{{introQuote.quote}}"</i><p>-{{introQuote.source}}</p></h1>
+          <h1 class='quote' *ngIf="introQuote && !introQuote.ftue"><i>"{{introQuote.quote}}"</i><p>-{{introQuote.source}}</p></h1>
+          <h1 class='quote' *ngIf="introQuote && introQuote.ftue">Welcome to your feed!<br/>{{introQuote.quote}}</h1>
           <h1 class='arrow'><ion-icon name="arrow-round-back"></ion-icon></h1>
         </ion-card-content>
       </ion-card>

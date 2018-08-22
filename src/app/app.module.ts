@@ -36,6 +36,7 @@ import { FoundedPage }          from '../pages/founded/founded';
 // import { ForgotPage }         from '../pages/forgot/forgot';
 import { FilterPage }          from '../pages/filter/filter';
 import { FtueFilterPage }          from '../pages/filter/ftue-filter';
+import { FtueHamburgerPage }          from '../pages/filter/ftue-hamburger';
 import { JoinNetworkPage }          from '../pages/network/join';
 
 import { CardComponent }         from '../components/card/card';
@@ -73,6 +74,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     FoundedPage,
     FilterPage,
     FtueFilterPage,
+    FtueHamburgerPage,
     JoinNetworkPage,
     // FollowersPage,
     // MissionPage,
@@ -111,6 +113,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     // MissionPage,
     FilterPage,
     FtueFilterPage,
+    FtueHamburgerPage,
     JoinNetworkPage,
   ],
   providers: [

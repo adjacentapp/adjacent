@@ -77,7 +77,7 @@ export class CardProvider {
             let removeQuote = data.filter((item) => {
               if(item.quote){
                 if(!globs.firstSignIn)
-                  globs.setIntroQuote(item)  
+                  globs.setIntroQuote(item)
                 return false;
               }
               return true;

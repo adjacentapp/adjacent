@@ -60,6 +60,7 @@ export class FtuePage {
         return new Promise((resolve, reject) => {
           this.auth.completeFtue().subscribe(res => {
             globs.setFtueFilters();
+            globs.setIntroQuote({ftue: true, quote: 'Find resources, join discussions, and update your followers.', hamburgerTip: 'Pitch ideas and stay connected with ideas you follow.'})
             this.navCtrl.setRoot(DiscoverPage);
             resolve();
           });
@@ -76,6 +77,7 @@ export class FtuePage {
                 role: 'cancel',
                 handler: () => { 
                   globs.setFtueFilters();
+                  globs.setIntroQuote({ftue: true, quote: 'Find resources, join discussions, and update your followers.', hamburgerTip: 'Pitch ideas and stay connected with ideas you follow.'})
                   this.navCtrl.setRoot(DiscoverPage);
                   resolve();
                 }
@@ -105,6 +107,7 @@ export class FtuePage {
         return new Promise((resolve, reject) => {
           this.auth.completeFtue().subscribe(res => {
             globs.setFtueFilters();
+            globs.setIntroQuote({ftue: true, quote: 'Here you can find start-ups to work with and stay connected to resources and events.', hamburgerTip: 'Update your bio and stay connected with ideas you follow.'})
             this.navCtrl.setRoot(DiscoverPage);
             resolve();
           });

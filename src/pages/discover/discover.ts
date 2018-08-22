@@ -9,6 +9,7 @@ import { NotificationProvider } from '../../providers/notification/notification'
 import { PopoverController } from 'ionic-angular';
 import { FilterPage } from '../../pages/filter/filter';
 import { FtueFilterPage } from '../../pages/filter/ftue-filter';
+import { FtueHamburgerPage } from '../../pages/filter/ftue-hamburger';
 import * as globs from '../../app/globals'
 
 @Component({
@@ -37,12 +38,12 @@ export class DiscoverPage {
 	}
 
   ngAfterViewInit (){
-    if(globs.ftueFilters){
+    // if(globs.ftueFilters){
       setTimeout(() => {
         this.showFtueFilter();
         globs.clearFtueFilters();
        }, 400);
-     }
+     // }
   }
 
 	getDeck() {
@@ -158,6 +159,24 @@ export class DiscoverPage {
       }
     }
     let popover = this.popoverCtrl.create(FtueFilterPage);
+    popover.present({
+      ev: mockEvent
+    });
+    popover.onDidDismiss(data => {
+      // this.showFilter(e)
+      this.showFtueHamburger()
+    });
+  }
+
+  showFtueHamburger() {
+    let mockEvent = {
+      target: {
+        getBoundingClientRect : () => {
+          return document.getElementById('hamburger_button').getBoundingClientRect()
+        }
+      }
+    }
+    let popover = this.popoverCtrl.create(FtueHamburgerPage);
     popover.present({
       ev: mockEvent
     });
