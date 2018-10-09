@@ -22,9 +22,9 @@
 </ion-header>
 
 <ion-content *ngIf="item">
-  <ion-refresher (ionRefresh)="wall.doRefresh($event)">
+  <!-- <ion-refresher (ionRefresh)="wall.doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+  </ion-refresher> -->
 
   <h1 *ngIf="loading" text-center><ion-spinner></ion-spinner></h1>
 

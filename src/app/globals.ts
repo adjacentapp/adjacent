@@ -3,8 +3,9 @@
 let DEV = false;
 // DEV = true;
 
-let localURL = "http://localhost/~slvtrs/adjacent/api/v3/";
-let remoteURL = "http://adjacent-env.btwkki4rra.us-west-2.elasticbeanstalk.com/api/v3/"
+let localURL = "http://localhost:9000/api/v3/";
+// let remoteURL = "http://adjacent-env.btwkki4rra.us-west-2.elasticbeanstalk.com/api/v3/"
+let remoteURL = "https://adjacentapp.com/api/v3/";
 
 export const ENCRYPTION_KEY = "aether12292015";
 

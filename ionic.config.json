@@ -1,5 +1,8 @@
 {
   "name": "Adjacent",
+  "integrations": {
+    "cordova": {}
+  },
   "version": "2.2.0",
   "author": "slvtrs",
   "homepage": "http://adjacent.us/",
@@ -83,8 +86,8 @@
       "cordova-plugin-filepath": {},
       "cordova-plugin-file": {},
       "cordova-plugin-camera": {
-        "PHOTOLIBRARY_USAGE_DESCRIPTION": "Adjacent would like to access the camera.",
-        "CAMERA_USAGE_DESCRIPTION": " "
+        "PHOTOLIBRARY_USAGE_DESCRIPTION": "Adjacent would like to access the library to upload a sweet head-shot.",
+        "CAMERA_USAGE_DESCRIPTION": "Adjacent would like to access the library to upload a sweet head-shot."
       },
       "cordova-plugin-badge": {},
       "phonegap-plugin-push": {},
@@ -116,10 +119,6 @@
       "android",
       "ios"
     ]
-  },
-  "app_id": "",
-  "integrations": {
-    "cordova": {}
   },
   "type": "ionic-angular"
 }

@@ -65,12 +65,11 @@
       </button>
     </ion-col>
     <ion-col col-4>
-      <!-- <button ion-button icon-left clear small color='secondary' (click)="shareTapped($event, item)">
+      <button *ngIf="founder" ion-button icon-left clear small color='secondary' (click)="shareTapped($event, item)">
         <ion-icon name="md-share-alt"></ion-icon>
         <div>Share</div>
-      </button> -->
-      <button ion-button icon-left clear small color='secondary' (click)="goToMessage($event)">
-        <!-- <ion-icon name="md-chatbubbles"></ion-icon> -->
+      </button>
+      <button *ngIf="!founder" ion-button icon-left clear small color='secondary' (click)="goToMessage($event)">
         <ion-icon name="md-paper-plane"></ion-icon>
         <div>Message</div>
       </button>

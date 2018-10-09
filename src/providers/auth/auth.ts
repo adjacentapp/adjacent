@@ -79,6 +79,7 @@ export class AuthProvider {
                 console.log(data);
                 this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, data.networks);
                 this.valid = true;
+                this.ftue_complete = data.ftue_complete;
                 this.badge.set(data.badge_count);
                 this.registerPushToken();
               }
@@ -121,6 +122,7 @@ export class AuthProvider {
               if(data.valid){
                 this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token);
                 this.valid = true;
+                this.ftue_complete = data.ftue_complete;
                 this.badge.set(data.badge_count);
                 this.registerPushToken();
                }

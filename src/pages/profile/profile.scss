@@ -18,8 +18,11 @@ edit-profile-page {
 // list of cards
 profile-page, page-bookmarks, page-founded {
 	idea-card {
-		> .card {
-			margin: 12px 0;
+    &:first-of-type > .card {
+      margin-top: 12px;
+    }
+    > .card {
+			margin: 0 0 36px;
 			width: 100%;
       .card {
         margin: 0;

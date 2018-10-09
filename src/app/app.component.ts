@@ -55,7 +55,13 @@ export class MyApp {
     this.getGlobs();
     this.platform.ready().then( () => {
         this.statusBar.styleDefault();
+        // this.statusBar.hide();
+        this.statusBar.overlaysWebView(false);
         this.splashScreen.hide();
+        if(this.platform.is('ios')){
+          this.statusBar.backgroundColorByHexString("#f8f8f8");
+          // this.statusBar.style(2)
+        }
 
         this.checkCookies();
 

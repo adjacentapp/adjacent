@@ -38,12 +38,12 @@ export class DiscoverPage {
 	}
 
   ngAfterViewInit (){
-    // if(globs.ftueFilters){
+    if(globs.ftueFilters){
       setTimeout(() => {
         this.showFtueFilter();
         globs.clearFtueFilters();
        }, 400);
-     // }
+     }
   }
 
 	getDeck() {

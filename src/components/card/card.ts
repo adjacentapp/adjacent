@@ -5,6 +5,8 @@ import { ShowMessagePage } from '../../pages/messages/show';
 import { Conversation } from '../../providers/messages/messages';
 // import { FollowersPage } from '../../pages/followers/followers';
 import { AuthProvider } from '../../providers/auth/auth';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import * as globs from '../../app/globals'
 
 @Component({
   selector: 'idea-card',
@@ -24,7 +26,8 @@ export class CardComponent {
     public navParams: NavParams, 
     private toastCtrl: ToastController, 
     private card: CardProvider, 
-    private auth: AuthProvider
+    private auth: AuthProvider,
+    private socialSharing: SocialSharing
   ) {}
 
   ngOnInit() {
@@ -77,6 +80,26 @@ export class CardComponent {
         null // unread
       )
     });
+  }
+
+  shareTapped(e, item){
+    console.log("http://" + globs.SHARE_URL + "/?idea=" + item.id);
+    e.stopPropagation();
+    let data = {
+      user_id: this.auth.currentUser.id,
+      card_id: item.id
+    };
+    this.card.share(data).subscribe(
+      success => console.log(success),
+      error => console.log(error)
+    );
+    this.socialSharing.share(
+      "Check out this idea I found in Adjacent -- " + item.pitch, // message
+      "Shared from Adjacent",   // subject
+      "www/assets/img/industries/" + item.industry.replace(" ","_") + ".jpg", // file
+      // "adjacentapp://app/idea/" + item.id  //url
+      "http://" + globs.SHARE_URL + "/?idea=" + item.id  //url
+     ); 
   }
 
 }

@@ -93,7 +93,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     BrowserModule,
     HttpModule,
     JsonpModule,
-    IonicModule.forRoot(MyApp, {})
+    IonicModule.forRoot(MyApp, {statusbarPadding: false})
   ],
   bootstrap: [IonicApp],
   entryComponents: [
