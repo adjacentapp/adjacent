@@ -22,6 +22,7 @@ import { GlobalsProvider } from '../providers/globals/globals';
 import { MessagesProvider } from '../providers/messages/messages';
 
 import * as globs from '../app/globals'
+import { Storage } from '@ionic/storage';
 
 @Component({
   templateUrl: 'app.html'
@@ -50,7 +51,8 @@ export class MyApp {
     private globs: GlobalsProvider,
     private msg: MessagesProvider,
     private alertCtrl: AlertController,
-    private deeplinks: Deeplinks
+    private deeplinks: Deeplinks,
+    private storage: Storage
   ){
     this.getGlobs();
     this.platform.ready().then( () => {
@@ -194,31 +196,46 @@ export class MyApp {
 
   checkCookies() {
     // immediately go to discover if cookies found
-    if(localStorage.token && localStorage.user_id) {
-      this.auth.loginFromLocalStorage();
-      if(!localStorage.ftue_complete){
-        globs.setFtueFilters();
-        this.nav.setRoot(FtuePage);
-      }
-      else {
-        this.nav.setRoot(DiscoverPage);
-      }
-      // if token authentication issue, redirect back to login
-      this.auth.checkToken(localStorage.token, localStorage.user_id).subscribe(
-        user => {
-          if(!this.auth.valid) {
-            localStorage.clear();
-            this.showError("Something went wrong. Please sign in again.");
-            this.nav.setRoot('LoginPage');
+    this.storage.ready().then(() => {
+    this.storage.get('token').then((token) => {
+    this.storage.get('user_id').then((user_id) => {
+    this.storage.get('ftue_complete').then((ftue_complete) => {
+    if(token && user_id) {
+    // if(localStorage.token && localStorage.user_id) {
+      // this.auth.loginFromLocalStorage();
+      this.auth.loginFromLocalStorage().then((currentUser) => {
+
+        // if(!localStorage.ftue_complete){
+        if(!ftue_complete){
+          globs.setFtueFilters();
+          this.nav.setRoot(FtuePage);
+        }
+        else {
+          this.nav.setRoot(DiscoverPage);
+        }
+        
+        // if token authentication issue, redirect back to login
+        // this.auth.checkToken(localStorage.token, localStorage.user_id).subscribe(
+        this.auth.checkToken(token, user_id).subscribe(
+          user => {
+            if(!this.auth.valid) {
+              // localStorage.clear();
+              this.storage.clear();
+              this.showError("Something went wrong. Please sign in again.");
+              this.nav.setRoot('LoginPage');
+            }
+          },
+          error => {
+              console.log(error);
+              // this.showError(error);
           }
-        },
-        error => {
-            console.log(error);
-            // this.showError(error);
-        });
+        );
+
+      })
     }
     else
       this.nav.setRoot('LoginPage');
+    }); }); }); });
   }
 
   logout() {

@@ -7,6 +7,7 @@ import * as globs from '../../app/globals'
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Badge } from '@ionic-native/badge';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { Storage } from '@ionic/storage';
  
 export class User {
   id: number;
@@ -16,22 +17,33 @@ export class User {
   photo_url: string;
   token?: string;
   networks?: any;
+  // private storage: Storage;
  
-  constructor(id: number, fir_name: string, las_name: string, email: string, photo_url: string, token?: string, networks?: any) {
+  constructor(id: number, fir_name: string, las_name: string, email: string, photo_url: string, token?: string, networks?: any, storage?: Storage) {
   	this.id = id || null;
     this.fir_name = !fir_name || fir_name == 'null' || fir_name == 'NULL' ? 'Entrepreneur' : fir_name;
     this.las_name = !las_name || las_name == 'null' || las_name == 'NULL' ? '' : las_name;
     this.email = email || null;
     this.photo_url = photo_url || null;
     this.token = token || null;
+
     if(token){
-      localStorage.token = token;
-      localStorage.user_id = this.id;
-      localStorage.fir_name = this.fir_name;
-      localStorage.las_name = this.las_name;
-      localStorage.email = this.email;
-      localStorage.photo_url = this.photo_url;
-      localStorage.network_ids = networks && networks.length ? networks.map(item => item.id.toString()).join(',') : '';
+      // localStorage.token = token;
+      // localStorage.user_id = this.id;
+      // localStorage.fir_name = this.fir_name;
+      // localStorage.las_name = this.las_name;
+      // localStorage.email = this.email;
+      // localStorage.photo_url = this.photo_url;
+      // localStorage.network_ids = networks && networks.length ? networks.map(item => item.id.toString()).join(',') : '';
+
+      storage.set('token', token);
+      storage.set('user_id', this.id);
+      storage.set('fir_name', this.fir_name);
+      storage.set('las_name', this.las_name);
+      storage.set('email', this.email);
+      storage.set('photo_url', this.photo_url);
+      let networkString = (networks && networks.length) ? networks.map(item => item.id.toString()).join(',') : ''
+      storage.set('network_ids', networkString);
     }
     this.networks = networks || [];
     if(this.networks.length){
@@ -53,7 +65,7 @@ export class AuthProvider {
   private dismissCheckDN: any;
   public checkDeepNotifications: any;
 
-  constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController, private badge: Badge, private fb: Facebook) {
+  constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController, private badge: Badge, private fb: Facebook, private storage: Storage) {
 
     this.dismissCheckDN = null;
     this.checkDeepNotifications = Observable.create(observer => {
@@ -61,13 +73,37 @@ export class AuthProvider {
     });
   }
 
-  loginFromLocalStorage(){
-    if(localStorage.network_ids)
-      this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token, localStorage.network_ids.split(',').map(function(item){ return {id: item}}) );
-    else
-      this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token );
-    this.valid = true;
-    this.ftue_complete = localStorage.ftue_complete;
+  // loginFromLocalStorage(){
+  //   if(localStorage.network_ids)
+  //     this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token, localStorage.network_ids.split(',').map(function(item){ return {id: item}}) );
+  //   else
+  //     this.currentUser = new User(localStorage.user_id, localStorage.fir_name, localStorage.las_name, localStorage.email, localStorage.photo_url, localStorage.token );
+  //   this.valid = true;
+  //   this.ftue_complete = localStorage.ftue_complete;
+  // }
+  // loginFromLocalStorage(){
+  public loginFromLocalStorage(): Promise<any> {
+    return new Promise((resolve, reject) => {
+    this.storage.ready().then(() => {
+    this.storage.get('user_id').then((user_id) => {
+    this.storage.get('fir_name').then((fir_name) => {
+    this.storage.get('las_name').then((las_name) => {
+    this.storage.get('email').then((email) => {
+    this.storage.get('photo_url').then((photo_url) => {
+    this.storage.get('token').then((token) => {
+    this.storage.get('network_ids').then((network_ids) => {
+    this.storage.get('ftue_complete').then((ftue_complete) => {
+      let networkString = (network_ids && network_ids.length) ? 
+        network_ids.split(',').map(function(item){ return {id: item}}) : null
+      this.currentUser = new User(user_id, fir_name, las_name, email, photo_url, token, networkString, this.storage );
+
+      this.valid = true;
+      this.ftue_complete = ftue_complete;
+
+      resolve(this.currentUser)
+      })
+
+    }); }); }); }); }); }); }); }); });
   }
 
   checkToken(token, user_id): Observable<any> {
@@ -77,9 +113,11 @@ export class AuthProvider {
             .map((data) => {
               if(data.valid){
                 console.log(data);
-                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, data.networks);
+                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, data.networks, this.storage);
                 this.valid = true;
                 this.ftue_complete = data.ftue_complete;
+                // localStorage.ftue_complete = data.ftue_complete;
+                this.storage.set('ftue_complete', data.ftue_complete);
                 this.badge.set(data.badge_count);
                 this.registerPushToken();
               }
@@ -101,7 +139,7 @@ export class AuthProvider {
             .map(this.extractData)
             .map((data) => {
               if(data.valid){
-                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, data.networks);
+                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, data.networks, this.storage);
                 this.valid = true;
                 this.ftue_complete = data.ftue_complete;
                 this.badge.set(data.badge_count);                
@@ -120,7 +158,7 @@ export class AuthProvider {
             .map(this.extractData)
             .map((data) => {
               if(data.valid){
-                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token);
+                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, this.storage);
                 this.valid = true;
                 this.ftue_complete = data.ftue_complete;
                 this.badge.set(data.badge_count);
@@ -147,7 +185,7 @@ export class AuthProvider {
               .map((data) => {
                 console.log(data);
                 if(data.valid){
-                  this.currentUser = new User(data.user_id, '', '', data.email, '', data.token);
+                  this.currentUser = new User(data.user_id, '', '', data.email, '', data.token, null, this.storage);
                   this.valid = true;
                   this.registerPushToken();
                   globs.setFirstSignInTrue();                
@@ -168,7 +206,7 @@ export class AuthProvider {
   }
 
   public updateCurrentUser(data) : User {
-    this.currentUser = new User(data.id, data.fir_name, data.las_name, data.email, data.photo_url, this.currentUser.token); 
+    this.currentUser = new User(data.id, data.fir_name, data.las_name, data.email, data.photo_url, this.currentUser.token, null, this.storage); 
     return this.currentUser;
   }
 
@@ -195,7 +233,8 @@ export class AuthProvider {
   }
 
   public completeFtue(): Observable<any[]> {
-    localStorage.ftue_complete = true;
+    // localStorage.ftue_complete = true;
+    this.storage.set('ftue_complete', true);
     let url = globs.BASE_API_URL + 'complete_ftue.php';
     return this.http.post(url, {user_id: this.currentUser.id})
           .map(this.extractData)
@@ -219,7 +258,8 @@ export class AuthProvider {
             .map((data) => {
               this.valid = false;
               this.badge.clear();
-              localStorage.clear();
+              // localStorage.clear();
+              this.storage.clear();
               this.currentUser = null;
               this.pushToken = null;
               console.log(data);
@@ -258,52 +298,57 @@ export class AuthProvider {
       this.dismissCheckDN.next(false);
       return;
     }
-    const options: PushOptions = {
-      android: {
-        senderID: '432969043178'
-      },
-      ios: {
-        alert: 'true',
-        badge: 'true',
-        sound: 'true'
-      },
-      windows: {}
-    };
-    const pushObject: PushObject = this.push.init(options);
+    
+    this.platform.ready().then(() => {
 
-    pushObject.on('registration').subscribe((data: any) => {
-      console.log('device token -> ' + data.registrationId);
-      setTimeout(() => {
-        console.log(this.currentUser);
-        this.postPushToken(data.registrationId).subscribe(
-          success => {
-            console.log('Device token successfully registered', data.registrationId);
-            this.pushToken = data.registrationId;
-           },
-          error => console.log(error)
-        );
-      }, 1000);
-    });
+      const options: PushOptions = {
+        android: {
+          senderID: '432969043178'
+        },
+        ios: {
+          alert: 'true',
+          badge: 'true',
+          sound: 'true'
+        },
+        windows: {}
+      };
+      const pushObject: PushObject = this.push.init(options);
 
-    pushObject.on('notification').subscribe((data: any) => {
-      console.log('push notification -> ' + data);
-      if (data.additionalData.foreground) { // if application open, show popup
-        this.badge.set(data.count);
-        // this is where in-app badges should be handled, not in setTimeouts
-      } else {  // if app is backgrounded/coldstart
-        let split = data.additionalData.url.split('/');
-        let id = split[ split.length-1 ];
-        let object = split[ split.length-2 ];
-        if(object == 'idea')
-          this.dismissCheckDN.next('nc');
-        else if(object == 'message')
-          this.dismissCheckDN.next('message');
-        else
-          this.dismissCheckDN.next(id);
-      }
-    });
+      pushObject.on('registration').subscribe((data: any) => {
+        console.log('device token -> ' + data.registrationId);
+        setTimeout(() => {
+          console.log(this.currentUser);
+          this.postPushToken(data.registrationId).subscribe(
+            success => {
+              console.log('Device token successfully registered', data.registrationId);
+              this.pushToken = data.registrationId;
+             },
+            error => console.log(error)
+          );
+        }, 1000);
+      });
 
-    pushObject.on('error').subscribe(error => console.error('Error with Push plugin' + error));
+      pushObject.on('notification').subscribe((data: any) => {
+        console.log('push notification -> ' + data);
+        if (data.additionalData.foreground) { // if application open, show popup
+          this.badge.set(data.count);
+          // this is where in-app badges should be handled, not in setTimeouts
+        } else {  // if app is backgrounded/coldstart
+          let split = data.additionalData.url.split('/');
+          let id = split[ split.length-1 ];
+          let object = split[ split.length-2 ];
+          if(object == 'idea')
+            this.dismissCheckDN.next('nc');
+          else if(object == 'message')
+            this.dismissCheckDN.next('message');
+          else
+            this.dismissCheckDN.next(id);
+        }
+      });
+
+      pushObject.on('error').subscribe(error => console.error('Error with Push plugin' + error));
+
+    })
   }
 
   public facebook(): Promise<any> {

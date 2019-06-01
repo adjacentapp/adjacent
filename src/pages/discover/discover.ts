@@ -11,6 +11,7 @@ import { FilterPage } from '../../pages/filter/filter';
 import { FtueFilterPage } from '../../pages/filter/ftue-filter';
 import { FtueHamburgerPage } from '../../pages/filter/ftue-hamburger';
 import * as globs from '../../app/globals'
+import { Storage } from '@ionic/storage';
 
 @Component({
 	selector: 'discover-page',
@@ -24,7 +25,8 @@ export class DiscoverPage {
 	dealing: boolean = false;
   filters: any = {
     industry: "Any",
-    network_ids: localStorage.network_ids ? localStorage.network_ids.split(',') : [0]
+    // network_ids: localStorage.network_ids ? localStorage.network_ids.split(',') : [0]
+    network_ids: [0]    
   };
   introQuote = null;
 
@@ -33,7 +35,12 @@ export class DiscoverPage {
 	username = '';
     email = '';
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider, private msg: MessagesProvider, private notif: NotificationProvider, public popoverCtrl: PopoverController, private eleRef: ElementRef) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private card: CardProvider, private auth: AuthProvider, private msg: MessagesProvider, private notif: NotificationProvider, public popoverCtrl: PopoverController, private eleRef: ElementRef, private storage: Storage) {
+
+    this.storage.get('network_ids').then((network_ids) => {
+      this.filters.network_ids = network_ids ? network_ids.split(',') : [0]
+    })
+
 		this.getDeck();
 	}
 

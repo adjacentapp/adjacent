@@ -7,6 +7,10 @@ page-login {
     padding-bottom: 0;
   }
 
+  .signup-col button[type=submit] {
+    margin-bottom: 12px;
+  }
+
   .facebook-col button.facebook {
     background-color: #3b5998;
     color: white;

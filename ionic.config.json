@@ -3,7 +3,7 @@
   "integrations": {
     "cordova": {}
   },
-  "version": "2.2.0",
+  "version": "2.2.9",
   "author": "slvtrs",
   "homepage": "http://adjacent.us/",
   "private": true,

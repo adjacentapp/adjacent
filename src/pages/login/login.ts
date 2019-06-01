@@ -4,6 +4,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { DiscoverPage } from '../../pages/discover/discover';
 import { FtuePage } from '../../pages/ftue/ftue';
 import * as globs from '../../app/globals'
+import { Storage } from '@ionic/storage';
  
 @IonicPage()
 @Component({
@@ -15,7 +16,7 @@ export class LoginPage {
   cordova: boolean;
   registerCredentials = { email: '', password: '' };
  
-  constructor(private nav: NavController, public menu: MenuController, private auth: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private platform: Platform) {
+  constructor(private nav: NavController, public menu: MenuController, private auth: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private platform: Platform, private storage: Storage) {
       this.cordova = this.platform.is('cordova');
   }
 
@@ -40,7 +41,8 @@ export class LoginPage {
       user => {
         if (this.auth.valid) {
           if(this.auth.ftue_complete){
-            localStorage.ftue_complete = true;
+            // localStorage.ftue_complete = true;
+            this.storage.set('ftue_complete', true)
             this.nav.setRoot(DiscoverPage);
           }
           else {

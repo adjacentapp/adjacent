@@ -15,6 +15,7 @@ import { FilePath }                                 from '@ionic-native/file-pat
 import { Badge }                                    from '@ionic-native/badge';
 import { Facebook }                                 from '@ionic-native/facebook';
 
+import { IonicStorageModule } from '@ionic/storage';
 import { StatusBar } 			from '@ionic-native/status-bar';
 import { SplashScreen } 		from '@ionic-native/splash-screen';
 import { GoogleAnalytics }	    from '@ionic-native/google-analytics';
@@ -93,7 +94,8 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     BrowserModule,
     HttpModule,
     JsonpModule,
-    IonicModule.forRoot(MyApp, {statusbarPadding: false})
+    IonicModule.forRoot(MyApp, {statusbarPadding: false}),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

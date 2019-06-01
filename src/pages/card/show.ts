@@ -75,7 +75,7 @@ export class ShowCardPage {
   }
 
   shareTapped(e, item){
-    console.log("http://" + globs.SHARE_URL + "/?idea=" + item.id);
+    console.log("https://" + globs.SHARE_URL + "/?idea=" + item.id);
     e.stopPropagation();
     let data = {
       user_id: this.auth.currentUser.id,
@@ -88,9 +88,8 @@ export class ShowCardPage {
     this.socialSharing.share(
       "Check out this idea I found in Adjacent -- " + item.pitch, // message
       "Shared from Adjacent",   // subject
-      "www/assets/img/industries/" + item.industry.replace(" ","_") + ".jpg", // file
-      // "adjacentapp://app/idea/" + item.id  //url
-      "http://" + globs.SHARE_URL + "/?idea=" + item.id  //url
+      null, //"www/assets/img/industries/" + item.industry.replace(" ","_") + ".jpg", // file
+      "https://" + globs.SHARE_URL + "/?idea=" + item.id  //url
      ); 
   }
 
