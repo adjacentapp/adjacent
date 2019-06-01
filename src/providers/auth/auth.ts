@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import * as globs from '../../app/globals'
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Badge } from '@ionic-native/badge';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+// import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
  
 export class User {
@@ -65,7 +65,10 @@ export class AuthProvider {
   private dismissCheckDN: any;
   public checkDeepNotifications: any;
 
-  constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController, private badge: Badge, private fb: Facebook, private storage: Storage) {
+  constructor (private http: Http, private platform: Platform, private push: Push, private alertCtrl: AlertController, private badge: Badge, 
+    //private fb: Facebook, 
+    private storage: Storage
+  ) {
 
     this.dismissCheckDN = null;
     this.checkDeepNotifications = Observable.create(observer => {
@@ -152,24 +155,24 @@ export class AuthProvider {
             .catch(this.handleError);
   }
 
-  public fb_login(credentials): Observable<any> {
-    let url = globs.BASE_API_URL + 'login_facebook.php';
-    return this.http.post(url, credentials)
-            .map(this.extractData)
-            .map((data) => {
-              if(data.valid){
-                this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, this.storage);
-                this.valid = true;
-                this.ftue_complete = data.ftue_complete;
-                this.badge.set(data.badge_count);
-                this.registerPushToken();
-               }
-               else
-                 this.valid = false;
-              return data;
-            })
-            .catch(this.handleError);
-  }
+  // public fb_login(credentials): Observable<any> {
+  //   let url = globs.BASE_API_URL + 'login_facebook.php';
+  //   return this.http.post(url, credentials)
+  //           .map(this.extractData)
+  //           .map((data) => {
+  //             if(data.valid){
+  //               this.currentUser = new User(data.user_id, data.fir_name, data.las_name, data.email, data.photo_url, data.token, this.storage);
+  //               this.valid = true;
+  //               this.ftue_complete = data.ftue_complete;
+  //               this.badge.set(data.badge_count);
+  //               this.registerPushToken();
+  //              }
+  //              else
+  //                this.valid = false;
+  //             return data;
+  //           })
+  //           .catch(this.handleError);
+  // }
 
   public register(credentials): Observable<any> {
     if (credentials.email === null || credentials.password === null) {
@@ -298,7 +301,7 @@ export class AuthProvider {
       this.dismissCheckDN.next(false);
       return;
     }
-    
+
     this.platform.ready().then(() => {
 
       const options: PushOptions = {
@@ -351,39 +354,39 @@ export class AuthProvider {
     })
   }
 
-  public facebook(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.fb.login(['public_profile', 'user_friends', 'email'])
-        .then((login_res: FacebookLoginResponse) => {
-          console.log('login_res:', login_res);
-          return new Promise((res, rej) => {
-            this.fb.api('/me?fields=id,email,first_name,last_name,picture,gender', ['public_profile', 'user_friends', 'email']).then((api_res) => {
-              console.log('api_res:', api_res);
-              let credentials = {
-                email: api_res.email,
-                facebook_hash: this.sha256(globs.ENCRYPTION_KEY + api_res.id),
-                fir_name: api_res.first_name,
-                las_name: api_res.last_name,
-                photo_url: 'https://graph.facebook.com/' + api_res.id + '/picture?type=large'
-              };
-              this.fb_login(credentials).subscribe(
-                success => {
-                  res(success);
-                  resolve(success);
-                },
-                err => {
-                  rej(err);
-                  reject(err);
-                }
-              );
-            });
-          });
-        }, err => {
-          this.handleError(err);
-          reject(err);
-        });
-    });
-  }
+  // public facebook(): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //     this.fb.login(['public_profile', 'user_friends', 'email'])
+  //       .then((login_res: FacebookLoginResponse) => {
+  //         console.log('login_res:', login_res);
+  //         return new Promise((res, rej) => {
+  //           this.fb.api('/me?fields=id,email,first_name,last_name,picture,gender', ['public_profile', 'user_friends', 'email']).then((api_res) => {
+  //             console.log('api_res:', api_res);
+  //             let credentials = {
+  //               email: api_res.email,
+  //               facebook_hash: this.sha256(globs.ENCRYPTION_KEY + api_res.id),
+  //               fir_name: api_res.first_name,
+  //               las_name: api_res.last_name,
+  //               photo_url: 'https://graph.facebook.com/' + api_res.id + '/picture?type=large'
+  //             };
+  //             this.fb_login(credentials).subscribe(
+  //               success => {
+  //                 res(success);
+  //                 resolve(success);
+  //               },
+  //               err => {
+  //                 rej(err);
+  //                 reject(err);
+  //               }
+  //             );
+  //           });
+  //         });
+  //       }, err => {
+  //         this.handleError(err);
+  //         reject(err);
+  //       });
+  //   });
+  // }
 
   private extractData(res: Response) {
     let body = res.json();

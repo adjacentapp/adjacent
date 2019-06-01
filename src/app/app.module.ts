@@ -13,7 +13,7 @@ import { File }                                     from '@ionic-native/file';
 import { FileTransfer }                             from '@ionic-native/file-transfer';
 import { FilePath }                                 from '@ionic-native/file-path';
 import { Badge }                                    from '@ionic-native/badge';
-import { Facebook }                                 from '@ionic-native/facebook';
+// import { Facebook }                                 from '@ionic-native/facebook';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { StatusBar } 			from '@ionic-native/status-bar';
@@ -140,7 +140,7 @@ import { MessagesProvider } 	from '../providers/messages/messages';
     FileTransfer,
     FilePath,
     Badge,
-    Facebook
+    // Facebook
   ],
   schemas: [
     // NO_ERRORS_SCHEMA

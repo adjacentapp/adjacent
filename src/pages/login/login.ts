@@ -61,13 +61,13 @@ export class LoginPage {
       });
   }
 
-  public facebook() {
-    this.showLoading('Connecting to Facebook...');
-    this.auth.facebook().then(
-      success => this.successPopup(),
-      err => this.showError(err)
-    );
-  }
+  // public facebook() {
+  //   this.showLoading('Connecting to Facebook...');
+  //   this.auth.facebook().then(
+  //     success => this.successPopup(),
+  //     err => this.showError(err)
+  //   );
+  // }
 
   showLoading(text) {
     this.loading = this.loadingCtrl.create({

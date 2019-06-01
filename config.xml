@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="6229" id="com.medy.adjacentapp" version="2.2.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="6230" id="com.medy.adjacentapp" version="2.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Adjacent</name>
     <description>An anonymous idea-sharing network.</description>
     <author email="aliana@umich.edu" href="http://adjacent.us/">Medy</author>
@@ -15,7 +15,7 @@
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="16" />
+    <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
@@ -83,18 +83,15 @@
     <allow-navigation href="http://192.168.2.18:8100" />
     <plugin name="cordova-plugin-badge" spec="^0.8.1" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1">
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Adjacent would like to access the library to upload a sweet head-shot." />
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Adjacent would like to access the camera to snap a sweet head-shot." />
+        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Adjacent would like to access the camera." />
+        <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
-    <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
-        <variable name="APP_ID" value="1648227645496673" />
-        <variable name="APP_NAME" value="Adjacent" />
-    </plugin>
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
-    <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
+    <plugin name="cordova-plugin-file-transfer" spec="~1.6.3" />
     <plugin name="cordova-plugin-filepath" spec="^1.0.2" />
+    <plugin name="cordova-plugin-google-analytics" spec="^1.8.6" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.2.2" />
@@ -119,11 +116,10 @@
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
-    <plugin name="cordova-plugin-google-analytics" spec="^1.8.6" />
-    <plugin name="cordova-sqlite-storage" spec="^3.2.0" />
-    <engine name="android" spec="^6.2.3" />
-    <engine name="ios" spec="4.5.5" />
     <plugin name="phonegap-plugin-push" spec="^2.2.3">
         <variable name="SENDER_ID" value="432969043178" />
     </plugin>
+    <plugin name="cordova-sqlite-storage" spec="~3.2.0" />
+    <engine name="ios" spec="4.5.5" />
+    <engine name="android" spec="^7.1.0" />
 </widget>
