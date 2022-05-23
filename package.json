@@ -57,7 +57,7 @@
         "es6-promise-plugin": "^4.2.2",
         "forwarded": "^0.1.2",
         "fresh": "^0.5.2",
-        "hawk": "^7.0.7",
+        "hawk": "^9.0.1",
         "ionic-angular": "3.3.0",
         "ionic-plugin-deeplinks": "^1.0.17",
         "ionic-plugin-keyboard": "^2.2.1",
